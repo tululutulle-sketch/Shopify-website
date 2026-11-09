@@ -96,7 +96,7 @@
           "url": {{ request.origin | append: routes.root_url | json }},
           "potentialAction": {
             "@type": "SearchAction",
-            "target": {{ request.origin | append: routes.search_url | append: '?q={search_term_string}' | json }},
+            "target": "{{ request.origin }}{{ routes.search_url }}?q={search_term_string}",
             "query-input": "required name=search_term_string"
           }
         }
