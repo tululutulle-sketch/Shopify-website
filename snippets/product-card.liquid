@@ -1,0 +1,133 @@
+{%- comment -%}
+  Product card used across grids, sliders, search and wishlist.
+  - product: product object (blank renders a placeholder card)
+  - sizes: image sizes attribute
+  - lazy: boolean (default true)
+  - index: placeholder index
+{%- endcomment -%}
+{%- liquid
+  assign sizes = sizes | default: '(min-width: 1024px) 22vw, (min-width: 768px) 30vw, 46vw'
+  assign loading = 'lazy'
+  if lazy == false
+    assign loading = 'eager'
+  endif
+  assign ratio_class = 'media--' | append: settings.card_image_ratio
+-%}
+{%- if product != blank -%}
+  {%- liquid
+    assign variant = product.selected_or_first_available_variant
+    assign on_sale = false
+    if product.compare_at_price > product.price
+      assign on_sale = true
+    endif
+    assign has_second_image = false
+    if settings.card_show_secondary_image and product.media.size > 1 and product.media[1].preview_image
+      assign has_second_image = true
+    endif
+    assign single_variant = false
+    if product.has_only_default_variant or product.variants.size == 1
+      assign single_variant = true
+    endif
+  -%}
+  <article class="product-card{% if has_second_image %} product-card--has-hover{% endif %}" data-product-handle="{{ product.handle }}">
+    <div class="product-card__media-wrap">
+      <a href="{{ product.url }}" class="product-card__media media {{ ratio_class }}" tabindex="-1" aria-hidden="true">
+        {%- if product.featured_media -%}
+          {{
+            product.featured_media.preview_image
+            | image_url: width: 900
+            | image_tag:
+              widths: '240, 360, 480, 600, 720, 900',
+              sizes: sizes,
+              loading: loading,
+              class: 'product-card__image product-card__image--primary',
+              alt: product.featured_media.alt | default: product.title | escape
+          }}
+          {%- if has_second_image -%}
+            {{
+              product.media[1].preview_image
+              | image_url: width: 900
+              | image_tag:
+                widths: '240, 360, 480, 600, 720, 900',
+                sizes: sizes,
+                loading: 'lazy',
+                class: 'product-card__image product-card__image--secondary',
+                alt: ''
+            }}
+          {%- endif -%}
+        {%- else -%}
+          {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+        {%- endif -%}
+      </a>
+
+      <div class="product-card__badges">
+        {%- if product.available == false -%}
+          <span class="badge badge--muted">{{ 'products.product.sold_out' | t }}</span>
+        {%- elsif on_sale -%}
+          <span class="badge badge--sale">{{ 'products.product.sale' | t }}</span>
+        {%- endif -%}
+      </div>
+
+      {%- if settings.card_show_wishlist -%}
+        {% render 'wishlist-button', product: product, class: 'product-card__wishlist' %}
+      {%- endif -%}
+
+      {%- if settings.card_show_quick_add and product.available -%}
+        <div class="product-card__quick-add">
+          {%- if single_variant -%}
+            {%- form 'product', product, class: 'quick-add-form', data-quick-add-form: '', novalidate: 'novalidate' -%}
+              <input type="hidden" name="id" value="{{ variant.id }}">
+              <input type="hidden" name="quantity" value="1">
+              <button type="submit" class="button button--small button--white product-card__quick-btn" aria-label="{{ 'products.product.add_to_cart' | t }}: {{ product.title | escape }}">
+                <span class="button__label">{% render 'icon', icon: 'plus' %} {{ 'products.product.quick_add' | t }}</span>
+                <span class="button__spinner" aria-hidden="true"></span>
+              </button>
+            {%- endform -%}
+          {%- else -%}
+            <button
+              type="button"
+              class="button button--small button--white product-card__quick-btn"
+              data-quick-view="{{ product.url | split: '?' | first }}"
+              aria-haspopup="dialog"
+              aria-label="{{ 'products.product.choose_options' | t }}: {{ product.title | escape }}"
+            >
+              <span class="button__label">{% render 'icon', icon: 'plus' %} {{ 'products.product.quick_add' | t }}</span>
+              <span class="button__spinner" aria-hidden="true"></span>
+            </button>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="product-card__info">
+      {%- if settings.card_show_vendor -%}
+        <p class="product-card__vendor caption">{{ product.vendor }}</p>
+      {%- endif -%}
+      <h3 class="product-card__title">
+        <a href="{{ product.url }}" class="product-card__link">{{ product.title | escape }}</a>
+      </h3>
+      {%- if settings.card_show_rating and product.metafields.reviews.rating.value != blank -%}
+        {%- liquid
+          assign rating_value = product.metafields.reviews.rating.value.rating | round: 1
+          assign rating_max = product.metafields.reviews.rating.value.scale_max
+          assign rating_count = product.metafields.reviews.rating_count.value
+        -%}
+        {% render 'rating', rating: rating_value, max: rating_max, count: rating_count %}
+      {%- endif -%}
+      {% render 'price', product: product, show_from: true %}
+    </div>
+  </article>
+{%- else -%}
+  <article class="product-card product-card--placeholder">
+    <div class="product-card__media-wrap">
+      <div class="product-card__media media {{ ratio_class }}">
+        {%- assign placeholder_index = index | default: 1 | modulo: 6 | plus: 1 -%}
+        {{ 'product-' | append: placeholder_index | placeholder_svg_tag: 'placeholder-svg' }}
+      </div>
+    </div>
+    <div class="product-card__info">
+      <h3 class="product-card__title">Product title</h3>
+      <div class="price"><span class="price__current">{{ 199900 | money }}</span></div>
+    </div>
+  </article>
+{%- endif -%}

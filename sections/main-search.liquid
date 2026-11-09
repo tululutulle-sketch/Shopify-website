@@ -1,0 +1,67 @@
+{%- liquid
+  assign card_sizes = '(min-width: 1024px) 22vw, (min-width: 768px) 30vw, 46vw'
+  assign columns = section.settings.columns
+-%}
+<div class="section section--tight-top main-search" data-section-id="{{ section.id }}">
+  <div class="page-width">
+    <div class="main-search__header">
+      <h1 class="display">
+        {%- if search.performed -%}{{ 'search.results_for' | t: terms: search.terms }}{%- else -%}{{ 'search.title' | t }}{%- endif -%}
+      </h1>
+      <form action="{{ routes.search_url }}" method="get" role="search" class="main-search__form">
+        <label for="MainSearch" class="visually-hidden">{{ 'accessibility.search' | t }}</label>
+        <input type="search" id="MainSearch" name="q" value="{{ search.terms | escape }}" class="field__input" placeholder="{{ 'header.search_placeholder' | t }}">
+        <input type="hidden" name="options[prefix]" value="last">
+        <button type="submit" class="button">{{ 'header.search_submit' | t }}</button>
+      </form>
+    </div>
+
+    {%- if search.performed -%}
+      {%- paginate search.results by section.settings.per_page -%}
+        <div class="collection-layout{% if search.filters.size > 0 %} collection-layout--sidebar{% endif %}" data-collection-layout>
+          {% render 'facets', results: search, section_id: section.id, show_sort: true %}
+          <div class="collection__products" id="ProductGrid-{{ section.id }}" data-product-grid-container>
+            {%- if search.results_count > 0 -%}
+              <ul class="list-unstyled product-grid" role="list" style="--columns: {{ columns }};" data-product-grid>
+                {%- for item in search.results -%}
+                  <li class="product-grid__item">
+                    {%- case item.object_type -%}
+                      {%- when 'product' -%}
+                        {% render 'product-card', product: item, sizes: card_sizes %}
+                      {%- else -%}
+                        <a href="{{ item.url }}" class="search-result-card">
+                          <span class="eyebrow">{{ item.object_type | capitalize }}</span>
+                          <span class="h4">{{ item.title | escape }}</span>
+                          <span class="caption">{{ item.content | strip_html | truncatewords: 18 }}</span>
+                        </a>
+                    {%- endcase -%}
+                  </li>
+                {%- endfor -%}
+              </ul>
+              {%- assign shown = paginate.current_offset | plus: search.results.size -%}
+              {% render 'pagination', paginate: paginate, type: 'load_more', shown: shown, total: paginate.items %}
+            {%- else -%}
+              <div class="empty-state">
+                <p class="h4">{{ 'search.no_results' | t: terms: search.terms }}</p>
+                <a href="{{ routes.all_products_collection_url }}" class="button">{{ 'general.404.link' | t }}</a>
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endpaginate -%}
+    {%- endif -%}
+  </div>
+</div>
+
+<script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "Search results",
+  "class": "section-main-search",
+  "settings": [
+    { "type": "range", "id": "per_page", "label": "Results per page", "min": 8, "max": 48, "step": 4, "default": 24 },
+    { "type": "range", "id": "columns", "label": "Results per row (desktop)", "min": 3, "max": 5, "step": 1, "default": 4 }
+  ]
+}
+{% endschema %}

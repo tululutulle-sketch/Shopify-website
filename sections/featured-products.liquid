@@ -1,0 +1,114 @@
+{%- liquid
+  assign columns = section.settings.columns
+  assign limit = section.settings.limit
+  assign use_manual = false
+  if section.settings.source == 'manual' and section.settings.products.count > 0
+    assign use_manual = true
+  endif
+  assign collection_obj = section.settings.collection
+  assign view_all_url = section.settings.view_all_link | default: collection_obj.url | default: routes.all_products_collection_url
+  assign card_sizes = '(min-width: 1024px) calc((100vw - 10rem) / ' | append: columns | append: '), (min-width: 768px) 30vw, 46vw'
+-%}
+<section class="section section--{{ section.settings.background }} featured-products">
+  <div class="page-width">
+    {%- liquid
+      assign heading_link = blank
+      if section.settings.show_view_all and section.settings.view_all_position == 'top'
+        assign heading_link = view_all_url
+      endif
+    -%}
+    {% render 'section-heading',
+      eyebrow: section.settings.eyebrow,
+      heading: section.settings.heading,
+      text: section.settings.text,
+      link: heading_link,
+      link_label: section.settings.view_all_label
+    %}
+
+    <ul class="list-unstyled product-grid{% if section.settings.mobile_scroll %} product-grid--scroll-mobile{% endif %}" role="list" style="--columns: {{ columns }};">
+      {%- if use_manual -%}
+        {%- for product in section.settings.products limit: limit -%}
+          <li class="product-grid__item reveal" style="--reveal-delay: {{ forloop.index0 | modulo: columns | times: 60 }}ms;">
+            {% render 'product-card', product: product, sizes: card_sizes %}
+          </li>
+        {%- endfor -%}
+      {%- elsif collection_obj != blank and collection_obj.products_count > 0 -%}
+        {%- for product in collection_obj.products limit: limit -%}
+          <li class="product-grid__item reveal" style="--reveal-delay: {{ forloop.index0 | modulo: columns | times: 60 }}ms;">
+            {% render 'product-card', product: product, sizes: card_sizes %}
+          </li>
+        {%- endfor -%}
+      {%- else -%}
+        {%- for i in (1..columns) -%}
+          <li class="product-grid__item">
+            {% render 'product-card', product: blank, index: i %}
+          </li>
+        {%- endfor -%}
+      {%- endif -%}
+    </ul>
+
+    {%- if section.settings.show_view_all and section.settings.view_all_position == 'bottom' and section.settings.view_all_label != blank -%}
+      <div class="section__footer">
+        <a href="{{ view_all_url }}" class="button button--outline">{{ section.settings.view_all_label | escape }}</a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product grid",
+  "class": "section-featured-products",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Small heading" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Featured Collection" },
+    { "type": "richtext", "id": "text", "label": "Text" },
+    {
+      "type": "select",
+      "id": "source",
+      "label": "Products from",
+      "options": [
+        { "value": "collection", "label": "A collection" },
+        { "value": "manual", "label": "Hand-picked products" }
+      ],
+      "default": "collection"
+    },
+    { "type": "collection", "id": "collection", "label": "Collection" },
+    { "type": "product_list", "id": "products", "label": "Hand-picked products", "limit": 20 },
+    { "type": "range", "id": "limit", "label": "Maximum products", "min": 2, "max": 20, "step": 1, "default": 8 },
+    { "type": "range", "id": "columns", "label": "Products per row (desktop)", "min": 3, "max": 5, "step": 1, "default": 4 },
+    { "type": "checkbox", "id": "mobile_scroll", "label": "Swipe horizontally on mobile", "default": false, "info": "Otherwise shows a two-column grid." },
+    { "type": "checkbox", "id": "show_view_all", "label": "Show \"View all\"", "default": true },
+    { "type": "text", "id": "view_all_label", "label": "View all label", "default": "View all" },
+    { "type": "url", "id": "view_all_link", "label": "View all link", "info": "Defaults to the selected collection." },
+    {
+      "type": "select",
+      "id": "view_all_position",
+      "label": "View all position",
+      "options": [
+        { "value": "top", "label": "Beside heading" },
+        { "value": "bottom", "label": "Below products" }
+      ],
+      "default": "bottom"
+    },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Background",
+      "options": [
+        { "value": "white", "label": "White" },
+        { "value": "cream", "label": "Cream" },
+        { "value": "blush", "label": "Blush" }
+      ],
+      "default": "white"
+    }
+  ],
+  "presets": [
+    { "name": "Featured collection" },
+    {
+      "name": "Bestsellers",
+      "settings": { "heading": "Bestsellers", "eyebrow": "Most loved", "view_all_position": "top" }
+    }
+  ]
+}
+{% endschema %}

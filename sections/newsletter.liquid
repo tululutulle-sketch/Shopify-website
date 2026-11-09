@@ -1,0 +1,46 @@
+<section class="section newsletter section--{{ section.settings.background }}" id="newsletter-{{ section.id }}">
+  <div class="page-width page-width--narrow newsletter__inner reveal">
+    {%- if section.settings.show_icon -%}
+      <span class="newsletter__icon">{% render 'icon', icon: 'sparkle' %}</span>
+    {%- endif -%}
+    {%- if section.settings.heading != blank -%}
+      <h2 class="h2 newsletter__heading">{{ section.settings.heading | escape }}</h2>
+    {%- endif -%}
+    {%- if section.settings.text != blank -%}
+      <div class="newsletter__text rte">{{ section.settings.text }}</div>
+    {%- endif -%}
+    {%- assign form_id = 'Newsletter-' | append: section.id -%}
+    {% render 'newsletter-form', form_id: form_id, style: 'boxed', button_label: section.settings.button_label %}
+    {%- if section.settings.disclaimer != blank -%}
+      <div class="newsletter__disclaimer caption rte">{{ section.settings.disclaimer }}</div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Newsletter",
+  "class": "section-newsletter",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "A Little Note from TULULU" },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Be the first to discover new collections, special releases and thoughtful gifts.</p>" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Subscribe" },
+    { "type": "richtext", "id": "disclaimer", "label": "Small print", "info": "e.g. a note about how often you email and unsubscribing." },
+    { "type": "checkbox", "id": "show_icon", "label": "Show sparkle icon", "default": true },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Background",
+      "options": [
+        { "value": "white", "label": "White" },
+        { "value": "cream", "label": "Cream" },
+        { "value": "blush", "label": "Blush" },
+        { "value": "lavender", "label": "Lavender" }
+      ],
+      "default": "blush"
+    }
+  ],
+  "presets": [{ "name": "Newsletter" }],
+  "enabled_on": { "templates": ["*"], "groups": ["footer"] }
+}
+{% endschema %}

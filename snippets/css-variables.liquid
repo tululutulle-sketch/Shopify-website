@@ -1,0 +1,52 @@
+{%- liquid
+  case settings.button_style
+    when 'pill'
+      assign button_radius = '999px'
+    when 'square'
+      assign button_radius = '0px'
+    else
+      assign button_radius = '4px'
+  endcase
+  if settings.heading_font == 'Cormorant Garamond'
+    assign heading_stack = '"Cormorant Garamond", Georgia, "Times New Roman", serif'
+    assign heading_adjust = 1.12
+  else
+    assign heading_stack = '"Playfair Display", Georgia, "Times New Roman", serif'
+    assign heading_adjust = 1
+  endif
+  if settings.body_font == 'Poppins'
+    assign body_stack = '"Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
+  else
+    assign body_stack = '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
+  endif
+  assign heading_scale = settings.heading_scale | default: 100 | times: heading_adjust | divided_by: 100.0
+  assign body_scale = settings.body_scale | default: 100 | divided_by: 100.0
+-%}
+<style>
+  :root {
+    --color-primary: {{ settings.color_primary }};
+    --color-primary-rgb: {{ settings.color_primary.red }}, {{ settings.color_primary.green }}, {{ settings.color_primary.blue }};
+    --color-primary-hover: {{ settings.color_primary_hover }};
+    --color-blush: {{ settings.color_blush }};
+    --color-lavender: {{ settings.color_lavender }};
+    --color-cream: {{ settings.color_cream }};
+    --color-bg: {{ settings.color_background }};
+    --color-heading: {{ settings.color_heading }};
+    --color-heading-rgb: {{ settings.color_heading.red }}, {{ settings.color_heading.green }}, {{ settings.color_heading.blue }};
+    --color-text: {{ settings.color_text }};
+    --color-muted: {{ settings.color_muted }};
+    --color-border: {{ settings.color_border }};
+    --color-sale: {{ settings.color_sale }};
+
+    --font-heading: {{ heading_stack }};
+    --font-body: {{ body_stack }};
+    --heading-scale: {{ heading_scale }};
+    --body-scale: {{ body_scale }};
+
+    --page-width: {{ settings.page_width | default: 1360 }}px;
+    --radius: {{ settings.radius | default: 6 }}px;
+    --radius-button: {{ button_radius }};
+    --logo-width: {{ settings.logo_width | default: 140 }}px;
+    --logo-width-mobile: {{ settings.logo_width_mobile | default: 110 }}px;
+  }
+</style>

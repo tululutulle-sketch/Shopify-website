@@ -1,0 +1,31 @@
+{
+  "type": "header",
+  "name": "Header group",
+  "sections": {
+    "announcement-bar": {
+      "type": "announcement-bar",
+      "blocks": {
+        "msg-1": { "type": "announcement", "settings": { "text": "Free Shipping on Orders Above ₹999", "link": "" } },
+        "msg-2": { "type": "announcement", "settings": { "text": "Beautifully Gift-Wrapped", "link": "" } },
+        "msg-3": { "type": "announcement", "settings": { "text": "Discover Our Latest Collections", "link": "shopify://collections/all" } }
+      },
+      "block_order": ["msg-1", "msg-2", "msg-3"],
+      "settings": {
+        "autoplay": true,
+        "speed": 5,
+        "background": "#E56B8C",
+        "text_color": "#FFFFFF"
+      }
+    },
+    "header": {
+      "type": "header",
+      "settings": {
+        "layout": "logo-left",
+        "menu": "main-menu",
+        "sticky": true,
+        "mega_caption": "The Gifting Edit"
+      }
+    }
+  },
+  "order": ["announcement-bar", "header"]
+}

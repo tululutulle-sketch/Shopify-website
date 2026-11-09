@@ -1,0 +1,22 @@
+<article class="section section--tight-top main-article">
+  <div class="page-width page-width--narrow">
+    <p class="eyebrow"><a href="{{ blog.url }}">{{ 'blogs.article.back' | t: blog: blog.title }}</a></p>
+    <h1 class="display">{{ article.title | escape }}</h1>
+    <p class="caption">{{ article.published_at | time_tag: format: 'date' }}{% if section.settings.show_author %} · {{ 'blogs.article.by' | t: author: article.author }}{% endif %}</p>
+    {%- if article.image -%}
+      <div class="media media--landscape main-article__image">
+        {% render 'responsive-image', image: article.image, sizes: '(min-width: 900px) 860px, 100vw', widths: '600, 900, 1200, 1700', lazy: false %}
+      </div>
+    {%- endif -%}
+    <div class="rte main-article__content">{{ article.content }}</div>
+  </div>
+</article>
+<script type="application/ld+json">{{ article | structured_data }}</script>
+
+{% schema %}
+{
+  "name": "Blog post",
+  "class": "section-main-article",
+  "settings": [{ "type": "checkbox", "id": "show_author", "label": "Show author", "default": false }]
+}
+{% endschema %}

@@ -1,0 +1,10 @@
+{%- if shop.enabled_payment_types.size > 0 -%}
+  <div class="payment-icons">
+    <span class="visually-hidden">{{ 'accessibility.payment_methods' | t }}</span>
+    <ul class="list-unstyled payment-icons__list" role="list">
+      {%- for type in shop.enabled_payment_types -%}
+        <li>{{ type | payment_type_svg_tag: class: 'payment-icon' }}</li>
+      {%- endfor -%}
+    </ul>
+  </div>
+{%- endif -%}

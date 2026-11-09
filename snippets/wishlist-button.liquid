@@ -1,0 +1,18 @@
+{%- comment -%}
+  - product: product object
+  - class: extra classes
+{%- endcomment -%}
+{%- if settings.wishlist_enable -%}
+  <wishlist-button class="wishlist-button {{ class }}" data-handle="{{ product.handle }}">
+    <button
+      type="button"
+      class="icon-button"
+      aria-pressed="false"
+      aria-label="{{ 'products.product.wishlist_add' | t }}"
+      data-label-add="{{ 'products.product.wishlist_add' | t }}"
+      data-label-remove="{{ 'products.product.wishlist_remove' | t }}"
+    >
+      {% render 'icon', icon: 'heart' %}
+    </button>
+  </wishlist-button>
+{%- endif -%}

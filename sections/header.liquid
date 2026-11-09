@@ -1,0 +1,250 @@
+{%- liquid
+  assign menu = section.settings.menu
+  assign wishlist_url = settings.wishlist_url | default: '/pages/wishlist'
+  assign is_home = false
+  if request.page_type == 'index'
+    assign is_home = true
+  endif
+-%}
+<sticky-header
+  class="header-wrapper{% if section.settings.sticky %} header-wrapper--sticky{% endif %}"
+  data-sticky="{{ section.settings.sticky }}"
+>
+  <header class="header page-width header--{{ section.settings.layout }}">
+    <div class="header__start">
+      <button
+        type="button"
+        class="icon-button header__menu-toggle"
+        aria-controls="MenuDrawer"
+        aria-expanded="false"
+        aria-label="{{ 'accessibility.open_menu' | t }}"
+        data-menu-open
+      >
+        {% render 'icon', icon: 'menu' %}
+      </button>
+
+      {%- if section.settings.layout == 'logo-left' -%}
+        {% render 'header-logo', tag_h1: is_home %}
+      {%- endif -%}
+
+      {%- if menu != blank -%}
+        <nav class="header__nav" aria-label="{{ menu.title | escape }}">
+          <ul class="header__menu list-unstyled" role="list">
+            {%- for link in menu.links -%}
+              <li class="header__menu-item{% if link.links != blank %} has-dropdown{% endif %}">
+                {%- if link.links != blank -%}
+                  <details-dropdown class="dropdown">
+                    <a
+                      href="{{ link.url }}"
+                      class="header__link{% if link.child_active or link.active %} is-active{% endif %}"
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                    >
+                      {{ link.title | escape }}
+                      {% render 'icon', icon: 'chevron-down' %}
+                    </a>
+                    {%- liquid
+                      assign has_grandchildren = false
+                      for child in link.links
+                        if child.links != blank
+                          assign has_grandchildren = true
+                        endif
+                      endfor
+                    -%}
+                    <div class="dropdown__panel{% if has_grandchildren %} dropdown__panel--mega{% endif %}">
+                      <div class="{% if has_grandchildren %}page-width dropdown__mega{% endif %}">
+                        <ul class="dropdown__list list-unstyled" role="list">
+                          {%- for child in link.links -%}
+                            <li class="dropdown__item">
+                              <a href="{{ child.url }}" class="dropdown__link{% if child.links != blank %} dropdown__heading{% endif %}{% if child.active %} is-active{% endif %}">
+                                {{- child.title | escape -}}
+                              </a>
+                              {%- if child.links != blank -%}
+                                <ul class="list-unstyled dropdown__sublist" role="list">
+                                  {%- for grandchild in child.links -%}
+                                    <li><a href="{{ grandchild.url }}" class="dropdown__link">{{ grandchild.title | escape }}</a></li>
+                                  {%- endfor -%}
+                                </ul>
+                              {%- endif -%}
+                            </li>
+                          {%- endfor -%}
+                        </ul>
+                        {%- if has_grandchildren and section.settings.mega_image != blank -%}
+                          <a href="{{ section.settings.mega_link | default: link.url }}" class="dropdown__feature">
+                            <div class="media media--portrait">
+                              {% render 'responsive-image', image: section.settings.mega_image, sizes: '300px', widths: '300, 450, 600' %}
+                            </div>
+                            {%- if section.settings.mega_caption != blank -%}
+                              <span class="dropdown__feature-caption">{{ section.settings.mega_caption | escape }}</span>
+                            {%- endif -%}
+                          </a>
+                        {%- endif -%}
+                      </div>
+                    </div>
+                  </details-dropdown>
+                {%- else -%}
+                  <a href="{{ link.url }}" class="header__link{% if link.active %} is-active{% endif %}"{% if link.active %} aria-current="page"{% endif %}>
+                    {{- link.title | escape -}}
+                  </a>
+                {%- endif -%}
+              </li>
+            {%- endfor -%}
+          </ul>
+        </nav>
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.layout == 'logo-center' -%}
+      <div class="header__center">
+        {% render 'header-logo', tag_h1: is_home %}
+      </div>
+    {%- endif -%}
+
+    <div class="header__icons">
+      <button type="button" class="icon-button" data-search-open aria-controls="SearchPanel" aria-expanded="false" aria-label="{{ 'accessibility.search' | t }}">
+        {% render 'icon', icon: 'search' %}
+      </button>
+      {%- if shop.customer_accounts_enabled -%}
+        <a href="{{ routes.account_url }}" class="icon-button header__icon--desktop" aria-label="{% if customer %}{{ 'header.account_view' | t }}{% else %}{{ 'header.account_login' | t }}{% endif %}">
+          {% render 'icon', icon: 'account' %}
+        </a>
+      {%- endif -%}
+      {%- if settings.wishlist_enable -%}
+        <a href="{{ wishlist_url }}" class="icon-button header__icon--desktop header__count-wrap" aria-label="{{ 'accessibility.wishlist' | t }}">
+          {% render 'icon', icon: 'heart' %}
+          <span class="header__count" data-wishlist-count hidden></span>
+        </a>
+      {%- endif -%}
+      <a href="{{ routes.cart_url }}" class="icon-button header__count-wrap" id="CartIcon" data-cart-open aria-label="{{ 'accessibility.cart' | t }}, {{ 'accessibility.cart_count' | t: count: cart.item_count }}">
+        {% render 'icon', icon: 'bag' %}
+        <span class="header__count" data-cart-count{% if cart.item_count == 0 %} hidden{% endif %}>{{ cart.item_count }}</span>
+      </a>
+    </div>
+  </header>
+
+  <div class="search-panel" id="SearchPanel" hidden>
+    <div class="page-width search-panel__inner">
+      <predictive-search class="predictive-search">
+        <form action="{{ routes.search_url }}" method="get" role="search" class="search-panel__form">
+          <label for="HeaderSearch" class="visually-hidden">{{ 'accessibility.search' | t }}</label>
+          {% render 'icon', icon: 'search' %}
+          <input
+            type="search"
+            id="HeaderSearch"
+            name="q"
+            class="search-panel__input"
+            placeholder="{{ 'header.search_placeholder' | t }}"
+            autocomplete="off"
+            role="combobox"
+            aria-expanded="false"
+            aria-controls="PredictiveResults"
+            aria-autocomplete="list"
+          >
+          <input type="hidden" name="options[prefix]" value="last">
+          <button type="button" class="icon-button" data-search-close aria-label="{{ 'accessibility.close' | t }}">{% render 'icon', icon: 'close' %}</button>
+        </form>
+        <div class="predictive-search__results" id="PredictiveResults" data-results aria-live="polite"></div>
+        {%- if section.settings.search_menu != blank -%}
+          <div class="search-panel__popular" data-popular>
+            <p class="caption">{{ 'header.popular' | t }}</p>
+            <ul class="list-unstyled chip-list" role="list">
+              {%- for link in section.settings.search_menu.links -%}
+                <li><a class="chip" href="{{ link.url }}">{{ link.title | escape }}</a></li>
+              {%- endfor -%}
+            </ul>
+          </div>
+        {%- endif -%}
+      </predictive-search>
+    </div>
+  </div>
+</sticky-header>
+
+<menu-drawer class="drawer drawer--left" id="MenuDrawer" hidden>
+  <div class="drawer__overlay" data-close></div>
+  <div class="drawer__panel" role="dialog" aria-modal="true" aria-label="{{ 'accessibility.menu' | t }}" tabindex="-1">
+    <div class="drawer__header">
+      {% render 'header-logo', tag_h1: false %}
+      <button type="button" class="icon-button" data-close aria-label="{{ 'accessibility.close' | t }}">{% render 'icon', icon: 'close' %}</button>
+    </div>
+    <nav class="drawer__body mobile-nav" aria-label="{{ 'accessibility.menu' | t }}">
+      {%- if menu != blank -%}
+        <ul class="list-unstyled mobile-nav__list" role="list">
+          {%- for link in menu.links -%}
+            <li class="mobile-nav__item">
+              {%- if link.links != blank -%}
+                <details class="mobile-nav__details">
+                  <summary class="mobile-nav__link">
+                    {{ link.title | escape }}
+                    {% render 'icon', icon: 'plus' %}
+                  </summary>
+                  <ul class="list-unstyled mobile-nav__sublist" role="list">
+                    <li><a class="mobile-nav__sublink mobile-nav__sublink--all" href="{{ link.url }}">{{ 'general.view_all' | t }} {{ link.title | escape }}</a></li>
+                    {%- for child in link.links -%}
+                      <li>
+                        <a class="mobile-nav__sublink" href="{{ child.url }}">{{ child.title | escape }}</a>
+                        {%- if child.links != blank -%}
+                          <ul class="list-unstyled mobile-nav__subsublist" role="list">
+                            {%- for grandchild in child.links -%}
+                              <li><a class="mobile-nav__sublink" href="{{ grandchild.url }}">{{ grandchild.title | escape }}</a></li>
+                            {%- endfor -%}
+                          </ul>
+                        {%- endif -%}
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+                </details>
+              {%- else -%}
+                <a class="mobile-nav__link" href="{{ link.url }}">{{ link.title | escape }}</a>
+              {%- endif -%}
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+      <ul class="list-unstyled mobile-nav__utility" role="list">
+        {%- if shop.customer_accounts_enabled -%}
+          <li>
+            <a href="{{ routes.account_url }}">
+              {% render 'icon', icon: 'account' %}
+              {% if customer %}{{ 'header.account_view' | t }}{% else %}{{ 'header.account_login' | t }}{% endif %}
+            </a>
+          </li>
+        {%- endif -%}
+        {%- if settings.wishlist_enable -%}
+          <li><a href="{{ wishlist_url }}">{% render 'icon', icon: 'heart' %} {{ 'wishlist.title' | t }}</a></li>
+        {%- endif -%}
+      </ul>
+    </nav>
+    <div class="drawer__footer">
+      {% render 'social-icons' %}
+    </div>
+  </div>
+</menu-drawer>
+
+{% schema %}
+{
+  "name": "Header",
+  "class": "section-header",
+  "settings": [
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Desktop layout",
+      "options": [
+        { "value": "logo-left", "label": "Logo left, menu beside" },
+        { "value": "logo-center", "label": "Menu left, logo centred" }
+      ],
+      "default": "logo-left"
+    },
+    { "type": "link_list", "id": "menu", "label": "Main menu", "default": "main-menu", "info": "Create dropdowns by nesting links under Shop, Gift Boxes and Collections in Online Store › Navigation." },
+    { "type": "checkbox", "id": "sticky", "label": "Sticky header on scroll", "default": true },
+    { "type": "header", "content": "Mega menu feature image" },
+    { "type": "paragraph", "content": "Shown in dropdowns that contain a third menu level." },
+    { "type": "image_picker", "id": "mega_image", "label": "Image" },
+    { "type": "text", "id": "mega_caption", "label": "Caption", "default": "The Gifting Edit" },
+    { "type": "url", "id": "mega_link", "label": "Link" },
+    { "type": "header", "content": "Search" },
+    { "type": "link_list", "id": "search_menu", "label": "Popular searches menu" }
+  ],
+  "enabled_on": { "groups": ["header"] }
+}
+{% endschema %}

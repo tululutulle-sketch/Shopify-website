@@ -1,0 +1,22 @@
+{%- comment -%}
+  Shared section header: eyebrow, heading, intro text and optional link.
+  - eyebrow, heading, text (richtext), link, link_label, align ('left' | 'center')
+{%- endcomment -%}
+{%- if heading != blank or eyebrow != blank or text != blank -%}
+  <div class="section-heading section-heading--{{ align | default: 'split' }} reveal">
+    <div class="section-heading__titles">
+      {%- if eyebrow != blank -%}
+        <p class="eyebrow">{{ eyebrow | escape }}</p>
+      {%- endif -%}
+      {%- if heading != blank -%}
+        <h2 class="h2 section-heading__title">{{ heading | escape }}</h2>
+      {%- endif -%}
+      {%- if text != blank -%}
+        <div class="section-heading__text rte">{{ text }}</div>
+      {%- endif -%}
+    </div>
+    {%- if link != blank and link_label != blank -%}
+      <a href="{{ link }}" class="link-arrow section-heading__link">{{ link_label | escape }} {% render 'icon', icon: 'arrow-right' %}</a>
+    {%- endif -%}
+  </div>
+{%- endif -%}

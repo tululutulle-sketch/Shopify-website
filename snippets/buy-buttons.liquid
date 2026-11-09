@@ -1,0 +1,59 @@
+{%- comment -%}
+  Product form with quantity, add to cart and Shopify dynamic checkout.
+  - product
+  - section_id
+  - show_quantity: boolean
+  - show_dynamic_checkout: boolean
+  - block: optional block for shopify_attributes
+{%- endcomment -%}
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign form_id = 'ProductForm-' | append: section_id
+-%}
+<product-form class="product-form" data-section-id="{{ section_id }}" {{ block.shopify_attributes }}>
+  {%- form 'product', product, id: form_id, class: 'product-form__form', novalidate: 'novalidate', data-product-form: '' -%}
+    <input type="hidden" name="id" value="{{ current_variant.id }}" data-variant-id>
+
+    <div class="product-form__row">
+      {%- if show_quantity -%}
+        <quantity-input class="quantity">
+          <button type="button" class="quantity__button" name="minus" aria-label="{{ 'accessibility.decrease_quantity' | t: product: product.title | escape }}">{% render 'icon', icon: 'minus' %}</button>
+          <label class="visually-hidden" for="Quantity-{{ section_id }}">{{ 'products.product.quantity' | t }}</label>
+          <input
+            class="quantity__input"
+            type="number"
+            name="quantity"
+            id="Quantity-{{ section_id }}"
+            min="1"
+            value="1"
+            inputmode="numeric"
+          >
+          <button type="button" class="quantity__button" name="plus" aria-label="{{ 'accessibility.increase_quantity' | t: product: product.title | escape }}">{% render 'icon', icon: 'plus' %}</button>
+        </quantity-input>
+      {%- endif -%}
+
+      <button
+        type="submit"
+        name="add"
+        class="button button--full product-form__submit"
+        data-add-button
+        {% unless current_variant.available %}disabled{% endunless %}
+      >
+        <span class="button__label" data-add-label>
+          {%- if current_variant.available -%}
+            {{ 'products.product.add_to_cart' | t }}
+          {%- else -%}
+            {{ 'products.product.sold_out' | t }}
+          {%- endif -%}
+        </span>
+        <span class="button__spinner" aria-hidden="true"></span>
+      </button>
+    </div>
+
+    <p class="form-message form-message--error" role="alert" data-form-error hidden></p>
+
+    {%- if show_dynamic_checkout -%}
+      <div class="product-form__dynamic">{{ form | payment_button }}</div>
+    {%- endif -%}
+  {%- endform -%}
+</product-form>

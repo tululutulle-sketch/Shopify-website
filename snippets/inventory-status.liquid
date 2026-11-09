@@ -1,0 +1,13 @@
+{%- comment -%}
+  - variant
+  - threshold: low stock threshold (0 disables)
+{%- endcomment -%}
+{%- if variant.available -%}
+  {%- if variant.inventory_management == 'shopify' and threshold > 0 and variant.inventory_quantity > 0 and variant.inventory_quantity <= threshold -%}
+    <span class="inventory inventory--low">{{ 'products.product.low_stock' | t: count: variant.inventory_quantity }}</span>
+  {%- else -%}
+    <span class="inventory inventory--in">{{ 'products.product.in_stock' | t }}</span>
+  {%- endif -%}
+{%- else -%}
+  <span class="inventory inventory--out">{{ 'products.product.out_of_stock' | t }}</span>
+{%- endif -%}

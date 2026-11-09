@@ -1,0 +1,14 @@
+<section class="section section--tight-top main-page">
+  <div class="page-width page-width--narrow">
+    <h1 class="display main-page__title">{{ page.title | escape }}</h1>
+    <div class="rte main-page__content">{{ page.content }}</div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Page",
+  "class": "section-main-page",
+  "settings": []
+}
+{% endschema %}

@@ -1,0 +1,77 @@
+{%- comment -%}
+  Product media gallery. A single scroll-snap track that is a swipeable carousel
+  on mobile and a thumbnail gallery or editorial grid on desktop.
+  - product
+  - section_id
+  - layout: 'thumbnails' | 'grid'
+  - ratio: 'square' | 'portrait' | 'natural'
+{%- endcomment -%}
+{%- liquid
+  assign featured = product.selected_or_first_available_variant.featured_media | default: product.featured_media
+  assign media_count = product.media.size
+-%}
+<product-gallery class="gallery gallery--{{ layout }}{% if media_count == 1 %} gallery--single{% endif %}" data-section-id="{{ section_id }}">
+  <div class="gallery__viewport">
+    <ul class="list-unstyled gallery__track" role="list" aria-label="{{ 'accessibility.gallery' | t }}" data-gallery-track>
+      {%- if media_count > 0 -%}
+        {%- for media in product.media -%}
+          <li
+            class="gallery__slide{% if media.id == featured.id %} is-active{% endif %}"
+            data-media-id="{{ media.id }}"
+            data-index="{{ forloop.index0 }}"
+          >
+            <div class="gallery__media media media--{{ ratio }}"{% if ratio == 'natural' %} style="--ratio: {{ media.aspect_ratio | default: 1 }};"{% endif %}>
+              {%- case media.media_type -%}
+                {%- when 'image' -%}
+                  {%- if forloop.first -%}
+                    {{ media | image_url: width: 1800 | image_tag: widths: '375, 550, 750, 1000, 1300, 1600, 1800', sizes: '(min-width: 1024px) 55vw, 100vw', loading: 'eager', fetchpriority: 'high', alt: media.alt | default: product.title | escape }}
+                  {%- else -%}
+                    {{ media | image_url: width: 1800 | image_tag: widths: '375, 550, 750, 1000, 1300, 1600, 1800', sizes: '(min-width: 1024px) 55vw, 100vw', loading: 'lazy', alt: media.alt | default: product.title | escape }}
+                  {%- endif -%}
+                {%- when 'video' -%}
+                  {{ media | video_tag: controls: true, playsinline: true, preload: 'metadata', image_size: '1200x' }}
+                {%- when 'external_video' -%}
+                  {{ media | external_video_tag: loading: 'lazy' }}
+                {%- when 'model' -%}
+                  {{ media | model_viewer_tag: reveal: 'interaction', toggleable: true }}
+              {%- endcase -%}
+            </div>
+          </li>
+        {%- endfor -%}
+      {%- else -%}
+        <li class="gallery__slide is-active">
+          <div class="gallery__media media media--square">{{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}</div>
+        </li>
+      {%- endif -%}
+    </ul>
+    {%- if media_count > 1 -%}
+      <div class="gallery__counter caption" aria-hidden="true"><span data-gallery-current>1</span> / {{ media_count }}</div>
+    {%- endif -%}
+  </div>
+
+  {%- if media_count > 1 -%}
+    <div class="gallery__dots" aria-hidden="true">
+      {%- for media in product.media -%}
+        <span class="gallery__dot{% if forloop.first %} is-active{% endif %}"></span>
+      {%- endfor -%}
+    </div>
+    <ul class="list-unstyled gallery__thumbs" role="list">
+      {%- for media in product.media -%}
+        <li>
+          <button
+            type="button"
+            class="gallery__thumb{% if media.id == featured.id %} is-active{% endif %}"
+            data-thumb-index="{{ forloop.index0 }}"
+            aria-label="{{ 'accessibility.zoom' | t: index: forloop.index }}"
+            {% if media.id == featured.id %}aria-current="true"{% endif %}
+          >
+            {{ media.preview_image | image_url: width: 200 | image_tag: widths: '100, 200', sizes: '88px', loading: 'lazy', alt: '' }}
+            {%- if media.media_type == 'video' or media.media_type == 'external_video' -%}
+              <span class="gallery__thumb-icon">{% render 'icon', icon: 'play' %}</span>
+            {%- endif -%}
+          </button>
+        </li>
+      {%- endfor -%}
+    </ul>
+  {%- endif -%}
+</product-gallery>

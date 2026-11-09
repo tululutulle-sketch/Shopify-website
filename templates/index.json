@@ -1,0 +1,143 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "blocks": {
+        "slide-1": {
+          "type": "slide",
+          "settings": {
+            "layout": "text-left",
+            "eyebrow": "The TULULU Edit",
+            "heading": "Objects of Delight.",
+            "text": "<p>Thoughtfully curated accessories and gifts for life's little celebrations.</p>",
+            "button_label": "Discover the collection",
+            "button_link": "shopify://collections/all",
+            "button_label_2": "Shop gift boxes",
+            "button_link_2": ""
+          }
+        }
+      },
+      "block_order": ["slide-1"],
+      "settings": {
+        "height": "large",
+        "background": "cream",
+        "autoplay": true,
+        "speed": 7,
+        "accessibility_label": "Featured collections"
+      }
+    },
+    "categories": {
+      "type": "category-cards",
+      "blocks": {
+        "cat-1": { "type": "category", "settings": { "title": "Hair Clip Combo Gift Boxes" } },
+        "cat-2": { "type": "category", "settings": { "title": "Tutu Skirts" } },
+        "cat-3": { "type": "category", "settings": { "title": "Frog Collection" } },
+        "cat-4": { "type": "category", "settings": { "title": "Surprise Gift Boxes" } },
+        "cat-5": { "type": "category", "settings": { "title": "Hair Accessory Bouquets" } }
+      },
+      "block_order": ["cat-1", "cat-2", "cat-3", "cat-4", "cat-5"],
+      "settings": {
+        "eyebrow": "Curated for you",
+        "heading": "Shop by Category",
+        "link_label": "View all",
+        "link": "shopify://collections/all",
+        "columns": 5,
+        "image_ratio": "portrait",
+        "show_count": false,
+        "show_arrow": true,
+        "background": "white"
+      }
+    },
+    "featured": {
+      "type": "featured-products",
+      "settings": {
+        "eyebrow": "New & noteworthy",
+        "heading": "Featured Collection",
+        "source": "collection",
+        "limit": 8,
+        "columns": 4,
+        "mobile_scroll": false,
+        "show_view_all": true,
+        "view_all_label": "View all",
+        "view_all_position": "bottom",
+        "background": "white"
+      }
+    },
+    "gifting": {
+      "type": "gifting-edit",
+      "blocks": {
+        "gift-1": { "type": "gift", "settings": { "title": "Hair Clip Combo Gift Boxes", "subtitle": "Coordinated sets, ready to give" } },
+        "gift-2": { "type": "gift", "settings": { "title": "Surprise Gift Boxes", "subtitle": "A little mystery inside" } },
+        "gift-3": { "type": "gift", "settings": { "title": "Hair Accessory Bouquets", "subtitle": "Arranged like flowers" } }
+      },
+      "block_order": ["gift-1", "gift-2", "gift-3"],
+      "settings": {
+        "image_position": "left",
+        "eyebrow": "The Gifting Edit",
+        "heading": "The Art of Gifting.",
+        "text": "<p>Thoughtful little surprises, beautifully presented.</p>",
+        "button_label": "Explore gifting",
+        "background": "blush"
+      }
+    },
+    "bestsellers": {
+      "type": "featured-products",
+      "settings": {
+        "eyebrow": "Most loved",
+        "heading": "Bestsellers",
+        "source": "collection",
+        "limit": 8,
+        "columns": 4,
+        "mobile_scroll": false,
+        "show_view_all": true,
+        "view_all_label": "View all",
+        "view_all_position": "top",
+        "background": "white"
+      }
+    },
+    "story": {
+      "type": "brand-story",
+      "blocks": {
+        "value-1": { "type": "value", "settings": { "icon": "sparkle", "title": "Thoughtfully curated", "text": "" } },
+        "value-2": { "type": "value", "settings": { "icon": "gift", "title": "Beautifully presented", "text": "" } }
+      },
+      "block_order": ["value-1", "value-2"],
+      "settings": {
+        "image_ratio": "portrait",
+        "image_position": "right",
+        "eyebrow": "Our Story",
+        "heading": "Little Details. Beautiful Moments.",
+        "button_label": "Read our story",
+        "button_link": "",
+        "background": "cream"
+      }
+    },
+    "reviews": {
+      "type": "testimonials",
+      "settings": {
+        "eyebrow": "Kind words",
+        "heading": "Loved by Our Customers",
+        "background": "white"
+      }
+    },
+    "instagram": {
+      "type": "instagram-gallery",
+      "blocks": {
+        "ig-1": { "type": "image", "settings": {} },
+        "ig-2": { "type": "image", "settings": {} },
+        "ig-3": { "type": "image", "settings": {} },
+        "ig-4": { "type": "image", "settings": {} },
+        "ig-5": { "type": "image", "settings": {} },
+        "ig-6": { "type": "image", "settings": {} }
+      },
+      "block_order": ["ig-1", "ig-2", "ig-3", "ig-4", "ig-5", "ig-6"],
+      "settings": {
+        "heading": "Follow the World of TULULU",
+        "columns": 6,
+        "button_label": "Follow us",
+        "background": "white"
+      }
+    }
+  },
+  "order": ["hero", "categories", "featured", "gifting", "bestsellers", "story", "reviews", "instagram"]
+}

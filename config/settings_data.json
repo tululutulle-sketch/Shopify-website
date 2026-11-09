@@ -1,0 +1,30 @@
+{
+  "current": {
+    "color_primary": "#E56B8C",
+    "color_primary_hover": "#D2577A",
+    "color_blush": "#FDE6ED",
+    "color_lavender": "#EEDFF7",
+    "color_cream": "#FFF7F9",
+    "color_background": "#FFFFFF",
+    "color_heading": "#352326",
+    "color_text": "#5E4B4F",
+    "color_muted": "#8C7478",
+    "color_border": "#F1E6E9",
+    "color_sale": "#E56B8C",
+    "heading_font": "Playfair Display",
+    "body_font": "Inter",
+    "cart_type": "drawer",
+    "free_shipping_enable": true,
+    "free_shipping_threshold": 999,
+    "wishlist_enable": true
+  },
+  "presets": {
+    "Default": {
+      "color_primary": "#E56B8C",
+      "color_blush": "#FDE6ED",
+      "color_lavender": "#EEDFF7",
+      "heading_font": "Playfair Display",
+      "body_font": "Inter"
+    }
+  }
+}

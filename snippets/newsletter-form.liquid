@@ -1,0 +1,40 @@
+{%- comment -%}
+  Shopify native customer subscription form (adds the email as a subscribed customer
+  tagged "newsletter").
+  - form_id: unique id
+  - style: 'boxed' | 'underline'
+  - button_label: optional
+{%- endcomment -%}
+{%- form 'customer', id: form_id, class: 'newsletter-form' -%}
+  <input type="hidden" name="contact[tags]" value="newsletter">
+  {%- if form.posted_successfully? -%}
+    <p class="form-message form-message--success" role="status" tabindex="-1" autofocus>
+      {% render 'icon', icon: 'check' %} {{ 'newsletter.success' | t }}
+    </p>
+  {%- else -%}
+    <div class="newsletter-form__field newsletter-form__field--{{ style | default: 'boxed' }}">
+      <label class="visually-hidden" for="{{ form_id }}-email">{{ 'newsletter.email' | t }}</label>
+      <input
+        id="{{ form_id }}-email"
+        type="email"
+        name="contact[email]"
+        class="newsletter-form__input"
+        value="{{ form.email }}"
+        placeholder="{{ 'newsletter.email' | t }}"
+        autocomplete="email"
+        autocapitalize="off"
+        spellcheck="false"
+        required
+        {% if form.errors %}aria-invalid="true" aria-describedby="{{ form_id }}-error"{% endif %}
+      >
+      <button type="submit" class="button newsletter-form__button" name="commit">
+        {%- if button_label != blank -%}{{ button_label | escape }}{%- else -%}{{ 'newsletter.subscribe' | t }}{%- endif -%}
+      </button>
+    </div>
+    {%- if form.errors -%}
+      <p class="form-message form-message--error" id="{{ form_id }}-error" role="alert">
+        {% render 'icon', icon: 'info' %} {{ 'newsletter.error' | t }}
+      </p>
+    {%- endif -%}
+  {%- endif -%}
+{%- endform -%}

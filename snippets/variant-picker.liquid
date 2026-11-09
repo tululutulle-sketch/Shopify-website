@@ -1,0 +1,94 @@
+{%- comment -%}
+  Option selectors built from product.options_with_values, so each product shows
+  only the options it really has (Size, Colour, etc.).
+  - product
+  - section_id
+  - picker_type: 'buttons' | 'dropdown'
+  - swatches: boolean, show colour swatches for colour options
+{%- endcomment -%}
+{%- unless product.has_only_default_variant -%}
+  <variant-picker class="variant-picker" data-section-id="{{ section_id }}">
+    {%- for option in product.options_with_values -%}
+      {%- liquid
+        assign option_name_down = option.name | downcase
+        assign is_color = false
+        if option_name_down contains 'colour' or option_name_down contains 'color'
+          assign is_color = true
+        endif
+        assign option_id = section_id | append: '-' | append: forloop.index0
+      -%}
+      {%- if picker_type == 'dropdown' and is_color == false -%}
+        <div class="variant-picker__option">
+          <label class="variant-picker__label" for="Option-{{ option_id }}">{{ option.name | escape }}</label>
+          <div class="select">
+            <select id="Option-{{ option_id }}" class="select__select" name="options[{{ option.name | escape }}]" data-option-index="{{ forloop.index0 }}">
+              {%- for value in option.values -%}
+                <option value="{{ value | escape }}"{% if option.selected_value == value %} selected{% endif %}>{{ value | escape }}</option>
+              {%- endfor -%}
+            </select>
+            {% render 'icon', icon: 'chevron-down' %}
+          </div>
+        </div>
+      {%- else -%}
+        <fieldset class="variant-picker__option" data-option-index="{{ forloop.index0 }}">
+          <legend class="variant-picker__label">
+            {{ option.name | escape }}<span class="variant-picker__selected" data-selected-value>: {{ option.selected_value | escape }}</span>
+          </legend>
+          <div class="variant-picker__values{% if is_color and swatches %} variant-picker__values--swatch{% endif %}">
+            {%- for value in option.values -%}
+              {%- assign input_id = 'Option-' | append: option_id | append: '-' | append: forloop.index0 -%}
+              <input
+                type="radio"
+                id="{{ input_id }}"
+                name="options[{{ option.name | escape }}]-{{ section_id }}"
+                value="{{ value | escape }}"
+                class="variant-picker__input visually-hidden"
+                data-option-index="{{ option.position | minus: 1 }}"
+                {% if option.selected_value == value %}checked{% endif %}
+              >
+              {%- if is_color and swatches -%}
+                {%- liquid
+                  assign swatch_style = ''
+                  if value.swatch.image
+                    assign swatch_url = value.swatch.image | image_url: width: 80
+                    assign swatch_style = 'background-image: url(' | append: swatch_url | append: ');'
+                  elsif value.swatch.color
+                    assign swatch_style = 'background-color: ' | append: value.swatch.color | append: ';'
+                  else
+                    assign swatch_style = 'background-color: ' | append: value | handleize | replace: '-', '' | append: ';'
+                  endif
+                -%}
+                <label for="{{ input_id }}" class="variant-picker__swatch" title="{{ value | escape }}">
+                  <span class="swatch" style="{{ swatch_style }}" aria-hidden="true"></span>
+                  <span class="visually-hidden">{{ value | escape }}</span>
+                </label>
+              {%- else -%}
+                <label for="{{ input_id }}" class="variant-picker__pill">{{ value | escape }}</label>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        </fieldset>
+      {%- endif -%}
+    {%- endfor -%}
+
+    <script type="application/json" data-variants>
+      [
+        {%- for variant in product.variants -%}
+          {
+            "id": {{ variant.id }},
+            "title": {{ variant.title | json }},
+            "options": {{ variant.options | json }},
+            "available": {{ variant.available | json }},
+            "price": {{ variant.price }},
+            "compare_at_price": {{ variant.compare_at_price | default: 0 }},
+            "sku": {{ variant.sku | json }},
+            "featured_media": {% if variant.featured_media %}{{ variant.featured_media.id }}{% else %}null{% endif %},
+            "inventory_management": {{ variant.inventory_management | json }},
+            "inventory_policy": {{ variant.inventory_policy | json }},
+            "inventory_quantity": {% if variant.inventory_management == 'shopify' %}{{ variant.inventory_quantity }}{% else %}null{% endif %}
+          }{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      ]
+    </script>
+  </variant-picker>
+{%- endunless -%}

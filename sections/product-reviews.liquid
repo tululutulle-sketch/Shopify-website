@@ -1,0 +1,52 @@
+{%- comment -%}
+  Product reviews. Add your review app's block here (e.g. Judge.me, Shopify Product
+  Reviews). The summary only shows genuine rating data from the reviews metafields.
+{%- endcomment -%}
+{%- liquid
+  assign has_rating = false
+  if product.metafields.reviews.rating.value != blank
+    assign has_rating = true
+  endif
+  assign app_blocks = section.blocks | where: 'type', '@app'
+-%}
+{%- if has_rating or app_blocks.size > 0 or request.design_mode -%}
+  <section class="section product-reviews" id="ProductReviews">
+    <div class="page-width page-width--narrow">
+      <div class="section-heading section-heading--center">
+        <div class="section-heading__titles">
+          <h2 class="h2 section-heading__title">{{ section.settings.heading | escape }}</h2>
+          {%- if has_rating -%}
+            {%- liquid
+              assign rating_value = product.metafields.reviews.rating.value.rating | round: 1
+              assign rating_max = product.metafields.reviews.rating.value.scale_max
+              assign rating_count = product.metafields.reviews.rating_count.value
+            -%}
+            <div class="product-reviews__summary">
+              <span class="product-reviews__score">{{ rating_value }}</span>
+              {% render 'rating', rating: rating_value, max: rating_max, count: rating_count %}
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+      {%- for block in section.blocks -%}
+        {% render block %}
+      {%- endfor -%}
+      {%- if app_blocks.size == 0 and request.design_mode -%}
+        <div class="editor-notice"><p>Install a product review app and add its block to this section to collect and display genuine customer reviews. This section stays hidden until reviews exist.</p></div>
+      {%- endif -%}
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Product reviews",
+  "class": "section-product-reviews",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Customer Reviews" }
+  ],
+  "blocks": [{ "type": "@app" }],
+  "presets": [{ "name": "Product reviews" }],
+  "enabled_on": { "templates": ["product"] }
+}
+{% endschema %}

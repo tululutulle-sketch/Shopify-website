@@ -1,0 +1,126 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "eyebrow": {
+          "type": "text",
+          "settings": {}
+        },
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
+        "rating": {
+          "type": "rating",
+          "settings": {}
+        },
+        "price": {
+          "type": "price",
+          "settings": {}
+        },
+        "variants": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "buttons",
+            "swatches": true,
+            "size_guide_label": "Size guide"
+          }
+        },
+        "inventory": {
+          "type": "inventory",
+          "settings": {
+            "low_stock_threshold": 5
+          }
+        },
+        "buy": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_quantity": true,
+            "show_dynamic_checkout": true
+          }
+        },
+        "delivery": {
+          "type": "delivery",
+          "settings": {
+            "line_1": "Free shipping on orders above ₹999",
+            "line_2": "Beautifully gift-wrapped"
+          }
+        },
+        "whats_inside": {
+          "type": "whats_inside",
+          "settings": {
+            "heading": "What's inside?"
+          }
+        },
+        "description": {
+          "type": "description",
+          "settings": {}
+        },
+        "details": {
+          "type": "collapsible",
+          "settings": {
+            "heading": "Product details",
+            "icon": "info",
+            "use_shipping_default": false,
+            "open": false
+          }
+        },
+        "shipping": {
+          "type": "collapsible",
+          "settings": {
+            "heading": "Shipping & returns",
+            "icon": "truck",
+            "use_shipping_default": true,
+            "open": false
+          }
+        },
+        "share": {
+          "type": "share",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "eyebrow",
+        "title",
+        "rating",
+        "price",
+        "variants",
+        "inventory",
+        "buy",
+        "delivery",
+        "whats_inside",
+        "description",
+        "details",
+        "shipping",
+        "share"
+      ],
+      "settings": {
+        "gallery_layout": "thumbnails",
+        "media_ratio": "square",
+        "media_size": "large",
+        "sticky_atc": true,
+        "show_sku": false
+      }
+    },
+    "reviews": {
+      "type": "product-reviews",
+      "settings": {
+        "heading": "Customer Reviews"
+      }
+    },
+    "related": {
+      "type": "related-products",
+      "settings": {
+        "heading": "You May Also Love",
+        "limit": 4,
+        "columns": 4
+      }
+    }
+  },
+  "order": [
+    "main",
+    "reviews",
+    "related"
+  ]
+}

@@ -1,0 +1,54 @@
+{%- comment -%}
+  Rendered in theme.liquid and re-rendered via the Section Rendering API
+  (sections=cart-drawer) after every cart change.
+{%- endcomment -%}
+<cart-drawer class="drawer drawer--right cart-drawer" id="CartDrawer" hidden>
+  <div class="drawer__overlay" data-close></div>
+  <div class="drawer__panel" role="dialog" aria-modal="true" aria-labelledby="CartDrawerTitle" tabindex="-1">
+    <div class="cart-drawer__inner" data-cart-drawer-inner>
+      <div class="drawer__header">
+        <p class="h4" id="CartDrawerTitle">
+          {{ 'cart.general.title' | t }}
+          {%- if cart.item_count > 0 %} <span class="caption">({{ cart.item_count }})</span>{% endif -%}
+        </p>
+        <button type="button" class="icon-button" data-close aria-label="{{ 'accessibility.close' | t }}">{% render 'icon', icon: 'close' %}</button>
+      </div>
+
+      {%- if cart.item_count > 0 -%}
+        {% render 'free-shipping-bar' %}
+        <div class="drawer__body">
+          {% render 'cart-line-items', context: 'drawer' %}
+        </div>
+        <div class="drawer__footer">
+          {% render 'cart-summary', context: 'drawer' %}
+        </div>
+      {%- else -%}
+        <div class="drawer__body cart-empty">
+          <span class="cart-empty__icon">{% render 'icon', icon: 'bag' %}</span>
+          <p class="h3">{{ 'cart.general.empty' | t }}</p>
+          <p class="caption">{{ 'cart.general.empty_text' | t }}</p>
+          <a href="{{ routes.all_products_collection_url }}" class="button">{{ 'cart.general.continue_shopping' | t }}</a>
+
+          {%- assign suggest = settings.cart_empty_collection -%}
+          {%- if suggest != blank and suggest.products_count > 0 -%}
+            <div class="cart-empty__suggest">
+              <p class="eyebrow">{{ 'cart.general.you_may_like' | t }}</p>
+              <ul class="list-unstyled product-grid" role="list" style="--columns: 2;">
+                {%- for product in suggest.products limit: 4 -%}
+                  <li class="product-grid__item">{% render 'product-card', product: product, sizes: '180px' %}</li>
+                {%- endfor -%}
+              </ul>
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</cart-drawer>
+
+{% schema %}
+{
+  "name": "Cart drawer",
+  "settings": []
+}
+{% endschema %}

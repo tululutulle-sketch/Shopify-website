@@ -1,0 +1,21 @@
+<section class="section main-404">
+  <div class="page-width page-width--narrow empty-state">
+    <p class="eyebrow">404</p>
+    <h1 class="display">{{ 'general.404.title' | t }}</h1>
+    <p>{{ 'general.404.subtext' | t }}</p>
+    <form action="{{ routes.search_url }}" method="get" role="search" class="main-search__form">
+      <label for="NotFoundSearch" class="visually-hidden">{{ 'accessibility.search' | t }}</label>
+      <input type="search" id="NotFoundSearch" name="q" class="field__input" placeholder="{{ 'header.search_placeholder' | t }}">
+      <button type="submit" class="button">{{ 'header.search_submit' | t }}</button>
+    </form>
+    <a href="{{ routes.all_products_collection_url }}" class="link-arrow">{{ 'general.404.link' | t }} {% render 'icon', icon: 'arrow-right' %}</a>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "404 page",
+  "class": "section-main-404",
+  "settings": []
+}
+{% endschema %}

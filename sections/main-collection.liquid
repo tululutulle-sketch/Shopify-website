@@ -1,0 +1,152 @@
+{%- liquid
+  assign banner_image = collection.image | default: section.settings.fallback_image
+  assign columns = section.settings.columns
+  if collection.filters.size > 0 and section.settings.enable_filtering
+    assign has_sidebar = true
+  else
+    assign has_sidebar = false
+  endif
+  assign card_sizes = '(min-width: 1024px) 22vw, (min-width: 768px) 30vw, 46vw'
+-%}
+
+{%- if section.settings.show_banner -%}
+  <div class="collection-banner{% if banner_image != blank %} collection-banner--image{% endif %} section--{{ section.settings.banner_background }}">
+    <div class="page-width collection-banner__inner">
+      <div class="collection-banner__content">
+        <nav class="breadcrumbs caption" aria-label="Breadcrumb">
+          <a href="{{ routes.root_url }}">Home</a> <span aria-hidden="true">/</span>
+          <a href="{{ routes.collections_url }}">Collections</a> <span aria-hidden="true">/</span>
+          <span aria-current="page">{{ collection.title | escape }}</span>
+        </nav>
+        <h1 class="display collection-banner__title">{{ collection.title | escape }}</h1>
+        {%- if section.settings.show_description and collection.description != blank -%}
+          <div class="rte collection-banner__description">{{ collection.description }}</div>
+        {%- endif -%}
+      </div>
+      {%- if banner_image != blank -%}
+        <div class="collection-banner__media media media--landscape">
+          {% render 'responsive-image', image: banner_image, sizes: '(min-width: 768px) 45vw, 100vw', widths: '450, 650, 900, 1200, 1500', lazy: false, alt: collection.title %}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+{%- endif -%}
+
+<div class="section section--tight-top collection" data-section-id="{{ section.id }}" id="CollectionSection-{{ section.id }}">
+  {%- paginate collection.products by section.settings.per_page -%}
+    <div class="page-width collection-layout{% if has_sidebar %} collection-layout--sidebar{% endif %}" data-collection-layout>
+      {%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
+        {%- if section.settings.enable_filtering -%}
+          {% render 'facets', results: collection, section_id: section.id, show_sort: section.settings.enable_sorting %}
+        {%- else -%}
+          {% render 'facets', results: collection, section_id: section.id, show_sort: section.settings.enable_sorting, filters_disabled: true %}
+        {%- endif -%}
+      {%- endif -%}
+
+      <div class="collection__products" id="ProductGrid-{{ section.id }}" data-product-grid-container>
+        {%- if collection.products.size > 0 -%}
+          <ul class="list-unstyled product-grid" role="list" style="--columns: {{ columns }};" data-product-grid>
+            {%- for product in collection.products -%}
+              <li class="product-grid__item">
+                {%- if forloop.index <= 4 and paginate.current_page == 1 -%}
+                  {% render 'product-card', product: product, sizes: card_sizes, lazy: false %}
+                {%- else -%}
+                  {% render 'product-card', product: product, sizes: card_sizes %}
+                {%- endif -%}
+              </li>
+            {%- endfor -%}
+          </ul>
+          {%- assign shown = paginate.current_offset | plus: collection.products.size -%}
+          {% render 'pagination', paginate: paginate, type: section.settings.pagination_type, shown: shown, total: paginate.items %}
+        {%- else -%}
+          <div class="empty-state">
+            {%- if collection.filters.size > 0 and collection.products_count > 0 -%}
+              <p class="h4">{{ 'collections.general.empty_filtered' | t }}</p>
+              <a href="{{ collection.url }}" class="button button--outline" data-facet-link>{{ 'facets.clear_all' | t }}</a>
+            {%- else -%}
+              <p class="h4">{{ 'collections.general.empty' | t }}</p>
+              <a href="{{ routes.all_products_collection_url }}" class="button">{{ 'general.404.link' | t }}</a>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- if collection.products.size > 0 -%}
+      <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          "name": {{ collection.title | json }},
+          "url": {{ request.origin | append: collection.url | json }},
+          {%- if collection.description != blank %}
+          "description": {{ collection.description | strip_html | truncate: 300 | json }},
+          {%- endif %}
+          "mainEntity": {
+            "@type": "ItemList",
+            "numberOfItems": {{ collection.products.size }},
+            "itemListElement": [
+              {%- for product in collection.products -%}
+                {
+                  "@type": "ListItem",
+                  "position": {{ paginate.current_offset | plus: forloop.index }},
+                  "url": {{ request.origin | append: product.url | json }},
+                  "name": {{ product.title | json }}
+                }{% unless forloop.last %},{% endunless %}
+              {%- endfor -%}
+            ]
+          }
+        }
+      </script>
+    {%- endif -%}
+  {%- endpaginate -%}
+</div>
+
+<script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "Product grid",
+  "class": "section-main-collection",
+  "settings": [
+    { "type": "header", "content": "Banner" },
+    { "type": "checkbox", "id": "show_banner", "label": "Show collection banner", "default": true },
+    { "type": "checkbox", "id": "show_description", "label": "Show collection description", "default": true },
+    { "type": "image_picker", "id": "fallback_image", "label": "Fallback banner image", "info": "Used when the collection has no image." },
+    {
+      "type": "select",
+      "id": "banner_background",
+      "label": "Banner background",
+      "options": [
+        { "value": "white", "label": "White" },
+        { "value": "cream", "label": "Cream" },
+        { "value": "blush", "label": "Blush" },
+        { "value": "lavender", "label": "Lavender" }
+      ],
+      "default": "cream"
+    },
+    { "type": "header", "content": "Products" },
+    { "type": "range", "id": "per_page", "label": "Products per page", "min": 8, "max": 48, "step": 4, "default": 24 },
+    { "type": "range", "id": "columns", "label": "Products per row (desktop)", "min": 3, "max": 5, "step": 1, "default": 4 },
+    {
+      "type": "select",
+      "id": "pagination_type",
+      "label": "Pagination",
+      "options": [
+        { "value": "load_more", "label": "Load more button" },
+        { "value": "pages", "label": "Page numbers" }
+      ],
+      "default": "load_more"
+    },
+    { "type": "header", "content": "Filtering & sorting" },
+    {
+      "type": "checkbox",
+      "id": "enable_filtering",
+      "label": "Enable filtering",
+      "default": true,
+      "info": "Configure filters (price, availability, colour, size…) with the Shopify Search & Discovery app."
+    },
+    { "type": "checkbox", "id": "enable_sorting", "label": "Enable sorting", "default": true }
+  ]
+}
+{% endschema %}

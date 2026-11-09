@@ -1,0 +1,26 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-cart",
+      "settings": {}
+    },
+    "recommended": {
+      "type": "featured-products",
+      "settings": {
+        "heading": "You May Also Love",
+        "source": "collection",
+        "limit": 4,
+        "columns": 4,
+        "show_view_all": false,
+        "view_all_label": "View all",
+        "view_all_position": "bottom",
+        "background": "white",
+        "mobile_scroll": true
+      }
+    }
+  },
+  "order": [
+    "main",
+    "recommended"
+  ]
+}

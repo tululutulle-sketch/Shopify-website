@@ -1,0 +1,277 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Tululu",
+    "theme_version": "1.0.0",
+    "theme_author": "TULULU",
+    "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
+    "theme_support_url": "https://help.shopify.com/"
+  },
+  {
+    "name": "Logo & favicon",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo",
+        "info": "Upload the original TULULU logo (PNG or SVG with transparent background). It is displayed at its original proportions."
+      },
+      {
+        "type": "range",
+        "id": "logo_width",
+        "label": "Desktop logo width",
+        "min": 60,
+        "max": 260,
+        "step": 5,
+        "unit": "px",
+        "default": 140
+      },
+      {
+        "type": "range",
+        "id": "logo_width_mobile",
+        "label": "Mobile logo width",
+        "min": 50,
+        "max": 200,
+        "step": 5,
+        "unit": "px",
+        "default": 110
+      },
+      {
+        "type": "image_picker",
+        "id": "logo_footer",
+        "label": "Footer logo",
+        "info": "Optional. Falls back to the main logo."
+      },
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon (TULULU monogram)",
+        "info": "Square image, at least 180 × 180px."
+      },
+      {
+        "type": "image_picker",
+        "id": "share_image",
+        "label": "Default social sharing image",
+        "info": "Used when a page has no image of its own. Recommended 1200 × 628px."
+      }
+    ]
+  },
+  {
+    "name": "Colours",
+    "settings": [
+      { "type": "color", "id": "color_primary", "label": "Primary (Rose pink)", "default": "#E56B8C" },
+      { "type": "color", "id": "color_primary_hover", "label": "Primary hover", "default": "#D2577A" },
+      { "type": "color", "id": "color_blush", "label": "Blush pink", "default": "#FDE6ED" },
+      { "type": "color", "id": "color_lavender", "label": "Soft lavender", "default": "#EEDFF7" },
+      { "type": "color", "id": "color_cream", "label": "Light cream", "default": "#FFF7F9" },
+      { "type": "color", "id": "color_background", "label": "Page background", "default": "#FFFFFF" },
+      { "type": "color", "id": "color_heading", "label": "Headings", "default": "#352326" },
+      { "type": "color", "id": "color_text", "label": "Body text", "default": "#5E4B4F" },
+      { "type": "color", "id": "color_muted", "label": "Muted text", "default": "#8C7478" },
+      { "type": "color", "id": "color_border", "label": "Borders", "default": "#F1E6E9" },
+      { "type": "color", "id": "color_sale", "label": "Sale badge", "default": "#E56B8C" }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "select",
+        "id": "heading_font",
+        "label": "Heading font",
+        "options": [
+          { "value": "Playfair Display", "label": "Playfair Display" },
+          { "value": "Cormorant Garamond", "label": "Cormorant Garamond" }
+        ],
+        "default": "Playfair Display"
+      },
+      {
+        "type": "select",
+        "id": "body_font",
+        "label": "Body & navigation font",
+        "options": [
+          { "value": "Inter", "label": "Inter" },
+          { "value": "Poppins", "label": "Poppins" }
+        ],
+        "default": "Inter"
+      },
+      {
+        "type": "range",
+        "id": "heading_scale",
+        "label": "Heading size",
+        "min": 80,
+        "max": 130,
+        "step": 5,
+        "unit": "%",
+        "default": 100
+      },
+      {
+        "type": "range",
+        "id": "body_scale",
+        "label": "Body text size",
+        "min": 90,
+        "max": 115,
+        "step": 5,
+        "unit": "%",
+        "default": 100
+      }
+    ]
+  },
+  {
+    "name": "Layout & style",
+    "settings": [
+      {
+        "type": "range",
+        "id": "page_width",
+        "label": "Page width",
+        "min": 1100,
+        "max": 1600,
+        "step": 20,
+        "unit": "px",
+        "default": 1360
+      },
+      {
+        "type": "range",
+        "id": "radius",
+        "label": "Corner radius (cards & images)",
+        "min": 0,
+        "max": 24,
+        "step": 2,
+        "unit": "px",
+        "default": 6
+      },
+      {
+        "type": "select",
+        "id": "button_style",
+        "label": "Button shape",
+        "options": [
+          { "value": "pill", "label": "Pill" },
+          { "value": "soft", "label": "Soft corners" },
+          { "value": "square", "label": "Square" }
+        ],
+        "default": "soft"
+      },
+      {
+        "type": "checkbox",
+        "id": "animations",
+        "label": "Enable subtle reveal animations",
+        "default": true,
+        "info": "Animations are always disabled for visitors who prefer reduced motion."
+      }
+    ]
+  },
+  {
+    "name": "Product cards",
+    "settings": [
+      {
+        "type": "select",
+        "id": "card_image_ratio",
+        "label": "Image ratio",
+        "options": [
+          { "value": "square", "label": "Square (1:1)" },
+          { "value": "portrait", "label": "Portrait (4:5)" }
+        ],
+        "default": "square"
+      },
+      { "type": "checkbox", "id": "card_show_secondary_image", "label": "Show second image on hover", "default": true },
+      { "type": "checkbox", "id": "card_show_quick_add", "label": "Show quick add", "default": true },
+      { "type": "checkbox", "id": "card_show_wishlist", "label": "Show wishlist button", "default": true },
+      { "type": "checkbox", "id": "card_show_vendor", "label": "Show vendor", "default": false },
+      {
+        "type": "checkbox",
+        "id": "card_show_rating",
+        "label": "Show product rating",
+        "default": true,
+        "info": "Only displayed when a review app has written genuine rating data to the product (reviews.rating metafield)."
+      }
+    ]
+  },
+  {
+    "name": "Cart",
+    "settings": [
+      {
+        "type": "select",
+        "id": "cart_type",
+        "label": "Cart type",
+        "options": [
+          { "value": "drawer", "label": "Drawer" },
+          { "value": "page", "label": "Page" }
+        ],
+        "default": "drawer"
+      },
+      { "type": "checkbox", "id": "free_shipping_enable", "label": "Show free shipping progress", "default": true },
+      {
+        "type": "number",
+        "id": "free_shipping_threshold",
+        "label": "Free shipping threshold",
+        "info": "In your store currency, without symbol (e.g. 999). Must match your shipping rates in Settings › Shipping.",
+        "default": 999
+      },
+      {
+        "type": "text",
+        "id": "free_shipping_message",
+        "label": "Message below threshold",
+        "default": "You're [amount] away from free shipping",
+        "info": "Use [amount] for the remaining amount."
+      },
+      {
+        "type": "text",
+        "id": "free_shipping_success",
+        "label": "Message once reached",
+        "default": "You've unlocked free shipping"
+      },
+      { "type": "checkbox", "id": "cart_show_note", "label": "Enable order note", "default": true },
+      { "type": "checkbox", "id": "cart_show_discount", "label": "Enable discount code field", "default": true },
+      {
+        "type": "collection",
+        "id": "cart_empty_collection",
+        "label": "Empty cart: suggested collection"
+      }
+    ]
+  },
+  {
+    "name": "Wishlist",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "wishlist_enable",
+        "label": "Enable wishlist",
+        "default": true,
+        "info": "Saves favourites in the shopper's browser. Create a page with the template \"page.wishlist\" and handle \"wishlist\"."
+      },
+      {
+        "type": "url",
+        "id": "wishlist_url",
+        "label": "Wishlist page",
+        "info": "Defaults to /pages/wishlist"
+      }
+    ]
+  },
+  {
+    "name": "Social media",
+    "settings": [
+      { "type": "text", "id": "social_instagram", "label": "Instagram", "info": "https://instagram.com/yourhandle" },
+      { "type": "text", "id": "social_facebook", "label": "Facebook" },
+      { "type": "text", "id": "social_pinterest", "label": "Pinterest" },
+      { "type": "text", "id": "social_youtube", "label": "YouTube" },
+      { "type": "text", "id": "social_whatsapp", "label": "WhatsApp link", "info": "https://wa.me/91XXXXXXXXXX" }
+    ]
+  },
+  {
+    "name": "Product page",
+    "settings": [
+      {
+        "type": "richtext",
+        "id": "shipping_returns_text",
+        "label": "Default shipping & returns text",
+        "info": "Shown in the \"Shipping & returns\" product tab when the tab has no content of its own."
+      },
+      {
+        "type": "page",
+        "id": "shipping_returns_page",
+        "label": "Shipping & returns page",
+        "info": "Optional page linked from the product tab."
+      }
+    ]
+  }
+]

@@ -1,0 +1,39 @@
+<section class="section section--tight-top list-collections">
+  <div class="page-width">
+    <h1 class="display list-collections__title">{{ section.settings.heading | escape }}</h1>
+    {%- paginate collections by 24 -%}
+      <ul class="list-unstyled category-cards__grid category-cards__grid--wrap" role="list" style="--columns: {{ section.settings.columns }};">
+        {%- for collection in collections -%}
+          {%- assign card_image = collection.image | default: collection.featured_image -%}
+          <li class="category-card">
+            <a href="{{ collection.url }}" class="category-card__link">
+              <div class="category-card__media media media--portrait">
+                {%- if card_image -%}
+                  {% render 'responsive-image', image: card_image, sizes: '(min-width: 1024px) 24vw, 46vw', widths: '300, 450, 600, 800' %}
+                {%- else -%}
+                  {{ 'collection-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                {%- endif -%}
+              </div>
+              <div class="category-card__info">
+                <h2 class="category-card__title">{{ collection.title | escape }}</h2>
+                <span class="caption">{{ 'collections.general.product_count' | t: count: collection.products_count }}</span>
+              </div>
+            </a>
+          </li>
+        {%- endfor -%}
+      </ul>
+      {% render 'pagination', paginate: paginate, type: 'pages' %}
+    {%- endpaginate -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Collections list",
+  "class": "section-list-collections",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Our Collections" },
+    { "type": "range", "id": "columns", "label": "Per row (desktop)", "min": 2, "max": 5, "step": 1, "default": 4 }
+  ]
+}
+{% endschema %}

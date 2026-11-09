@@ -1,0 +1,14 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-search",
+      "settings": {
+        "per_page": 24,
+        "columns": 4
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

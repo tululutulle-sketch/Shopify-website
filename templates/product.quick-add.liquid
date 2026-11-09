@@ -1,0 +1,19 @@
+{%- layout none -%}
+{%- comment -%}
+  Fetched by the quick add modal: /products/{handle}?view=quick-add
+{%- endcomment -%}
+{%- assign section_id = 'quick-add-' | append: product.id -%}
+<product-info class="quick-add" data-section-id="{{ section_id }}" data-product-url="{{ product.url }}" data-update-url="false">
+  <div class="quick-add__media">
+    {% render 'product-gallery', product: product, section_id: section_id, layout: 'grid', ratio: 'square' %}
+  </div>
+  <div class="quick-add__info">
+    <h2 class="h3 quick-add__title"><a href="{{ product.url }}">{{ product.title | escape }}</a></h2>
+    <div data-price-container>{% render 'price', product: product, use_variant: true, class: 'price--large' %}</div>
+    {% render 'variant-picker', product: product, section_id: section_id, picker_type: 'buttons', swatches: true %}
+    <p class="caption product__inventory" data-inventory data-low-threshold="5">{% render 'inventory-status', variant: product.selected_or_first_available_variant, threshold: 5 %}</p>
+    {% render 'buy-buttons', product: product, section_id: section_id, show_quantity: true, show_dynamic_checkout: false %}
+    <a href="{{ product.url }}" class="link-arrow quick-add__details">{{ 'products.product.view_details' | t }} {% render 'icon', icon: 'arrow-right' %}</a>
+  </div>
+  <script type="application/json" data-money-format>{{ shop.money_format | json }}</script>
+</product-info>

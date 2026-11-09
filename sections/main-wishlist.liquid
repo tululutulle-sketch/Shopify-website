@@ -1,0 +1,26 @@
+<section class="section section--tight-top main-wishlist">
+  <div class="page-width">
+    <div class="main-cart__header">
+      <h1 class="display">{{ page.title | default: 'Wishlist' | escape }}</h1>
+    </div>
+    {%- if page.content != blank -%}<div class="rte main-wishlist__intro">{{ page.content }}</div>{%- endif -%}
+    <wishlist-page class="wishlist-page" data-columns="{{ section.settings.columns }}">
+      <ul class="list-unstyled product-grid" role="list" style="--columns: {{ section.settings.columns }};" data-wishlist-grid aria-busy="true"></ul>
+      <div class="empty-state" data-wishlist-empty hidden>
+        <span class="cart-empty__icon">{% render 'icon', icon: 'heart' %}</span>
+        <p>{{ 'wishlist.empty' | t }}</p>
+        <a href="{{ routes.all_products_collection_url }}" class="button">{{ 'wishlist.browse' | t }}</a>
+      </div>
+    </wishlist-page>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Wishlist",
+  "class": "section-main-wishlist",
+  "settings": [
+    { "type": "range", "id": "columns", "label": "Products per row (desktop)", "min": 3, "max": 5, "step": 1, "default": 4 }
+  ]
+}
+{% endschema %}

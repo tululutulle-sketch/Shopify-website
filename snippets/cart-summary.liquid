@@ -1,0 +1,74 @@
+{%- comment -%}
+  Note, discount code, totals and checkout. Checkout uses Shopify's native checkout.
+  - context: 'drawer' | 'page'
+{%- endcomment -%}
+<div class="cart-summary">
+  {%- if settings.cart_show_note -%}
+    <details class="cart-summary__note"{% if cart.note != blank %} open{% endif %}>
+      <summary class="link">{% render 'icon', icon: 'gift' %} {{ 'cart.general.note' | t }}</summary>
+      <label for="CartNote-{{ context }}" class="visually-hidden">{{ 'cart.general.note' | t }}</label>
+      <textarea id="CartNote-{{ context }}" class="field__textarea" name="note" rows="3" placeholder="{{ 'cart.general.note_placeholder' | t }}" data-cart-note>{{ cart.note }}</textarea>
+    </details>
+  {%- endif -%}
+
+  {%- if settings.cart_show_discount -%}
+    <cart-discount class="cart-summary__discount">
+      <div class="cart-discount__field">
+        <label for="Discount-{{ context }}" class="visually-hidden">{{ 'cart.general.discount_code' | t }}</label>
+        <input id="Discount-{{ context }}" type="text" class="field__input" placeholder="{{ 'cart.general.discount_code' | t }}" autocomplete="off" data-discount-input>
+        <button type="button" class="button button--outline button--small" data-discount-apply>{{ 'cart.general.discount_apply' | t }}</button>
+      </div>
+      <p class="form-message form-message--error caption" role="alert" data-discount-error hidden>{{ 'cart.general.discount_invalid' | t }}</p>
+      {%- if cart.discount_applications.size > 0 -%}
+        <ul class="list-unstyled chip-list cart-discount__codes" role="list">
+          {%- for application in cart.discount_applications -%}
+            {%- if application.type == 'discount_code' -%}
+              <li>
+                <button type="button" class="chip chip--removable" data-discount-remove="{{ application.title | escape }}" aria-label="{{ 'facets.remove' | t: filter: application.title | escape }}">
+                  {{ application.title | escape }} {% render 'icon', icon: 'close' %}
+                </button>
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+    </cart-discount>
+  {%- endif -%}
+
+  <dl class="cart-summary__totals">
+    {%- if cart.cart_level_discount_applications.size > 0 -%}
+      {%- for discount in cart.cart_level_discount_applications -%}
+        <div class="cart-summary__row cart-summary__row--discount">
+          <dt>{{ discount.title | escape }}</dt>
+          <dd>−{{ discount.total_allocated_amount | money }}</dd>
+        </div>
+      {%- endfor -%}
+    {%- endif -%}
+    <div class="cart-summary__row cart-summary__row--total">
+      <dt>{{ 'cart.general.subtotal' | t }}</dt>
+      <dd data-cart-subtotal>{{ cart.total_price | money_with_currency }}</dd>
+    </div>
+  </dl>
+  <p class="caption cart-summary__taxes">
+    {%- if cart.taxes_included -%}{{ 'cart.general.taxes_included' | t }}{%- else -%}{{ 'cart.general.taxes_and_shipping' | t }}{%- endif -%}
+  </p>
+  {%- if settings.cart_show_discount -%}
+    <p class="caption cart-summary__taxes">{{ 'cart.general.discount_note' | t }}</p>
+  {%- endif -%}
+
+  <form action="{{ routes.cart_url }}" method="post" class="cart-summary__checkout">
+    <button type="submit" name="checkout" class="button button--full"{% if cart.item_count == 0 %} disabled{% endif %}>
+      {{ 'cart.general.checkout' | t }}
+    </button>
+  </form>
+  {%- if context == 'drawer' -%}
+    <div class="cart-summary__links">
+      <a href="{{ routes.cart_url }}" class="link">{{ 'cart.general.view_cart' | t }}</a>
+      <button type="button" class="link" data-close>{{ 'cart.general.continue_shopping' | t }}</button>
+    </div>
+  {%- else -%}
+    {%- if additional_checkout_buttons -%}
+      <div class="cart-summary__additional">{{ content_for_additional_checkout_buttons }}</div>
+    {%- endif -%}
+  {%- endif -%}
+</div>

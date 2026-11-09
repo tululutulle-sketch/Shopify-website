@@ -1,0 +1,22 @@
+{%- comment -%}
+  Displays a star rating. Only renders when genuine rating data is supplied
+  (e.g. the standard reviews.rating metafield written by a review app).
+  - rating: number
+  - max: number (default 5)
+  - count: optional review count
+{%- endcomment -%}
+{%- if rating != blank and rating > 0 -%}
+  {%- liquid
+    assign max = max | default: 5
+    assign percent = rating | divided_by: max | times: 100.0
+  -%}
+  <div class="rating" role="img" aria-label="{{ 'accessibility.star_rating' | t: rating: rating, max: max }}">
+    <span class="rating__stars" style="--rating-percent: {{ percent }}%;" aria-hidden="true">
+      <span class="rating__base">{% for i in (1..5) %}{% render 'icon', icon: 'star' %}{% endfor %}</span>
+      <span class="rating__fill">{% for i in (1..5) %}{% render 'icon', icon: 'star' %}{% endfor %}</span>
+    </span>
+    {%- if count != blank and count > 0 -%}
+      <span class="rating__count">({{ count }})</span>
+    {%- endif -%}
+  </div>
+{%- endif -%}

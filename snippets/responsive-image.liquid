@@ -1,0 +1,18 @@
+{%- comment -%}
+  - image: image object (required)
+  - sizes: sizes attribute
+  - widths: comma-separated widths
+  - class: class names
+  - lazy: boolean (default true)
+  - alt: alt override
+{%- endcomment -%}
+{%- liquid
+  assign widths = widths | default: '375, 550, 750, 1000, 1250, 1500, 1800, 2200'
+  assign sizes = sizes | default: '100vw'
+  assign alt_text = alt | default: image.alt | escape
+  if lazy == false
+    echo image | image_url: width: 2200 | image_tag: widths: widths, sizes: sizes, class: class, alt: alt_text, loading: 'eager', fetchpriority: 'high'
+  else
+    echo image | image_url: width: 2200 | image_tag: widths: widths, sizes: sizes, class: class, alt: alt_text, loading: 'lazy'
+  endif
+-%}

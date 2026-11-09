@@ -1,0 +1,43 @@
+<cart-page class="section section--tight-top main-cart" data-section-id="{{ section.id }}">
+  <div class="page-width" data-cart-page-inner>
+    <div class="main-cart__header">
+      <h1 class="display">{{ 'cart.general.title' | t }}</h1>
+      {%- if cart.item_count > 0 -%}
+        <a href="{{ routes.all_products_collection_url }}" class="link-arrow">{{ 'cart.general.continue_shopping' | t }} {% render 'icon', icon: 'arrow-right' %}</a>
+      {%- endif -%}
+    </div>
+
+    {%- if cart.item_count > 0 -%}
+      <div class="main-cart__grid">
+        <div class="main-cart__items">
+          {% render 'free-shipping-bar' %}
+          <form action="{{ routes.cart_url }}" method="post" id="CartPageForm">
+            {% render 'cart-line-items', context: 'page' %}
+            <noscript><button type="submit" class="button button--outline" name="update">Update</button></noscript>
+          </form>
+        </div>
+        <aside class="main-cart__summary">
+          {% render 'cart-summary', context: 'page' %}
+        </aside>
+      </div>
+    {%- else -%}
+      <div class="empty-state cart-empty">
+        <span class="cart-empty__icon">{% render 'icon', icon: 'bag' %}</span>
+        <p class="h3">{{ 'cart.general.empty' | t }}</p>
+        <p class="caption">{{ 'cart.general.empty_text' | t }}</p>
+        <a href="{{ routes.all_products_collection_url }}" class="button">{{ 'cart.general.continue_shopping' | t }}</a>
+        {%- if shop.customer_accounts_enabled and customer == nil -%}
+          <p class="caption">Have an account? <a href="{{ routes.account_login_url }}" class="link">{{ 'customer.login.title' | t }}</a></p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+</cart-page>
+
+{% schema %}
+{
+  "name": "Cart",
+  "class": "section-main-cart",
+  "settings": []
+}
+{% endschema %}

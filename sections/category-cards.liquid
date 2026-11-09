@@ -1,0 +1,110 @@
+{%- liquid
+  assign columns = section.settings.columns
+  assign card_sizes = '(min-width: 1024px) calc((100vw - 10rem) / ' | append: columns | append: '), (min-width: 768px) 30vw, 62vw'
+-%}
+<section class="section section--{{ section.settings.background }} category-cards">
+  <div class="page-width">
+    {% render 'section-heading',
+      eyebrow: section.settings.eyebrow,
+      heading: section.settings.heading,
+      text: section.settings.text,
+      link: section.settings.link,
+      link_label: section.settings.link_label
+    %}
+  </div>
+  <div class="page-width page-width--bleed-mobile">
+    <ul class="list-unstyled scroller category-cards__grid" role="list" style="--columns: {{ columns }};">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign collection_obj = block.settings.collection
+          assign card_image = block.settings.image | default: collection_obj.image | default: collection_obj.featured_image
+          assign card_title = block.settings.title | default: collection_obj.title
+          assign card_url = block.settings.link | default: collection_obj.url | default: '#'
+        -%}
+        <li class="category-card reveal" style="--reveal-delay: {{ forloop.index0 | times: 60 }}ms;" {{ block.shopify_attributes }}>
+          <a href="{{ card_url }}" class="category-card__link">
+            <div class="category-card__media media media--{{ section.settings.image_ratio }}">
+              {%- if card_image != blank -%}
+                {% render 'responsive-image', image: card_image, sizes: card_sizes, widths: '300, 450, 600, 800, 1000', alt: card_title, class: 'category-card__image' %}
+              {%- else -%}
+                {{ 'collection-' | append: forloop.index | placeholder_svg_tag: 'placeholder-svg' }}
+              {%- endif -%}
+            </div>
+            <div class="category-card__info">
+              <h3 class="category-card__title">{{ card_title | default: 'Collection title' | escape }}</h3>
+              {%- if section.settings.show_count and collection_obj != blank -%}
+                <span class="caption">{{ 'collections.general.product_count' | t: count: collection_obj.products_count }}</span>
+              {%- elsif section.settings.show_arrow -%}
+                <span class="category-card__arrow" aria-hidden="true">{% render 'icon', icon: 'arrow-right' %}</span>
+              {%- endif -%}
+            </div>
+          </a>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Shop by category",
+  "class": "section-category-cards",
+  "max_blocks": 10,
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Small heading", "default": "Curated for you" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Shop by Category" },
+    { "type": "richtext", "id": "text", "label": "Text" },
+    { "type": "text", "id": "link_label", "label": "Link label", "default": "View all" },
+    { "type": "url", "id": "link", "label": "Link" },
+    { "type": "range", "id": "columns", "label": "Cards per row (desktop)", "min": 3, "max": 6, "step": 1, "default": 5 },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Image ratio",
+      "options": [
+        { "value": "portrait", "label": "Portrait (4:5)" },
+        { "value": "tall", "label": "Tall (2:3)" },
+        { "value": "square", "label": "Square" }
+      ],
+      "default": "portrait"
+    },
+    { "type": "checkbox", "id": "show_count", "label": "Show product count", "default": false },
+    { "type": "checkbox", "id": "show_arrow", "label": "Show arrow", "default": true },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Background",
+      "options": [
+        { "value": "white", "label": "White" },
+        { "value": "cream", "label": "Cream" },
+        { "value": "blush", "label": "Blush" }
+      ],
+      "default": "white"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category",
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Collection" },
+        { "type": "image_picker", "id": "image", "label": "Image", "info": "Overrides the collection image. Use consistent portrait photography." },
+        { "type": "text", "id": "title", "label": "Title", "info": "Overrides the collection title." },
+        { "type": "url", "id": "link", "label": "Link", "info": "Overrides the collection link." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shop by category",
+      "blocks": [
+        { "type": "category", "settings": { "title": "Hair Clip Combo Gift Boxes" } },
+        { "type": "category", "settings": { "title": "Tutu Skirts" } },
+        { "type": "category", "settings": { "title": "Frog Collection" } },
+        { "type": "category", "settings": { "title": "Surprise Gift Boxes" } },
+        { "type": "category", "settings": { "title": "Hair Accessory Bouquets" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

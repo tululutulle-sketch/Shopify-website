@@ -1,0 +1,168 @@
+{%- liquid
+  assign slide_count = section.blocks.size
+  assign is_slider = false
+  if slide_count > 1
+    assign is_slider = true
+  endif
+-%}
+<hero-slider
+  class="hero hero--{{ section.settings.height }} section--{{ section.settings.background }}"
+  data-autoplay="{{ section.settings.autoplay }}"
+  data-speed="{{ section.settings.speed | times: 1000 }}"
+  role="region"
+  aria-roledescription="carousel"
+  aria-label="{{ section.settings.accessibility_label | escape }}"
+>
+  <div class="hero__track">
+    {%- for block in section.blocks -%}
+      {%- liquid
+        assign is_first = false
+        if forloop.first and section.index == 1
+          assign is_first = true
+        endif
+      -%}
+      <div
+        class="hero__slide{% if forloop.first %} is-active{% endif %} hero__slide--{{ block.settings.layout }}"
+        {% if is_slider %}role="group" aria-roledescription="slide" aria-label="{{ 'accessibility.slide' | t: index: forloop.index }}"{% endif %}
+        {% unless forloop.first %}aria-hidden="true"{% endunless %}
+        {{ block.shopify_attributes }}
+      >
+        <div class="hero__inner page-width">
+          <div class="hero__content">
+            {%- if block.settings.eyebrow != blank -%}
+              <p class="eyebrow">{{ block.settings.eyebrow | escape }}</p>
+            {%- endif -%}
+            {%- if block.settings.heading != blank -%}
+              {%- if forloop.first -%}
+                <h2 class="hero__heading display">{{ block.settings.heading | escape }}</h2>
+              {%- else -%}
+                <p class="hero__heading display">{{ block.settings.heading | escape }}</p>
+              {%- endif -%}
+            {%- endif -%}
+            {%- if block.settings.text != blank -%}
+              <div class="hero__text rte">{{ block.settings.text }}</div>
+            {%- endif -%}
+            <div class="hero__buttons">
+              {%- if block.settings.button_label != blank -%}
+                <a href="{{ block.settings.button_link | default: routes.all_products_collection_url }}" class="button" {% unless forloop.first %}tabindex="-1"{% endunless %}>
+                  {{ block.settings.button_label | escape }}
+                </a>
+              {%- endif -%}
+              {%- if block.settings.button_label_2 != blank -%}
+                <a href="{{ block.settings.button_link_2 | default: routes.all_products_collection_url }}" class="link-arrow" {% unless forloop.first %}tabindex="-1"{% endunless %}>
+                  {{ block.settings.button_label_2 | escape }} {% render 'icon', icon: 'arrow-right' %}
+                </a>
+              {%- endif -%}
+            </div>
+          </div>
+
+          <div class="hero__media">
+            {%- if block.settings.image != blank -%}
+              <div class="hero__image{% if block.settings.image_mobile != blank %} hero__image--desktop{% endif %}">
+                {%- if is_first -%}
+                  {% render 'responsive-image', image: block.settings.image, sizes: '(min-width: 768px) 58vw, 100vw', lazy: false, class: 'hero__img' %}
+                {%- else -%}
+                  {% render 'responsive-image', image: block.settings.image, sizes: '(min-width: 768px) 58vw, 100vw', class: 'hero__img' %}
+                {%- endif -%}
+              </div>
+              {%- if block.settings.image_mobile != blank -%}
+                <div class="hero__image hero__image--mobile">
+                  {%- if is_first -%}
+                    {% render 'responsive-image', image: block.settings.image_mobile, sizes: '100vw', widths: '375, 550, 750, 1000, 1200', lazy: false, class: 'hero__img' %}
+                  {%- else -%}
+                    {% render 'responsive-image', image: block.settings.image_mobile, sizes: '100vw', widths: '375, 550, 750, 1000, 1200', class: 'hero__img' %}
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+            {%- else -%}
+              <div class="hero__image hero__image--placeholder">
+                {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    {%- endfor -%}
+  </div>
+
+  {%- if is_slider -%}
+    <div class="hero__controls page-width">
+      <button type="button" class="icon-button hero__arrow" data-prev aria-label="{{ 'accessibility.previous_slide' | t }}">{% render 'icon', icon: 'chevron-left' %}</button>
+      <div class="hero__dots" role="tablist">
+        {%- for block in section.blocks -%}
+          <button type="button" class="hero__dot{% if forloop.first %} is-active{% endif %}" data-dot="{{ forloop.index0 }}" aria-label="{{ 'accessibility.slide' | t: index: forloop.index }}"{% if forloop.first %} aria-current="true"{% endif %}></button>
+        {%- endfor -%}
+      </div>
+      <button type="button" class="icon-button hero__arrow" data-next aria-label="{{ 'accessibility.next_slide' | t }}">{% render 'icon', icon: 'chevron-right' %}</button>
+    </div>
+  {%- endif -%}
+</hero-slider>
+
+{% schema %}
+{
+  "name": "Hero banner",
+  "class": "section-hero",
+  "max_blocks": 5,
+  "settings": [
+    {
+      "type": "select",
+      "id": "height",
+      "label": "Height",
+      "options": [
+        { "value": "medium", "label": "Medium" },
+        { "value": "large", "label": "Large" },
+        { "value": "full", "label": "Full screen" }
+      ],
+      "default": "large"
+    },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Background",
+      "options": [
+        { "value": "white", "label": "White" },
+        { "value": "cream", "label": "Cream" },
+        { "value": "blush", "label": "Blush" },
+        { "value": "lavender", "label": "Lavender" }
+      ],
+      "default": "cream"
+    },
+    { "type": "checkbox", "id": "autoplay", "label": "Auto-rotate slides", "default": true },
+    { "type": "range", "id": "speed", "label": "Change slides every", "min": 4, "max": 12, "step": 1, "unit": "s", "default": 7 },
+    { "type": "text", "id": "accessibility_label", "label": "Slideshow description (screen readers)", "default": "Featured collections" }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image", "info": "Landscape or square lifestyle photography. Recommended 1800 × 1500px." },
+        { "type": "image_picker", "id": "image_mobile", "label": "Mobile image", "info": "Optional. Recommended 1000 × 1100px." },
+        {
+          "type": "select",
+          "id": "layout",
+          "label": "Desktop layout",
+          "options": [
+            { "value": "text-left", "label": "Text left, image right" },
+            { "value": "text-right", "label": "Image left, text right" }
+          ],
+          "default": "text-left"
+        },
+        { "type": "text", "id": "eyebrow", "label": "Small heading", "default": "The TULULU Edit" },
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Objects of Delight." },
+        { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Thoughtfully curated accessories and gifts for life's little celebrations.</p>" },
+        { "type": "text", "id": "button_label", "label": "Button label", "default": "Discover the collection" },
+        { "type": "url", "id": "button_link", "label": "Button link" },
+        { "type": "text", "id": "button_label_2", "label": "Secondary link label" },
+        { "type": "url", "id": "button_link_2", "label": "Secondary link" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero banner",
+      "blocks": [{ "type": "slide" }]
+    }
+  ]
+}
+{% endschema %}

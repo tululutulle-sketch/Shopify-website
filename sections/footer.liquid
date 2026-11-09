@@ -1,0 +1,99 @@
+<footer class="footer" style="--footer-bg: {{ section.settings.background }};">
+  <div class="page-width footer__grid">
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when 'brand' -%}
+          <div class="footer__block footer__block--brand" {{ block.shopify_attributes }}>
+            {%- assign footer_logo = settings.logo_footer | default: settings.logo -%}
+            {% render 'header-logo', logo: footer_logo, class: 'footer__logo' %}
+            {%- if block.settings.text != blank -%}
+              <div class="footer__text rte">{{ block.settings.text }}</div>
+            {%- endif -%}
+            {%- if block.settings.show_social -%}
+              {% render 'social-icons' %}
+            {%- endif -%}
+          </div>
+        {%- when 'menu' -%}
+          <div class="footer__block footer__block--menu" {{ block.shopify_attributes }}>
+            <details class="footer__details" open>
+              <summary class="footer__heading">
+                {{ block.settings.heading | default: block.settings.menu.title | escape }}
+                {% render 'icon', icon: 'plus' %}
+              </summary>
+              {%- if block.settings.menu != blank -%}
+                <ul class="list-unstyled footer__links" role="list">
+                  {%- for link in block.settings.menu.links -%}
+                    <li><a href="{{ link.url }}" class="footer__link"{% if link.url contains 'instagram.com' %} target="_blank" rel="noopener"{% endif %}>{{ link.title | escape }}</a></li>
+                  {%- endfor -%}
+                </ul>
+              {%- endif -%}
+            </details>
+          </div>
+        {%- when 'newsletter' -%}
+          <div class="footer__block footer__block--newsletter" {{ block.shopify_attributes }}>
+            <p class="footer__heading footer__heading--static">{{ block.settings.heading | escape }}</p>
+            {%- if block.settings.text != blank -%}
+              <div class="footer__text rte">{{ block.settings.text }}</div>
+            {%- endif -%}
+            {% render 'newsletter-form', form_id: 'FooterNewsletter', style: 'underline' %}
+          </div>
+      {%- endcase -%}
+    {%- endfor -%}
+  </div>
+
+  <div class="footer__bottom">
+    <div class="page-width footer__bottom-inner">
+      <p class="footer__copyright caption">
+        &copy; {{ 'now' | date: '%Y' }} {{ shop.name | link_to: routes.root_url }}.
+        {%- if section.settings.copyright_text != blank %} {{ section.settings.copyright_text | escape }}{% endif %}
+        {%- if section.settings.show_powered_by %} {{ powered_by_link }}{% endif %}
+      </p>
+      {%- if section.settings.show_payment -%}
+        {% render 'payment-icons' %}
+      {%- endif -%}
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "class": "section-footer",
+  "max_blocks": 6,
+  "settings": [
+    { "type": "color", "id": "background", "label": "Background", "default": "#FFF7F9" },
+    { "type": "text", "id": "copyright_text", "label": "Copyright text", "default": "All rights reserved." },
+    { "type": "checkbox", "id": "show_payment", "label": "Show payment icons", "default": true },
+    { "type": "checkbox", "id": "show_powered_by", "label": "Show \"Powered by Shopify\"", "default": false }
+  ],
+  "blocks": [
+    {
+      "type": "brand",
+      "name": "Brand",
+      "limit": 1,
+      "settings": [
+        { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Thoughtfully curated accessories and gifts for life's little celebrations.</p>" },
+        { "type": "checkbox", "id": "show_social", "label": "Show social icons", "default": true, "info": "Add links in Theme settings › Social media." }
+      ]
+    },
+    {
+      "type": "menu",
+      "name": "Menu",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Shop" },
+        { "type": "link_list", "id": "menu", "label": "Menu", "default": "footer" }
+      ]
+    },
+    {
+      "type": "newsletter",
+      "name": "Newsletter",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Stay in touch" },
+        { "type": "richtext", "id": "text", "label": "Text", "default": "<p>New collections, special releases and thoughtful gifts — straight to your inbox.</p>" }
+      ]
+    }
+  ],
+  "enabled_on": { "groups": ["footer"] }
+}
+{% endschema %}

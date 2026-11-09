@@ -1,0 +1,14 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-list-collections",
+      "settings": {
+        "heading": "Our Collections",
+        "columns": 4
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
