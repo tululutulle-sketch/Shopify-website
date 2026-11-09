@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
@@ -6,6 +15,7 @@
         "slide-1": {
           "type": "slide",
           "settings": {
+            "image": "shopify://shop_images/Blush_Pink_Curated_Gift_Box.png",
             "layout": "text-left",
             "eyebrow": "The TULULU Edit",
             "heading": "Objects of Delight.",
@@ -17,7 +27,9 @@
           }
         }
       },
-      "block_order": ["slide-1"],
+      "block_order": [
+        "slide-1"
+      ],
       "settings": {
         "height": "large",
         "background": "cream",
@@ -29,16 +41,58 @@
     "categories": {
       "type": "category-cards",
       "blocks": {
-        "cat-1": { "type": "category", "settings": { "title": "Hair Clip Combo Gift Boxes" } },
-        "cat-2": { "type": "category", "settings": { "title": "Tutu Skirts" } },
-        "cat-3": { "type": "category", "settings": { "title": "Frog Collection" } },
-        "cat-4": { "type": "category", "settings": { "title": "Surprise Gift Boxes" } },
-        "cat-5": { "type": "category", "settings": { "title": "Hair Accessory Bouquets" } }
+        "cat-1": {
+          "type": "category",
+          "settings": {
+            "collection": "",
+            "title": "Hair Clip Combo Gift Boxes",
+            "link": ""
+          }
+        },
+        "cat-2": {
+          "type": "category",
+          "settings": {
+            "collection": "",
+            "title": "Tutu Skirts",
+            "link": ""
+          }
+        },
+        "cat-3": {
+          "type": "category",
+          "settings": {
+            "collection": "",
+            "title": "Frog Collection",
+            "link": ""
+          }
+        },
+        "cat-4": {
+          "type": "category",
+          "settings": {
+            "collection": "",
+            "title": "Surprise Gift Boxes",
+            "link": ""
+          }
+        },
+        "cat-5": {
+          "type": "category",
+          "settings": {
+            "collection": "",
+            "title": "Hair Accessory Bouquets",
+            "link": ""
+          }
+        }
       },
-      "block_order": ["cat-1", "cat-2", "cat-3", "cat-4", "cat-5"],
+      "block_order": [
+        "cat-1",
+        "cat-2",
+        "cat-3",
+        "cat-4",
+        "cat-5"
+      ],
       "settings": {
         "eyebrow": "Curated for you",
         "heading": "Shop by Category",
+        "text": "",
         "link_label": "View all",
         "link": "shopify://collections/all",
         "columns": 5,
@@ -53,12 +107,16 @@
       "settings": {
         "eyebrow": "New & noteworthy",
         "heading": "Featured Collection",
+        "text": "",
         "source": "collection",
+        "collection": "",
+        "products": [],
         "limit": 8,
         "columns": 4,
         "mobile_scroll": false,
         "show_view_all": true,
         "view_all_label": "View all",
+        "view_all_link": "",
         "view_all_position": "bottom",
         "background": "white"
       }
@@ -66,17 +124,43 @@
     "gifting": {
       "type": "gifting-edit",
       "blocks": {
-        "gift-1": { "type": "gift", "settings": { "title": "Hair Clip Combo Gift Boxes", "subtitle": "Coordinated sets, ready to give" } },
-        "gift-2": { "type": "gift", "settings": { "title": "Surprise Gift Boxes", "subtitle": "A little mystery inside" } },
-        "gift-3": { "type": "gift", "settings": { "title": "Hair Accessory Bouquets", "subtitle": "Arranged like flowers" } }
+        "gift-1": {
+          "type": "gift",
+          "settings": {
+            "collection": "",
+            "title": "Hair Clip Combo Gift Boxes",
+            "subtitle": "Coordinated sets, ready to give"
+          }
+        },
+        "gift-2": {
+          "type": "gift",
+          "settings": {
+            "collection": "",
+            "title": "Surprise Gift Boxes",
+            "subtitle": "A little mystery inside"
+          }
+        },
+        "gift-3": {
+          "type": "gift",
+          "settings": {
+            "collection": "",
+            "title": "Hair Accessory Bouquets",
+            "subtitle": "Arranged like flowers"
+          }
+        }
       },
-      "block_order": ["gift-1", "gift-2", "gift-3"],
+      "block_order": [
+        "gift-1",
+        "gift-2",
+        "gift-3"
+      ],
       "settings": {
         "image_position": "left",
         "eyebrow": "The Gifting Edit",
         "heading": "The Art of Gifting.",
         "text": "<p>Thoughtful little surprises, beautifully presented.</p>",
         "button_label": "Explore gifting",
+        "button_link": "",
         "background": "blush"
       }
     },
@@ -85,12 +169,16 @@
       "settings": {
         "eyebrow": "Most loved",
         "heading": "Bestsellers",
+        "text": "",
         "source": "collection",
+        "collection": "",
+        "products": [],
         "limit": 8,
         "columns": 4,
         "mobile_scroll": false,
         "show_view_all": true,
         "view_all_label": "View all",
+        "view_all_link": "",
         "view_all_position": "top",
         "background": "white"
       }
@@ -98,15 +186,33 @@
     "story": {
       "type": "brand-story",
       "blocks": {
-        "value-1": { "type": "value", "settings": { "icon": "sparkle", "title": "Thoughtfully curated", "text": "" } },
-        "value-2": { "type": "value", "settings": { "icon": "gift", "title": "Beautifully presented", "text": "" } }
+        "value-1": {
+          "type": "value",
+          "settings": {
+            "icon": "sparkle",
+            "title": "Thoughtfully curated",
+            "text": ""
+          }
+        },
+        "value-2": {
+          "type": "value",
+          "settings": {
+            "icon": "gift",
+            "title": "Beautifully presented",
+            "text": ""
+          }
+        }
       },
-      "block_order": ["value-1", "value-2"],
+      "block_order": [
+        "value-1",
+        "value-2"
+      ],
       "settings": {
         "image_ratio": "portrait",
         "image_position": "right",
         "eyebrow": "Our Story",
         "heading": "Little Details. Beautiful Moments.",
+        "text": "<p>TULULU is a boutique of accessories and gifts chosen for the moments that matter — birthdays, celebrations and simple everyday surprises.</p><p>Every piece is selected with care and presented beautifully, so that giving feels as special as receiving.</p>",
         "button_label": "Read our story",
         "button_link": "",
         "background": "cream"
@@ -117,27 +223,78 @@
       "settings": {
         "eyebrow": "Kind words",
         "heading": "Loved by Our Customers",
+        "text": "",
         "background": "white"
       }
     },
     "instagram": {
       "type": "instagram-gallery",
       "blocks": {
-        "ig-1": { "type": "image", "settings": {} },
-        "ig-2": { "type": "image", "settings": {} },
-        "ig-3": { "type": "image", "settings": {} },
-        "ig-4": { "type": "image", "settings": {} },
-        "ig-5": { "type": "image", "settings": {} },
-        "ig-6": { "type": "image", "settings": {} }
+        "ig-1": {
+          "type": "image",
+          "settings": {
+            "link": ""
+          }
+        },
+        "ig-2": {
+          "type": "image",
+          "settings": {
+            "link": ""
+          }
+        },
+        "ig-3": {
+          "type": "image",
+          "settings": {
+            "link": ""
+          }
+        },
+        "ig-4": {
+          "type": "image",
+          "settings": {
+            "link": ""
+          }
+        },
+        "ig-5": {
+          "type": "image",
+          "settings": {
+            "link": ""
+          }
+        },
+        "ig-6": {
+          "type": "image",
+          "settings": {
+            "link": ""
+          }
+        }
       },
-      "block_order": ["ig-1", "ig-2", "ig-3", "ig-4", "ig-5", "ig-6"],
+      "block_order": [
+        "ig-1",
+        "ig-2",
+        "ig-3",
+        "ig-4",
+        "ig-5",
+        "ig-6"
+      ],
       "settings": {
         "heading": "Follow the World of TULULU",
+        "handle": "",
+        "profile_url": "",
+        "text": "",
         "columns": 6,
         "button_label": "Follow us",
+        "app_note": "Upload images as blocks, or add an Instagram feed app block for a live feed.",
         "background": "white"
       }
     }
   },
-  "order": ["hero", "categories", "featured", "gifting", "bestsellers", "story", "reviews", "instagram"]
+  "order": [
+    "hero",
+    "categories",
+    "featured",
+    "gifting",
+    "bestsellers",
+    "story",
+    "reviews",
+    "instagram"
+  ]
 }
