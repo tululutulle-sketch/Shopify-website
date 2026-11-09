@@ -103,7 +103,7 @@
     {%- endif -%}
   </head>
 
-  <body class="template-{{ template.name }}{% if template.suffix %} template-{{ template.name }}--{{ template.suffix }}{% endif %}">
+  <body class="{% unless settings.animations %}no-animations {% endunless %}template-{{ template.name }}{% if template.suffix %} template-{{ template.name }}--{{ template.suffix }}{% endif %}">
     <a class="skip-link visually-hidden-focusable" href="#MainContent">{{ 'accessibility.skip_to_content' | t }}</a>
 
     {% sections 'header-group' %}
