@@ -21,12 +21,13 @@
             data-index="{{ forloop.index0 }}"
           >
             <div class="gallery__media media media--{{ ratio }}"{% if ratio == 'natural' %} style="--ratio: {{ media.aspect_ratio | default: 1 }};"{% endif %}>
+              {%- assign media_alt = media.alt | default: product.title | escape -%}
               {%- case media.media_type -%}
                 {%- when 'image' -%}
                   {%- if forloop.first -%}
-                    {{ media | image_url: width: 1800 | image_tag: widths: '375, 550, 750, 1000, 1300, 1600, 1800', sizes: '(min-width: 1024px) 55vw, 100vw', loading: 'eager', fetchpriority: 'high', alt: media.alt | default: product.title | escape }}
+                    {{ media | image_url: width: 1800 | image_tag: widths: '375, 550, 750, 1000, 1300, 1600, 1800', sizes: '(min-width: 1024px) 55vw, 100vw', loading: 'eager', fetchpriority: 'high', alt: media_alt }}
                   {%- else -%}
-                    {{ media | image_url: width: 1800 | image_tag: widths: '375, 550, 750, 1000, 1300, 1600, 1800', sizes: '(min-width: 1024px) 55vw, 100vw', loading: 'lazy', alt: media.alt | default: product.title | escape }}
+                    {{ media | image_url: width: 1800 | image_tag: widths: '375, 550, 750, 1000, 1300, 1600, 1800', sizes: '(min-width: 1024px) 55vw, 100vw', loading: 'lazy', alt: media_alt }}
                   {%- endif -%}
                 {%- when 'video' -%}
                   {{ media | video_tag: controls: true, playsinline: true, preload: 'metadata', image_size: '1200x' }}

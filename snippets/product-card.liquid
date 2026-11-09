@@ -33,6 +33,7 @@
     <div class="product-card__media-wrap">
       <a href="{{ product.url }}" class="product-card__media media {{ ratio_class }}" tabindex="-1" aria-hidden="true">
         {%- if product.featured_media -%}
+          {%- assign card_alt = product.featured_media.alt | default: product.title | escape -%}
           {{
             product.featured_media.preview_image
             | image_url: width: 900
@@ -41,7 +42,7 @@
               sizes: sizes,
               loading: loading,
               class: 'product-card__image product-card__image--primary',
-              alt: product.featured_media.alt | default: product.title | escape
+              alt: card_alt
           }}
           {%- if has_second_image -%}
             {{

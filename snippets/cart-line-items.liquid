@@ -7,7 +7,8 @@
     <li class="cart-item" data-line="{{ forloop.index }}" data-key="{{ item.key }}">
       <a href="{{ item.url }}" class="cart-item__media media media--square" tabindex="-1" aria-hidden="true">
         {%- if item.image -%}
-          {{ item.image | image_url: width: 300 | image_tag: widths: '100, 150, 200, 300', sizes: '(min-width: 768px) 110px, 88px', loading: 'lazy', alt: item.image.alt | default: item.product.title | escape }}
+          {%- assign item_alt = item.image.alt | default: item.product.title | escape -%}
+          {{ item.image | image_url: width: 300 | image_tag: widths: '100, 150, 200, 300', sizes: '(min-width: 768px) 110px, 88px', loading: 'lazy', alt: item_alt }}
         {%- else -%}
           {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
         {%- endif -%}
