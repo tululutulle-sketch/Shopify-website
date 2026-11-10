@@ -546,7 +546,9 @@
         if (sticky && this.dataset.updateUrl === 'true') { sticky.disabled = disabled; sticky.textContent = text; }
       };
 
-      if (!variant) { setButtons(strings.unavailable, true); return; }
+      const estimate = this.querySelector('delivery-estimate');
+      if (!variant) { setButtons(strings.unavailable, true); estimate?.setAvailable(false); return; }
+      estimate?.setAvailable(variant.available);
 
       this.querySelectorAll('[data-variant-id]').forEach((input) => {
         input.value = variant.id;
@@ -554,8 +556,9 @@
       });
       setButtons(variant.available ? strings.addToCart : strings.soldOut, !variant.available);
 
-      const priceHTML = this.priceHTML(variant);
-      this.querySelectorAll('[data-price-container]').forEach((el) => (el.innerHTML = priceHTML));
+      this.querySelectorAll('[data-price-container]').forEach((el) => {
+        el.innerHTML = this.priceHTML(variant, true, el.dataset.showSavings === 'true');
+      });
       if (this.dataset.updateUrl === 'true') {
         const stickyPrice = document.querySelector('[data-sticky-price]');
         if (stickyPrice) stickyPrice.innerHTML = this.priceHTML(variant, false);
@@ -583,11 +586,15 @@
         this.querySelector('product-gallery')?.goToMedia(variant.featured_media);
       }
     }
-    priceHTML(variant, large = true) {
+    priceHTML(variant, large = true, savings = false) {
       const onSale = variant.compare_at_price > variant.price;
       const current = formatMoney(variant.price, this.moneyFormat);
       const cls = `price${onSale ? ' price--on-sale' : ''}${variant.available ? '' : ' price--sold-out'}${large ? ' price--large' : ''}`;
-      return `<div class="${cls}" data-price><span class="price__current">${current}</span>${onSale ? `<s class="price__compare">${formatMoney(variant.compare_at_price, this.moneyFormat)}</s>` : ''}</div>`;
+      const percent = onSale ? Math.floor(((variant.compare_at_price - variant.price) * 100) / variant.compare_at_price) : 0;
+      const badge = savings && percent > 0
+        ? `<span class="badge badge--sale price__save">${(theme.strings.savePercent || 'Save [percent]%').replace('[percent]', percent)}</span>`
+        : '';
+      return `<div class="${cls}" data-price><span class="price__current">${current}</span>${onSale ? `<s class="price__compare">${formatMoney(variant.compare_at_price, this.moneyFormat)}</s>` : ''}${badge}</div>`;
     }
   }
   customElements.define('product-info', ProductInfo);
@@ -603,6 +610,16 @@
       this.counter = this.querySelector('[data-gallery-current]');
       this.thumbs.forEach((t) => t.addEventListener('click', () => this.goTo(Number(t.dataset.thumbIndex))));
       this.track?.addEventListener('scroll', debounce(() => this.syncFromScroll(), 60), { passive: true });
+      this.lightbox = this.querySelector('[data-lightbox]');
+      this.querySelectorAll('[data-zoom-index]').forEach((btn) => btn.addEventListener('click', () => this.openZoom(btn)));
+    }
+    openZoom(btn) {
+      if (!this.lightbox) return;
+      this.lightbox.open(btn);
+      const slide = this.lightbox.querySelector(`[data-zoom-slide="${btn.dataset.zoomIndex}"]`);
+      const img = slide?.querySelector('img');
+      if (img) img.loading = 'eager';
+      requestAnimationFrame(() => slide?.scrollIntoView({ block: 'start' }));
     }
     goTo(index, smooth = true) {
       const slide = this.slides[index];
@@ -634,6 +651,96 @@
     }
   }
   customElements.define('product-gallery', ProductGallery);
+
+  /* ---------- Delivery estimate (merchant-set dispatch times, shopper's local time) ---------- */
+  class DeliveryEstimate extends HTMLElement {
+    connectedCallback() {
+      this.text = this.querySelector('[data-estimate-text]');
+      this.available = this.dataset.available === 'true';
+      this.render();
+      this.timer = setInterval(() => this.render(), 60000);
+    }
+    disconnectedCallback() { clearInterval(this.timer); }
+    setAvailable(available) { this.available = available; this.render(); }
+    addDays(from, days) {
+      const date = new Date(from);
+      let added = 0;
+      while (added < days) {
+        date.setDate(date.getDate() + 1);
+        if (this.dataset.skipSunday === 'true' && date.getDay() === 0) continue;
+        added += 1;
+      }
+      return date;
+    }
+    render() {
+      const min = Number(this.dataset.min) || 1;
+      const max = Math.max(Number(this.dataset.max) || min, min);
+      const cutoff = Number(this.dataset.cutoff);
+      const now = new Date();
+      const deadline = new Date(now);
+      deadline.setHours(cutoff, 0, 0, 0);
+      let dispatch = new Date(now);
+      if (now >= deadline || (this.dataset.skipSunday === 'true' && now.getDay() === 0)) {
+        dispatch = this.addDays(now, 1);
+        deadline.setTime(dispatch.getTime());
+        deadline.setHours(cutoff, 0, 0, 0);
+      }
+      const fmt = new Intl.DateTimeFormat(document.documentElement.lang || undefined, { weekday: 'short', day: 'numeric', month: 'short' });
+      const mins = Math.max(1, Math.round((deadline - now) / 60000));
+      const countdown = mins >= 60 ? `${Math.floor(mins / 60)}h ${mins % 60}m` : `${mins}m`;
+      const escape = (s) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+      this.text.innerHTML = escape(this.dataset.template || '')
+        .replace('[countdown]', `<strong>${countdown}</strong>`)
+        .replace('[start]', `<strong>${fmt.format(this.addDays(dispatch, min))}</strong>`)
+        .replace('[end]', `<strong>${fmt.format(this.addDays(dispatch, max))}</strong>`);
+      this.hidden = !this.available;
+    }
+  }
+  customElements.define('delivery-estimate', DeliveryEstimate);
+
+  /* ---------- Gift note (sent as a line item property) ---------- */
+  class GiftNote extends HTMLElement {
+    connectedCallback() {
+      const toggle = this.querySelector('[data-gift-toggle]');
+      const panel = this.querySelector('.gift-note__panel');
+      const text = this.querySelector('[data-gift-text]');
+      const count = this.querySelector('[data-gift-count]');
+      toggle.addEventListener('change', () => {
+        panel.hidden = !toggle.checked;
+        text.disabled = !toggle.checked;
+        toggle.setAttribute('aria-expanded', String(toggle.checked));
+        if (toggle.checked) text.focus();
+      });
+      text.addEventListener('input', () => { count.textContent = text.value.length; });
+    }
+  }
+  customElements.define('gift-note', GiftNote);
+
+  /* ---------- Recently viewed (stored in the shopper's browser) ---------- */
+  class RecentlyViewed extends HTMLElement {
+    async connectedCallback() {
+      const key = 'tululu:recent';
+      const current = this.dataset.current;
+      let list = [];
+      try { list = JSON.parse(localStorage.getItem(key)) || []; } catch (e) { /* storage unavailable */ }
+      const others = list.filter((h) => h !== current).slice(0, Number(this.dataset.limit) || 4);
+      try { localStorage.setItem(key, JSON.stringify([current, ...list.filter((h) => h !== current)].slice(0, 12))); } catch (e) { /* storage unavailable */ }
+      if (!others.length) return;
+      const root = theme.routes.root.replace(/\/$/, '');
+      const cards = await Promise.all(others.map(async (handle) => {
+        try {
+          const res = await fetch(`${root}/products/${handle}?view=card`);
+          return res.ok ? await res.text() : null;
+        } catch (e) { return null; }
+      }));
+      const valid = cards.filter((html) => html && html.trim());
+      if (!valid.length) return;
+      this.querySelector('[data-recently-viewed-grid]').innerHTML = valid.map((html) => `<li class="product-grid__item">${html}</li>`).join('');
+      this.hidden = false;
+      Wishlist.sync();
+    }
+  }
+  customElements.define('recently-viewed', RecentlyViewed);
 
   /* ---------- Quick add modal ---------- */
   class QuickAddModal extends OverlayElement {
@@ -756,7 +863,7 @@
       this.querySelector('button').addEventListener('click', async () => {
         const data = { title: this.dataset.title, url: this.dataset.url };
         if (navigator.share) { try { await navigator.share(data); } catch (e) { /* cancelled */ } return; }
-        try { await navigator.clipboard.writeText(data.url); showToast('Link copied'); } catch (e) { window.prompt('Copy link', data.url); }
+        try { await navigator.clipboard.writeText(data.url); showToast(theme.strings.linkCopied || 'Link copied'); } catch (e) { window.prompt('Copy link', data.url); }
       });
     }
   }

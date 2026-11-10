@@ -51,7 +51,8 @@
     "gallery": "Product images",
     "zoom": "View image {{ index }}",
     "loading": "Loading…",
-    "payment_methods": "Payment methods"
+    "payment_methods": "Payment methods",
+    "open_zoom": "Open image {{ index }} in zoom view"
   },
   "header": {
     "search_placeholder": "Search for gifts, clips, tutus…",
@@ -92,7 +93,11 @@
       "related": "You may also love",
       "whats_inside": "What's inside?",
       "size_guide": "Size guide",
-      "sku": "SKU"
+      "sku": "SKU",
+      "save_percent": "Save {{ percent }}%",
+      "add_short": "Add",
+      "recently_viewed": "Recently viewed",
+      "copied": "Link copied"
     }
   },
   "collections": {

@@ -65,6 +65,8 @@
           soldOut: {{ 'products.product.sold_out' | t | json }},
           unavailable: {{ 'products.product.unavailable' | t | json }},
           added: {{ 'products.product.added' | t | json }},
+          savePercent: {{ 'products.product.save_percent' | t: percent: '[percent]' | json }},
+          linkCopied: {{ 'products.product.copied' | t | json }},
           cartError: {{ 'cart.general.error' | t | json }},
           wishlistEmpty: {{ 'wishlist.empty' | t | json }}
         }

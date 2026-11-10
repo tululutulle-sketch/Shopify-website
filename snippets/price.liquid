@@ -3,6 +3,7 @@
   - product: product object (required)
   - use_variant: boolean, use the selected/first available variant instead of the price range
   - show_from: boolean, prefix "From" when variant prices differ
+  - show_savings: boolean, show a "Save X%" badge when on sale
   - class: extra classes
 {%- endcomment -%}
 {%- liquid
@@ -39,6 +40,12 @@
     <span class="price__current">{{ money_price }}</span>
     <span class="visually-hidden">{{ 'products.product.regular_price' | t }}</span>
     <s class="price__compare">{{ compare_at_price | money }}</s>
+    {%- if show_savings -%}
+      {%- assign savings_percent = compare_at_price | minus: price | times: 100 | divided_by: compare_at_price -%}
+      {%- if savings_percent > 0 -%}
+        <span class="badge badge--sale price__save">{{ 'products.product.save_percent' | t: percent: savings_percent }}</span>
+      {%- endif -%}
+    {%- endif -%}
   {%- else -%}
     <span class="price__current">{{ money_price }}</span>
   {%- endif -%}

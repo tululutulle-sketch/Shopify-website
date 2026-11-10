@@ -20,7 +20,7 @@
 
     <div class="product__grid product__grid--{{ section.settings.media_size }}">
       <div class="product__media">
-        {% render 'product-gallery', product: product, section_id: section.id, layout: section.settings.gallery_layout, ratio: section.settings.media_ratio %}
+        {% render 'product-gallery', product: product, section_id: section.id, layout: section.settings.gallery_layout, ratio: section.settings.media_ratio, zoom: section.settings.enable_zoom %}
       </div>
 
       <div class="product__info">
@@ -43,8 +43,8 @@
 
               {%- when 'price' -%}
                 <div class="product__block product__price-wrap" {{ block.shopify_attributes }}>
-                  <div data-price-container>
-                    {% render 'price', product: product, use_variant: true, class: 'price--large' %}
+                  <div data-price-container data-show-savings="{{ block.settings.show_savings }}">
+                    {% render 'price', product: product, use_variant: true, show_savings: block.settings.show_savings, class: 'price--large' %}
                   </div>
                   <p class="caption product__tax">
                     {%- if cart.taxes_included -%}{{ 'products.product.tax_included' | t }} {% endif -%}
@@ -184,6 +184,110 @@
                   </share-button>
                 </div>
 
+              {%- when 'delivery_estimate' -%}
+                <delivery-estimate
+                  class="product__block delivery-estimate"
+                  data-min="{{ block.settings.min_days }}"
+                  data-max="{{ block.settings.max_days }}"
+                  data-cutoff="{{ block.settings.cutoff_hour }}"
+                  data-skip-sunday="{{ block.settings.skip_sundays }}"
+                  data-template="{{ block.settings.text | escape }}"
+                  data-available="{{ current_variant.available }}"
+                  hidden
+                  {{ block.shopify_attributes }}
+                >
+                  {% render 'icon', icon: 'truck' %}
+                  <p class="delivery-estimate__text" data-estimate-text></p>
+                </delivery-estimate>
+
+              {%- when 'gift_message' -%}
+                {%- assign gift_max = block.settings.max_characters -%}
+                <gift-note class="product__block gift-note" {{ block.shopify_attributes }}>
+                  <label class="checkbox gift-note__toggle">
+                    <input type="checkbox" data-gift-toggle aria-controls="GiftNote-{{ block.id }}" aria-expanded="false">
+                    <span class="checkbox__box" aria-hidden="true">{% render 'icon', icon: 'check' %}</span>
+                    <span class="gift-note__label">{% render 'icon', icon: 'gift' %}{{ block.settings.label | escape }}</span>
+                  </label>
+                  <div class="gift-note__panel" id="GiftNote-{{ block.id }}" hidden>
+                    <label class="visually-hidden" for="GiftNoteText-{{ block.id }}">{{ block.settings.label | escape }}</label>
+                    <textarea
+                      id="GiftNoteText-{{ block.id }}"
+                      class="field__textarea gift-note__text"
+                      name="properties[{{ block.settings.property_name | default: 'Gift note' | escape }}]"
+                      form="ProductForm-{{ section.id }}"
+                      maxlength="{{ gift_max }}"
+                      rows="3"
+                      placeholder="{{ block.settings.placeholder | escape }}"
+                      disabled
+                      data-gift-text
+                    ></textarea>
+                    <div class="gift-note__meta caption">
+                      {%- if block.settings.info != blank -%}<span>{{ block.settings.info | escape }}</span>{%- endif -%}
+                      <span class="gift-note__count"><span data-gift-count>0</span>/{{ gift_max }}</span>
+                    </div>
+                  </div>
+                </gift-note>
+
+              {%- when 'trust_badges' -%}
+                <ul class="product__block list-unstyled trust-badges" role="list" {{ block.shopify_attributes }}>
+                  {%- for i in (1..3) -%}
+                    {%- liquid
+                      assign badge_text_key = 'text_' | append: i
+                      assign badge_icon_key = 'icon_' | append: i
+                      assign badge_text = block.settings[badge_text_key]
+                    -%}
+                    {%- if badge_text != blank -%}
+                      <li class="trust-badges__item">{% render 'icon', icon: block.settings[badge_icon_key] %}<span>{{ badge_text }}</span></li>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </ul>
+
+              {%- when 'complementary' -%}
+                <product-recommendations
+                  class="product__block complementary"
+                  data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ block.settings.limit }}&intent=complementary"
+                  {{ block.shopify_attributes }}
+                >
+                  {%- if recommendations.performed and recommendations.products_count > 0 -%}
+                    <p class="complementary__heading">{{ block.settings.heading | escape }}</p>
+                    <ul class="list-unstyled complementary__list" role="list">
+                      {%- for rec in recommendations.products -%}
+                        <li class="complementary__item">
+                          <a href="{{ rec.url }}" class="complementary__media media media--square" tabindex="-1" aria-hidden="true">
+                            {%- if rec.featured_media -%}
+                              {{ rec.featured_media.preview_image | image_url: width: 200 | image_tag: widths: '100, 200', sizes: '72px', loading: 'lazy', alt: '' }}
+                            {%- else -%}
+                              {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                            {%- endif -%}
+                          </a>
+                          <div class="complementary__info">
+                            <a href="{{ rec.url }}" class="complementary__title">{{ rec.title | escape }}</a>
+                            {% render 'price', product: rec, show_from: true %}
+                          </div>
+                          {%- if rec.available -%}
+                            {%- if rec.has_only_default_variant -%}
+                              {%- form 'product', rec, class: 'complementary__form', data-quick-add-form: '', novalidate: 'novalidate' -%}
+                                <input type="hidden" name="id" value="{{ rec.selected_or_first_available_variant.id }}">
+                                <input type="hidden" name="quantity" value="1">
+                                <button type="submit" class="button button--small button--outline complementary__add" aria-label="{{ 'products.product.add_to_cart' | t }}: {{ rec.title | escape }}">
+                                  <span class="button__label">{{ 'products.product.add_short' | t }}</span>
+                                  <span class="button__spinner" aria-hidden="true"></span>
+                                </button>
+                              {%- endform -%}
+                            {%- else -%}
+                              <button type="button" class="button button--small button--outline complementary__add" data-quick-view="{{ rec.url }}" aria-haspopup="dialog" aria-label="{{ 'products.product.choose_options' | t }}: {{ rec.title | escape }}">
+                                {{ 'products.product.add_short' | t }}
+                              </button>
+                            {%- endif -%}
+                          {%- endif -%}
+                        </li>
+                      {%- endfor -%}
+                    </ul>
+                  {%- elsif request.design_mode -%}
+                    <div class="editor-notice"><p>Complementary products appear here once you set them up in the Search &amp; Discovery app.</p></div>
+                  {%- endif -%}
+                </product-recommendations>
+
               {%- when 'custom_liquid' -%}
                 <div class="product__block" {{ block.shopify_attributes }}>{{ block.settings.custom_liquid }}</div>
             {%- endcase -%}
@@ -268,6 +372,7 @@
       ],
       "default": "large"
     },
+    { "type": "checkbox", "id": "enable_zoom", "label": "Open images in full-screen zoom", "default": true },
     { "type": "checkbox", "id": "sticky_atc", "label": "Sticky add to cart on mobile", "default": true },
     { "type": "checkbox", "id": "show_sku", "label": "Show SKU", "default": false }
   ],
@@ -282,7 +387,14 @@
       ]
     },
     { "type": "title", "name": "Title", "limit": 1 },
-    { "type": "price", "name": "Price", "limit": 1 },
+    {
+      "type": "price",
+      "name": "Price",
+      "limit": 1,
+      "settings": [
+        { "type": "checkbox", "id": "show_savings", "label": "Show savings badge on sale items", "default": true }
+      ]
+    },
     {
       "type": "rating",
       "name": "Product rating",
@@ -393,6 +505,79 @@
       ]
     },
     { "type": "share", "name": "Share", "limit": 1 },
+    {
+      "type": "delivery_estimate",
+      "name": "Delivery estimate",
+      "limit": 1,
+      "settings": [
+        { "type": "paragraph", "content": "Shows a delivery window counted from today in the shopper's local time. Match it to your real dispatch and courier times." },
+        { "type": "text", "id": "text", "label": "Text", "default": "Order within [countdown] to get it by [start] – [end]", "info": "Use [countdown], [start] and [end]." },
+        { "type": "range", "id": "min_days", "label": "Earliest delivery (days)", "min": 1, "max": 20, "step": 1, "default": 3 },
+        { "type": "range", "id": "max_days", "label": "Latest delivery (days)", "min": 1, "max": 30, "step": 1, "default": 7 },
+        { "type": "range", "id": "cutoff_hour", "label": "Dispatch cutoff (hour, 24h)", "min": 0, "max": 23, "step": 1, "default": 14 },
+        { "type": "checkbox", "id": "skip_sundays", "label": "Skip Sundays", "default": true }
+      ]
+    },
+    {
+      "type": "gift_message",
+      "name": "Gift note",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "label", "label": "Checkbox label", "default": "Add a gift note" },
+        { "type": "text", "id": "placeholder", "label": "Placeholder", "default": "Write your message…" },
+        { "type": "text", "id": "info", "label": "Helper text", "default": "We'll add it to a card inside the package." },
+        { "type": "text", "id": "property_name", "label": "Order field name", "default": "Gift note", "info": "Shown with the item in the cart and on the order." },
+        { "type": "range", "id": "max_characters", "label": "Maximum characters", "min": 50, "max": 500, "step": 10, "default": 200 }
+      ]
+    },
+    {
+      "type": "trust_badges",
+      "name": "Trust badges",
+      "limit": 1,
+      "settings": [
+        { "type": "paragraph", "content": "Only list promises your store actually keeps." },
+        { "type": "select", "id": "icon_1", "label": "Icon 1", "options": [
+            { "value": "truck", "label": "Delivery" },
+            { "value": "gift", "label": "Gift" },
+            { "value": "return", "label": "Returns" },
+            { "value": "check", "label": "Check" },
+            { "value": "heart", "label": "Heart" },
+            { "value": "sparkle", "label": "Sparkle" },
+            { "value": "shield", "label": "Secure" }
+          ], "default": "shield" },
+        { "type": "inline_richtext", "id": "text_1", "label": "Text 1", "default": "Secure checkout" },
+        { "type": "select", "id": "icon_2", "label": "Icon 2", "options": [
+            { "value": "truck", "label": "Delivery" },
+            { "value": "gift", "label": "Gift" },
+            { "value": "return", "label": "Returns" },
+            { "value": "check", "label": "Check" },
+            { "value": "heart", "label": "Heart" },
+            { "value": "sparkle", "label": "Sparkle" },
+            { "value": "shield", "label": "Secure" }
+          ], "default": "gift" },
+        { "type": "inline_richtext", "id": "text_2", "label": "Text 2", "default": "Gift-ready packaging" },
+        { "type": "select", "id": "icon_3", "label": "Icon 3", "options": [
+            { "value": "truck", "label": "Delivery" },
+            { "value": "gift", "label": "Gift" },
+            { "value": "return", "label": "Returns" },
+            { "value": "check", "label": "Check" },
+            { "value": "heart", "label": "Heart" },
+            { "value": "sparkle", "label": "Sparkle" },
+            { "value": "shield", "label": "Secure" }
+          ], "default": "truck" },
+        { "type": "inline_richtext", "id": "text_3", "label": "Text 3" }
+      ]
+    },
+    {
+      "type": "complementary",
+      "name": "Complete the gift",
+      "limit": 1,
+      "settings": [
+        { "type": "paragraph", "content": "Pick pairings for each product in the Search & Discovery app, under Product recommendations › Complementary products." },
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Complete the gift" },
+        { "type": "range", "id": "limit", "label": "Maximum products", "min": 1, "max": 6, "step": 1, "default": 3 }
+      ]
+    },
     {
       "type": "custom_liquid",
       "name": "Custom Liquid",

@@ -5,6 +5,7 @@
   - section_id
   - layout: 'thumbnails' | 'grid'
   - ratio: 'square' | 'portrait' | 'natural'
+  - zoom: boolean, open images in a full-screen lightbox
 {%- endcomment -%}
 {%- liquid
   assign featured = product.selected_or_first_available_variant.featured_media | default: product.featured_media
@@ -28,6 +29,11 @@
                     {{ media | image_url: width: 1800 | image_tag: widths: '375, 550, 750, 1000, 1300, 1600, 1800', sizes: '(min-width: 1024px) 55vw, 100vw', loading: 'eager', fetchpriority: 'high', alt: media_alt }}
                   {%- else -%}
                     {{ media | image_url: width: 1800 | image_tag: widths: '375, 550, 750, 1000, 1300, 1600, 1800', sizes: '(min-width: 1024px) 55vw, 100vw', loading: 'lazy', alt: media_alt }}
+                  {%- endif -%}
+                  {%- if zoom -%}
+                    <button type="button" class="gallery__zoom" data-zoom-index="{{ forloop.index0 }}" aria-haspopup="dialog" aria-label="{{ 'accessibility.open_zoom' | t: index: forloop.index }}">
+                      <span class="gallery__zoom-icon">{% render 'icon', icon: 'zoom' %}</span>
+                    </button>
                   {%- endif -%}
                 {%- when 'video' -%}
                   {{ media | video_tag: controls: true, playsinline: true, preload: 'metadata', image_size: '1200x' }}
@@ -74,5 +80,23 @@
         </li>
       {%- endfor -%}
     </ul>
+  {%- endif -%}
+
+  {%- if zoom and media_count > 0 -%}
+    <dialog-modal class="modal lightbox" id="Lightbox-{{ section_id }}" data-lightbox hidden>
+      <div class="lightbox__dialog" role="dialog" aria-modal="true" aria-label="{{ 'accessibility.gallery' | t }}" tabindex="-1">
+        <button type="button" class="lightbox__close icon-button" data-close aria-label="{{ 'accessibility.close' | t }}">{% render 'icon', icon: 'close' %}</button>
+        <ul class="list-unstyled lightbox__track" role="list">
+          {%- for media in product.media -%}
+            {%- if media.media_type == 'image' -%}
+              {%- assign zoom_alt = media.alt | default: product.title | escape -%}
+              <li class="lightbox__slide" data-zoom-slide="{{ forloop.index0 }}">
+                {{ media | image_url: width: 2400 | image_tag: widths: '750, 1100, 1500, 2000, 2400', sizes: '(min-width: 1024px) 80vw, 100vw', loading: 'lazy', alt: zoom_alt }}
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      </div>
+    </dialog-modal>
   {%- endif -%}
 </product-gallery>

@@ -29,7 +29,9 @@
         },
         "price": {
           "type": "price",
-          "settings": {}
+          "settings": {
+            "show_savings": true
+          }
         },
         "variants": {
           "type": "variant_picker",
@@ -50,13 +52,6 @@
           "settings": {
             "show_quantity": true,
             "show_dynamic_checkout": true
-          }
-        },
-        "delivery": {
-          "type": "delivery",
-          "settings": {
-            "line_1": "Free shipping on orders above ₹999",
-            "line_2": "Beautifully gift-wrapped"
           }
         },
         "whats_inside": {
@@ -90,6 +85,44 @@
         "share": {
           "type": "share",
           "settings": {}
+        },
+        "delivery_estimate": {
+          "type": "delivery_estimate",
+          "settings": {
+            "text": "Order within [countdown] to get it by [start] – [end]",
+            "min_days": 3,
+            "max_days": 7,
+            "cutoff_hour": 14,
+            "skip_sundays": true
+          }
+        },
+        "gift_note": {
+          "type": "gift_message",
+          "settings": {
+            "label": "Add a gift note",
+            "placeholder": "Write your message…",
+            "info": "We'll add it to a card inside the package.",
+            "property_name": "Gift note",
+            "max_characters": 200
+          }
+        },
+        "trust": {
+          "type": "trust_badges",
+          "settings": {
+            "icon_1": "shield",
+            "text_1": "Secure checkout",
+            "icon_2": "gift",
+            "text_2": "Beautifully gift-wrapped",
+            "icon_3": "truck",
+            "text_3": "Free shipping above ₹999"
+          }
+        },
+        "complementary": {
+          "type": "complementary",
+          "settings": {
+            "heading": "Complete the gift",
+            "limit": 3
+          }
         }
       },
       "block_order": [
@@ -99,10 +132,13 @@
         "price",
         "variants",
         "inventory",
+        "delivery_estimate",
+        "gift_note",
         "buy",
-        "delivery",
+        "trust",
         "whats_inside",
         "description",
+        "complementary",
         "details",
         "shipping",
         "share"
@@ -112,7 +148,8 @@
         "media_ratio": "square",
         "media_size": "large",
         "sticky_atc": true,
-        "show_sku": false
+        "show_sku": false,
+        "enable_zoom": true
       }
     },
     "reviews": {
@@ -128,11 +165,20 @@
         "limit": 4,
         "columns": 4
       }
+    },
+    "recently_viewed": {
+      "type": "recently-viewed",
+      "settings": {
+        "heading": "Recently Viewed",
+        "limit": 4,
+        "columns": 4
+      }
     }
   },
   "order": [
     "main",
     "reviews",
-    "related"
+    "related",
+    "recently_viewed"
   ]
 }
