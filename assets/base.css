@@ -181,7 +181,8 @@ h4, .h4 { font-size: calc(1.2rem * var(--heading-scale)); }
 .button--white:hover { background: var(--color-heading); color: #fff; border-color: var(--color-heading); box-shadow: none; }
 .button--small { min-height: 40px; padding: 0.55rem 1.1rem; font-size: 0.7rem; letter-spacing: 0.12em; }
 .button--full { width: 100%; }
-.button .icon { width: 16px; height: 16px; }
+.button .icon { width: 16px; height: 16px; flex-shrink: 0; }
+.button__label { display: inline-flex; align-items: center; justify-content: center; gap: 0.45rem; white-space: nowrap; }
 .button__spinner {
   display: none; position: absolute; width: 18px; height: 18px; border-radius: 50%;
   border: 2px solid currentColor; border-right-color: transparent; animation: spin 0.7s linear infinite;
@@ -429,11 +430,11 @@ h4, .h4 { font-size: calc(1.2rem * var(--heading-scale)); }
 .quick-add .gallery__thumbs, .quick-add .gallery__counter { display: none; }
 
 .toast {
-  position: fixed; left: 50%; bottom: 1.5rem; z-index: 200; transform: translate(-50%, 150%);
+  position: fixed; left: 50%; bottom: calc(1.5rem + env(safe-area-inset-bottom)); z-index: 200; transform: translate(-50%, calc(100% + 3rem)); opacity: 0; visibility: hidden;
   background: var(--color-heading); color: #fff; padding: 0.85rem 1.4rem; border-radius: 999px; font-size: 0.88rem;
-  transition: transform 0.4s var(--ease); pointer-events: none; max-width: calc(100vw - 2rem);
+  transition: transform 0.4s var(--ease), opacity 0.3s, visibility 0.4s; pointer-events: none; max-width: calc(100vw - 2rem); text-align: center;
 }
-.toast.is-visible { transform: translate(-50%, 0); }
+.toast.is-visible { transform: translate(-50%, 0); opacity: 1; visibility: visible; }
 
 /* ---------- Section heading ---------- */
 .section-heading { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: var(--space-4); margin-bottom: var(--space-6); }
@@ -511,7 +512,7 @@ h4, .h4 { font-size: calc(1.2rem * var(--heading-scale)); }
 
 /* ---------- Product grid & cards ---------- */
 .product-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-6) var(--space-3); }
-@media (min-width: 768px) { .product-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-7) var(--space-5); } }
+@media (min-width: 768px) { .product-grid { grid-template-columns: repeat(var(--columns-tablet, 3), minmax(0, 1fr)); gap: var(--space-7) var(--space-5); } }
 @media (min-width: 1024px) { .product-grid { grid-template-columns: repeat(var(--columns, 4), minmax(0, 1fr)); } }
 @media (max-width: 767px) {
   .product-grid--scroll-mobile { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; margin: 0 calc(var(--gutter) * -1); padding: 0 var(--gutter); scroll-padding: 0 var(--gutter); }
@@ -775,6 +776,11 @@ h4, .h4 { font-size: calc(1.2rem * var(--heading-scale)); }
 /* ---------- Product page ---------- */
 .product__breadcrumbs { margin-bottom: var(--space-4); }
 .product__grid { display: grid; gap: var(--space-5); }
+@media (min-width: 768px) and (max-width: 1023px) {
+  .product__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-6); align-items: start; }
+  .product__info-inner { position: sticky; top: calc(var(--header-height) + 1rem); }
+  .product__title { font-size: clamp(1.6rem, 3.6vw, 2.1rem); }
+}
 @media (min-width: 1024px) {
   .product__grid { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: var(--space-8); align-items: start; }
   .product__grid--medium { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
@@ -905,6 +911,9 @@ h4, .h4 { font-size: calc(1.2rem * var(--heading-scale)); }
 .sticky-atc .price { font-size: 0.82rem; }
 .sticky-atc__button { min-height: 46px; padding: 0.7rem 1.3rem; }
 @media (min-width: 1024px) { .sticky-atc { display: none; } }
+
+/* Theme custom elements render as blocks */
+gift-note, product-recommendations, recently-viewed, product-info, product-form, product-gallery, variant-picker { display: block; }
 
 /* Savings badge */
 .price__save { align-self: center; font-size: 0.68rem; padding: 0.25rem 0.6rem; }

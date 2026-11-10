@@ -6,6 +6,21 @@
     assign use_manual = true
   endif
   assign collection_obj = section.settings.collection
+
+  # Fill the row when there are fewer products than columns.
+  if use_manual
+    assign item_count = section.settings.products.count
+  elsif collection_obj != blank and collection_obj.products_count > 0
+    assign item_count = collection_obj.products_count
+  else
+    assign item_count = columns
+  endif
+  if item_count > limit
+    assign item_count = limit
+  endif
+  if item_count < columns and item_count > 1
+    assign columns = item_count
+  endif
   assign view_all_url = section.settings.view_all_link | default: collection_obj.url | default: routes.all_products_collection_url
   assign card_sizes = '(min-width: 1024px) calc((100vw - 10rem) / ' | append: columns | append: '), (min-width: 768px) 30vw, 46vw'
 -%}
@@ -25,7 +40,7 @@
       link_label: section.settings.view_all_label
     %}
 
-    <ul class="list-unstyled product-grid{% if section.settings.mobile_scroll %} product-grid--scroll-mobile{% endif %}" role="list" style="--columns: {{ columns }};">
+    <ul class="list-unstyled product-grid{% if section.settings.mobile_scroll %} product-grid--scroll-mobile{% endif %}" role="list" style="--columns: {{ columns }}; --columns-tablet: {{ columns | at_most: 3 }};">
       {%- if use_manual -%}
         {%- for product in section.settings.products limit: limit -%}
           <li class="product-grid__item reveal" style="--reveal-delay: {{ forloop.index0 | modulo: columns | times: 60 }}ms;">
