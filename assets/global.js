@@ -317,11 +317,12 @@
         if (!html) return;
         const doc = parseHTML(html);
         if (id === 'cart-drawer') {
+          // Read the count before replaceWith moves the new markup out of `doc`.
+          const count = doc.querySelector('#CartDrawerTitle .caption');
+          Cart.setCount(count ? Number(count.textContent.replace(/\D/g, '')) : 0);
           const next = doc.querySelector('[data-cart-drawer-inner]');
           const current = document.querySelector('[data-cart-drawer-inner]');
           if (next && current) current.replaceWith(next);
-          const count = doc.querySelector('#CartDrawerTitle .caption');
-          Cart.setCount(count ? Number(count.textContent.replace(/\D/g, '')) : 0);
         } else {
           const next = doc.querySelector('[data-cart-page-inner]');
           const current = document.querySelector(`#shopify-section-${id} [data-cart-page-inner]`);
