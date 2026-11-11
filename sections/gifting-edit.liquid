@@ -1,5 +1,12 @@
+{%- liquid
+  assign show_media = true
+  if section.settings.image == blank and request.design_mode == false
+    assign show_media = false
+  endif
+-%}
 <section class="section section--{{ section.settings.background }} gifting-edit">
-  <div class="page-width gifting-edit__grid gifting-edit__grid--{{ section.settings.image_position }}">
+  <div class="page-width gifting-edit__grid gifting-edit__grid--{{ section.settings.image_position }}{% unless show_media %} gifting-edit__grid--no-media{% endunless %}">
+    {%- if show_media -%}
     <div class="gifting-edit__media reveal">
       <div class="media media--portrait gifting-edit__image">
         {%- if section.settings.image != blank -%}
@@ -14,6 +21,7 @@
         </div>
       {%- endif -%}
     </div>
+    {%- endif -%}
 
     <div class="gifting-edit__content reveal">
       {%- if section.settings.eyebrow != blank -%}

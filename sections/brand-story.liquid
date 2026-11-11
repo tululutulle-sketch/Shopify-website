@@ -1,5 +1,12 @@
+{%- liquid
+  assign show_media = true
+  if section.settings.image == blank and request.design_mode == false
+    assign show_media = false
+  endif
+-%}
 <section class="section section--{{ section.settings.background }} brand-story">
-  <div class="page-width brand-story__grid brand-story__grid--{{ section.settings.image_position }}">
+  <div class="page-width brand-story__grid brand-story__grid--{{ section.settings.image_position }}{% unless show_media %} brand-story__grid--no-media{% endunless %}">
+    {%- if show_media -%}
     <div class="brand-story__media reveal">
       <div class="media media--{{ section.settings.image_ratio }} brand-story__image">
         {%- if section.settings.image != blank -%}
@@ -14,6 +21,7 @@
         </div>
       {%- endif -%}
     </div>
+    {%- endif -%}
     <div class="brand-story__content reveal">
       {%- if section.settings.eyebrow != blank -%}
         <p class="eyebrow">{{ section.settings.eyebrow | escape }}</p>

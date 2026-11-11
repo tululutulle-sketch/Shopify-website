@@ -1,15 +1,25 @@
 {%- liquid
   assign columns = section.settings.columns
+  assign grid_items = 0
+  assign rec_count = recommendations.products_count | default: 0
+  if rec_count > 0 and rec_count < columns
+    if rec_count >= 3
+      assign columns = rec_count
+    else
+      assign columns = 3
+      assign grid_items = rec_count
+    endif
+  endif
   assign card_sizes = '(min-width: 1024px) 22vw, (min-width: 768px) 30vw, 46vw'
 -%}
 <product-recommendations
-  class="section related-products"
+  class="section section--white related-products"
   data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ section.settings.limit }}&intent=related"
 >
   {%- if recommendations.performed and recommendations.products_count > 0 -%}
     <div class="page-width">
       {% render 'section-heading', heading: section.settings.heading, align: 'center' %}
-      <ul class="list-unstyled product-grid product-grid--scroll-mobile" role="list" style="--columns: {{ columns }};">
+      <ul class="list-unstyled product-grid product-grid--scroll-mobile{% if grid_items > 0 %} product-grid--centered{% endif %}" role="list" style="--columns: {{ columns }}; --columns-tablet: {{ columns | at_most: 3 }};{% if grid_items > 0 %} --items: {{ grid_items }};{% endif %}">
         {%- for product in recommendations.products -%}
           <li class="product-grid__item">
             {% render 'product-card', product: product, sizes: card_sizes %}

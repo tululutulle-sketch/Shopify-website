@@ -1,6 +1,14 @@
 {%- liquid
   assign profile_url = section.settings.profile_url | default: settings.social_instagram
+  assign has_content = false
+  for block in section.blocks
+    if block.type == '@app' or block.settings.image != blank
+      assign has_content = true
+      break
+    endif
+  endfor
 -%}
+{%- if has_content or request.design_mode -%}
 <section class="section section--{{ section.settings.background }} instagram">
   <div class="page-width">
     <div class="section-heading section-heading--center reveal">
@@ -30,6 +38,7 @@
         {%- if block.type == '@app' -%}
           <li class="instagram__app">{% render block %}</li>
         {%- else -%}
+          {%- if block.settings.image == blank and request.design_mode == false -%}{%- continue -%}{%- endif -%}
           {%- assign tile_link = block.settings.link | default: profile_url -%}
           <li class="instagram__item reveal" style="--reveal-delay: {{ forloop.index0 | times: 40 }}ms;" {{ block.shopify_attributes }}>
             {%- if tile_link != blank -%}<a href="{{ tile_link }}" target="_blank" rel="noopener" class="instagram__link">{%- else -%}<div class="instagram__link">{%- endif -%}
@@ -57,6 +66,7 @@
     {%- endif -%}
   </div>
 </section>
+{%- endif -%}
 
 {% schema %}
 {

@@ -15,7 +15,7 @@
   --space-8: 4rem;
   --space-9: 6rem;
   --gutter: 1rem;
-  --section-space: 3.5rem;
+  --section-space: 3rem;
   --header-height: 64px;
   --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
   --duration: 0.35s;
@@ -24,10 +24,10 @@
 }
 
 @media (min-width: 768px) {
-  :root { --gutter: 2rem; --section-space: 5rem; --header-height: 76px; }
+  :root { --gutter: 2rem; --section-space: 4rem; --header-height: 76px; }
 }
 @media (min-width: 1024px) {
-  :root { --gutter: 3rem; --section-space: 6.5rem; }
+  :root { --gutter: 3rem; --section-space: 5rem; }
 }
 
 /* ---------- Reset ---------- */
@@ -127,7 +127,14 @@ h4, .h4 { font-size: calc(1.2rem * var(--heading-scale)); }
 .section--cream { background: var(--color-cream); }
 .section--blush { background: var(--color-blush); }
 .section--lavender { background: var(--color-lavender); }
-.section + .section.section--white, .section--white + .section--white { padding-top: 0; }
+/* Shopify wraps each section in its own div, so collapse the doubled space between
+   neighbouring sections that share a background (also across an empty section). */
+.shopify-section:has(> .section--white) + .shopify-section > .section--white,
+.shopify-section:has(> .section--cream) + .shopify-section > .section--cream,
+.shopify-section:has(> .section--blush) + .shopify-section > .section--blush,
+.shopify-section:has(> .section--lavender) + .shopify-section > .section--lavender,
+.shopify-section:has(> .section--white) + .shopify-section:not(:has(> *)) + .shopify-section > .section--white,
+.shopify-section:has(> .section--cream) + .shopify-section:not(:has(> *)) + .shopify-section > .section--cream { padding-top: 0; }
 .section__footer { margin-top: var(--space-7); text-align: center; }
 
 .media { position: relative; overflow: hidden; background: var(--color-cream); border-radius: var(--radius); }
@@ -559,6 +566,9 @@ h4, .h4 { font-size: calc(1.2rem * var(--heading-scale)); }
 
 /* ---------- Gifting edit ---------- */
 .gifting-edit__grid { display: grid; gap: var(--space-6); align-items: center; }
+.gifting-edit__grid--no-media, .brand-story__grid--no-media { grid-template-columns: minmax(0, 720px) !important; justify-content: center; text-align: center; }
+.gifting-edit__grid--no-media .gifting-edit__list { text-align: left; }
+.brand-story__grid--no-media .brand-story__values { text-align: left; }
 .gifting-edit__media { position: relative; }
 .gifting-edit__image-accent { position: absolute; width: 38%; right: -4%; bottom: -8%; border: 6px solid var(--color-blush); box-shadow: var(--shadow-soft); }
 .gifting-edit__heading { margin-bottom: var(--space-4); }
@@ -914,6 +924,18 @@ h4, .h4 { font-size: calc(1.2rem * var(--heading-scale)); }
 
 /* Theme custom elements render as blocks */
 gift-note, product-recommendations, recently-viewed, product-info, product-form, product-gallery, variant-picker { display: block; }
+
+/* Product grids with fewer products than columns: keep card size, centre the row */
+@media (min-width: 768px) {
+  .product-grid--centered { grid-template-columns: repeat(var(--items), calc((100% - (var(--columns-tablet, 3) - 1) * var(--space-5)) / var(--columns-tablet, 3))); justify-content: center; }
+}
+@media (min-width: 1024px) {
+  .product-grid--centered { grid-template-columns: repeat(var(--items), calc((100% - (var(--columns) - 1) * var(--space-5)) / var(--columns))); }
+}
+
+/* Category card without an image on the live store */
+.category-card__fallback { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; position: absolute; inset: 0; background: linear-gradient(145deg, var(--color-blush), var(--color-lavender)); color: var(--color-primary); }
+.category-card__fallback .icon { width: 34%; height: auto; max-width: 72px; stroke-width: 1; }
 
 /* Savings badge */
 .price__save { align-self: center; font-size: 0.68rem; padding: 0.25rem 0.6rem; }

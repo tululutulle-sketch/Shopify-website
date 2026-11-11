@@ -18,12 +18,25 @@
   if item_count > limit
     assign item_count = limit
   endif
-  if item_count < columns and item_count > 1
-    assign columns = item_count
+  assign grid_items = 0
+  if item_count < columns
+    if item_count >= 3
+      assign columns = item_count
+    else
+      assign columns = 3
+      assign grid_items = item_count
+    endif
+  endif
+  assign has_products = true
+  if use_manual == false and collection_obj == blank
+    assign has_products = false
+  elsif use_manual == false and collection_obj.products_count == 0
+    assign has_products = false
   endif
   assign view_all_url = section.settings.view_all_link | default: collection_obj.url | default: routes.all_products_collection_url
   assign card_sizes = '(min-width: 1024px) calc((100vw - 10rem) / ' | append: columns | append: '), (min-width: 768px) 30vw, 46vw'
 -%}
+{%- if has_products or request.design_mode -%}
 <section class="section section--{{ section.settings.background }} featured-products">
   <div class="page-width">
     {%- liquid
@@ -40,7 +53,7 @@
       link_label: section.settings.view_all_label
     %}
 
-    <ul class="list-unstyled product-grid{% if section.settings.mobile_scroll %} product-grid--scroll-mobile{% endif %}" role="list" style="--columns: {{ columns }}; --columns-tablet: {{ columns | at_most: 3 }};">
+    <ul class="list-unstyled product-grid{% if section.settings.mobile_scroll %} product-grid--scroll-mobile{% endif %}{% if grid_items > 0 %} product-grid--centered{% endif %}" role="list" style="--columns: {{ columns }}; --columns-tablet: {{ columns | at_most: 3 }};{% if grid_items > 0 %} --items: {{ grid_items }};{% endif %}">
       {%- if use_manual -%}
         {%- for product in section.settings.products limit: limit -%}
           <li class="product-grid__item reveal" style="--reveal-delay: {{ forloop.index0 | modulo: columns | times: 60 }}ms;">
@@ -69,6 +82,7 @@
     {%- endif -%}
   </div>
 </section>
+{%- endif -%}
 
 {% schema %}
 {

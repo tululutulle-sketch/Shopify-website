@@ -10,7 +10,7 @@
   assign app_blocks = section.blocks | where: 'type', '@app'
 -%}
 {%- if has_rating or app_blocks.size > 0 or request.design_mode -%}
-  <section class="section product-reviews" id="ProductReviews">
+  <section class="section section--white product-reviews" id="ProductReviews">
     <div class="page-width page-width--narrow">
       <div class="section-heading section-heading--center">
         <div class="section-heading__titles">
