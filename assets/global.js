@@ -1,4 +1,4 @@
-/* TULULU theme — global interactions (vanilla ES6, no dependencies) */
+/* TULULU theme — global interactions (vanilla ES6, no dependencies). */
 (() => {
   const theme = window.theme || {};
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
