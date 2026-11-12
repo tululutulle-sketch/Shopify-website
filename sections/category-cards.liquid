@@ -1,6 +1,20 @@
 {%- liquid
   assign columns = section.settings.columns
   assign card_sizes = '(min-width: 1024px) calc((100vw - 10rem) / ' | append: columns | append: '), (min-width: 768px) 30vw, 62vw'
+
+  assign ratio_class = section.settings.image_ratio
+  assign ratio_style = ''
+  if section.settings.image_ratio == 'adapt'
+    assign ratio_class = 'square'
+    for block in section.blocks
+      assign first_image = block.settings.image | default: block.settings.collection.image | default: block.settings.collection.featured_image
+      if first_image != blank
+        assign ratio_class = 'natural'
+        assign ratio_style = '--ratio: ' | append: first_image.aspect_ratio | append: ';'
+        break
+      endif
+    endfor
+  endif
 -%}
 <section class="section section--{{ section.settings.background }} category-cards">
   <div class="page-width">
@@ -23,7 +37,7 @@
         -%}
         <li class="category-card reveal" style="--reveal-delay: {{ forloop.index0 | times: 60 }}ms;" {{ block.shopify_attributes }}>
           <a href="{{ card_url }}" class="category-card__link">
-            <div class="category-card__media media media--{{ section.settings.image_ratio }}">
+            <div class="category-card__media media media--{{ ratio_class }}"{% if ratio_style != blank %} style="{{ ratio_style }}"{% endif %}>
               {%- if card_image != blank -%}
                 {% render 'responsive-image', image: card_image, sizes: card_sizes, widths: '300, 450, 600, 800, 1000', alt: card_title, class: 'category-card__image' %}
               {%- elsif request.design_mode -%}
@@ -64,11 +78,14 @@
       "id": "image_ratio",
       "label": "Image ratio",
       "options": [
+        { "value": "adapt", "label": "Adapt to image" },
         { "value": "portrait", "label": "Portrait (4:5)" },
         { "value": "tall", "label": "Tall (2:3)" },
-        { "value": "square", "label": "Square" }
+        { "value": "square", "label": "Square" },
+        { "value": "landscape", "label": "Landscape (3:2)" }
       ],
-      "default": "portrait"
+      "default": "portrait",
+      "info": "Adapt to image uses the first card's image shape so all cards stay the same size."
     },
     { "type": "checkbox", "id": "show_count", "label": "Show product count", "default": false },
     { "type": "checkbox", "id": "show_arrow", "label": "Show arrow", "default": true },
@@ -90,7 +107,7 @@
       "name": "Category",
       "settings": [
         { "type": "collection", "id": "collection", "label": "Collection" },
-        { "type": "image_picker", "id": "image", "label": "Image", "info": "Overrides the collection image. Use consistent portrait photography." },
+        { "type": "image_picker", "id": "image", "label": "Image", "info": "Overrides the collection image. Use images with the same shape for a clean grid." },
         { "type": "text", "id": "title", "label": "Title", "info": "Overrides the collection title." },
         { "type": "url", "id": "link", "label": "Link", "info": "Overrides the collection link." }
       ]
