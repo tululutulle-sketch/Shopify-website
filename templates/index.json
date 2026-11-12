@@ -179,7 +179,7 @@
         "source": "collection",
         "collection": "best-sellers",
         "products": [],
-        "limit": 8,
+        "limit": 4,
         "columns": 4,
         "mobile_scroll": true,
         "show_view_all": true,
