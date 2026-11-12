@@ -177,7 +177,7 @@
         "heading": "Bestsellers",
         "text": "",
         "source": "collection",
-        "collection": "",
+        "collection": "best-sellers",
         "products": [],
         "limit": 8,
         "columns": 4,
