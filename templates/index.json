@@ -72,6 +72,7 @@
           "type": "category",
           "settings": {
             "collection": "",
+            "image": "shopify://shop_images/Pastel_Tululu_Surprise_Gift_Box.png",
             "title": "Surprise Gift Boxes",
             "link": ""
           }
@@ -80,6 +81,7 @@
           "type": "category",
           "settings": {
             "collection": "",
+            "image": "shopify://shop_images/Pastel_Tululu_Surprise_Gift_Box_1.png",
             "title": "Hair Accessory Bouquets",
             "link": ""
           }
