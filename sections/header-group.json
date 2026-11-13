@@ -14,6 +14,13 @@
     "announcement-bar": {
       "type": "announcement-bar",
       "blocks": {
+        "announcement_tR8WyD": {
+          "type": "announcement",
+          "settings": {
+            "text": "Free Shipping on Orders Above ₹999",
+            "link": ""
+          }
+        },
         "msg-3": {
           "type": "announcement",
           "settings": {
@@ -38,6 +45,7 @@
         }
       },
       "block_order": [
+        "announcement_tR8WyD",
         "msg-3",
         "msg-1",
         "msg-2"
