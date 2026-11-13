@@ -204,6 +204,8 @@
         "value-2"
       ],
       "settings": {
+        "image": "shopify://shop_images/Pastel_Pink_Baby_Essentials_Flat_Lay.png",
+        "image_2": "shopify://shop_images/Pastel_Pink_Baby_Boutique_Collage.png",
         "image_ratio": "portrait",
         "image_position": "right",
         "eyebrow": "Our Story",
@@ -304,6 +306,7 @@
         "ig-6": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/IMG_8301.png",
             "link": ""
           }
         }
