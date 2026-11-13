@@ -41,7 +41,7 @@
     "featured": {
       "type": "featured-products",
       "settings": {
-        "eyebrow": "New & noteworthy",
+        "eyebrow": "",
         "heading": "Featured Products",
         "text": "",
         "source": "collection",
