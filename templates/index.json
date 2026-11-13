@@ -269,6 +269,7 @@
         "ig-1": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/IMG_7773.heic",
             "link": ""
           }
         },
