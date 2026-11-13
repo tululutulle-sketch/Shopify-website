@@ -60,6 +60,14 @@
     "categories": {
       "type": "category-cards",
       "blocks": {
+        "category_d8hCm4": {
+          "type": "category",
+          "settings": {
+            "collection": "robin-s-eggs",
+            "title": "",
+            "link": ""
+          }
+        },
         "cat-2": {
           "type": "category",
           "settings": {
@@ -94,6 +102,7 @@
         }
       },
       "block_order": [
+        "category_d8hCm4",
         "cat-2",
         "cat-5",
         "cat-4",
