@@ -32,13 +32,6 @@
             "show_social": true
           }
         },
-        "shop": {
-          "type": "menu",
-          "settings": {
-            "heading": "Shop",
-            "menu": "main-menu"
-          }
-        },
         "care": {
           "type": "menu",
           "settings": {
@@ -49,7 +42,6 @@
       },
       "block_order": [
         "brand",
-        "shop",
         "care"
       ],
       "settings": {
