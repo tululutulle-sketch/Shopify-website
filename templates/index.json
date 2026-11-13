@@ -60,19 +60,19 @@
     "categories": {
       "type": "category-cards",
       "blocks": {
-        "category_d8hCm4": {
-          "type": "category",
-          "settings": {
-            "collection": "robin-s-eggs",
-            "title": "",
-            "link": ""
-          }
-        },
         "cat-2": {
           "type": "category",
           "settings": {
             "collection": "tutu-skirt",
             "title": "New Born Set",
+            "link": ""
+          }
+        },
+        "category_d8hCm4": {
+          "type": "category",
+          "settings": {
+            "collection": "robin-s-eggs",
+            "title": "",
             "link": ""
           }
         },
@@ -102,8 +102,8 @@
         }
       },
       "block_order": [
-        "category_d8hCm4",
         "cat-2",
+        "category_d8hCm4",
         "cat-5",
         "cat-4",
         "cat-1"
