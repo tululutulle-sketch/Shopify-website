@@ -271,17 +271,17 @@
             "link": ""
           }
         },
-        "ig-2": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/IMG_8300.jpg",
-            "link": ""
-          }
-        },
         "ig-3": {
           "type": "image",
           "settings": {
             "image": "shopify://shop_images/IMG_6681.heic",
+            "link": ""
+          }
+        },
+        "ig-6": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/IMG_8302.png",
             "link": ""
           }
         },
@@ -292,28 +292,28 @@
             "link": ""
           }
         },
+        "ig-2": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/IMG_8300.jpg",
+            "link": ""
+          }
+        },
         "ig-5": {
           "type": "image",
           "settings": {
             "image": "shopify://shop_images/IMG_7692.heic",
             "link": ""
           }
-        },
-        "ig-6": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/IMG_8302.png",
-            "link": ""
-          }
         }
       },
       "block_order": [
         "ig-1",
-        "ig-2",
         "ig-3",
+        "ig-6",
         "ig-4",
-        "ig-5",
-        "ig-6"
+        "ig-2",
+        "ig-5"
       ],
       "settings": {
         "heading": "Follow the World of TULULU",
