@@ -42,7 +42,7 @@
       "type": "featured-products",
       "settings": {
         "eyebrow": "New & noteworthy",
-        "heading": "Featured Collection",
+        "heading": "Featured Products",
         "text": "",
         "source": "collection",
         "collection": "best-sellers",
