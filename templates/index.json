@@ -100,8 +100,8 @@
         "cat-5"
       ],
       "settings": {
-        "eyebrow": "Curated for you",
-        "heading": "Shop by Category",
+        "eyebrow": "",
+        "heading": "Shop by Collections",
         "text": "",
         "link_label": "View all",
         "link": "shopify://collections",
