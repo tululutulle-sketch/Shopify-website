@@ -104,7 +104,7 @@
         "heading": "Shop by Category",
         "text": "",
         "link_label": "View all",
-        "link": "shopify://collections/all",
+        "link": "shopify://collections",
         "columns": 4,
         "image_ratio": "portrait",
         "show_count": false,
