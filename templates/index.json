@@ -175,43 +175,6 @@
         "background": "white"
       }
     },
-    "story": {
-      "type": "brand-story",
-      "blocks": {
-        "value-1": {
-          "type": "value",
-          "settings": {
-            "icon": "sparkle",
-            "title": "Thoughtfully curated",
-            "text": ""
-          }
-        },
-        "value-2": {
-          "type": "value",
-          "settings": {
-            "icon": "gift",
-            "title": "Beautifully presented",
-            "text": ""
-          }
-        }
-      },
-      "block_order": [
-        "value-1",
-        "value-2"
-      ],
-      "settings": {
-        "image": "shopify://shop_images/Pastel_Pink_Baby_Essentials_Flat_Lay.png",
-        "image_2": "shopify://shop_images/Pastel_Pink_Baby_Boutique_Collage.png",
-        "image_ratio": "portrait",
-        "image_position": "right",
-        "eyebrow": "Our Story",
-        "heading": "Little Details. Beautiful Moments.",
-        "text": "<p>TULULU is a boutique of accessories and gifts chosen for the moments that matter — birthdays, celebrations and simple everyday surprises.</p><p>Every piece is selected with care and presented beautifully, so that giving feels as special as receiving.</p>",
-        "button_label": "Read our story",
-        "button_link": "",
-        "background": "cream"
-      }
-    },
     "reviews": {
       "type": "testimonials",
       "blocks": {
@@ -333,7 +296,6 @@
     "categories",
     "gifting",
     "bestsellers",
-    "story",
     "reviews",
     "instagram"
   ]
