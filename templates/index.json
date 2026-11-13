@@ -60,19 +60,19 @@
     "categories": {
       "type": "category-cards",
       "blocks": {
-        "cat-1": {
-          "type": "category",
-          "settings": {
-            "collection": "hair-accessories",
-            "title": "Bow Clips",
-            "link": ""
-          }
-        },
         "cat-2": {
           "type": "category",
           "settings": {
             "collection": "tutu-skirt",
             "title": "New Born Set",
+            "link": ""
+          }
+        },
+        "cat-5": {
+          "type": "category",
+          "settings": {
+            "collection": "marshmallow-collections",
+            "title": "Marshmallow",
             "link": ""
           }
         },
@@ -84,20 +84,20 @@
             "link": ""
           }
         },
-        "cat-5": {
+        "cat-1": {
           "type": "category",
           "settings": {
-            "collection": "marshmallow-collections",
-            "title": "Marshmallow",
+            "collection": "hair-accessories",
+            "title": "Bow Clips",
             "link": ""
           }
         }
       },
       "block_order": [
-        "cat-1",
         "cat-2",
+        "cat-5",
         "cat-4",
-        "cat-5"
+        "cat-1"
       ],
       "settings": {
         "eyebrow": "",
