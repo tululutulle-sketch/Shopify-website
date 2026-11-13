@@ -1,14 +1,22 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "story": {
       "type": "brand-story",
-      "blocks": {},
-      "block_order": [],
       "settings": {
         "image_ratio": "portrait",
         "image_position": "right",
         "eyebrow": "Our Story",
         "heading": "Little Details. Beautiful Moments.",
+        "text": "<p>TULULU is a boutique of accessories and gifts chosen for the moments that matter — birthdays, celebrations and simple everyday surprises.</p><p>Every piece is selected with care and presented beautifully, so that giving feels as special as receiving.</p>",
         "button_label": "Shop the collection",
         "button_link": "shopify://collections/all",
         "background": "cream"
@@ -17,22 +25,10 @@
     "main": {
       "type": "main-page",
       "settings": {}
-    },
-    "instagram": {
-      "type": "instagram-gallery",
-      "blocks": {},
-      "block_order": [],
-      "settings": {
-        "heading": "Follow the World of TULULU",
-        "columns": 6,
-        "button_label": "Follow us",
-        "background": "white"
-      }
     }
   },
   "order": [
     "story",
-    "main",
-    "instagram"
+    "main"
   ]
 }
