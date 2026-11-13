@@ -22,8 +22,8 @@
             "text": "<p>Thoughtfully curated accessories and gifts for life's little celebrations.</p>",
             "button_label": "Discover the collection",
             "button_link": "shopify://collections/all",
-            "button_label_2": "Shop gift boxes",
-            "button_link_2": "shopify://products/tutu-skirt-unicorn-combo"
+            "button_label_2": "",
+            "button_link_2": ""
           }
         }
       },
