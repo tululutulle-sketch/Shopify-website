@@ -323,6 +323,12 @@ h4, .h4 { font-size: calc(1.2rem * var(--heading-scale)); }
 .header__link {
   position: relative; display: inline-flex; align-items: center; gap: 0.3rem; padding: 1.6rem 0;
   font-size: 0.8rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-heading);
+  white-space: nowrap;
+}
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .header__start { gap: var(--space-4); }
+  .header__menu { gap: var(--space-4); }
+  .header__link { font-size: 0.74rem; letter-spacing: 0.08em; }
 }
 .header__link .icon { width: 14px; height: 14px; transition: transform var(--duration) var(--ease); }
 .header__link::after {
