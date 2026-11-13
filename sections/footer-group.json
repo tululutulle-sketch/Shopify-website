@@ -36,7 +36,7 @@
           "type": "menu",
           "settings": {
             "heading": "Shop",
-            "menu": ""
+            "menu": "main-menu"
           }
         },
         "care": {
@@ -45,20 +45,12 @@
             "heading": "Supports",
             "menu": "supports"
           }
-        },
-        "about": {
-          "type": "menu",
-          "settings": {
-            "heading": "About",
-            "menu": ""
-          }
         }
       },
       "block_order": [
         "brand",
         "shop",
-        "care",
-        "about"
+        "care"
       ],
       "settings": {
         "background": "#fff7f9",
