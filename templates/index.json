@@ -283,12 +283,14 @@
         "ig-3": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/IMG_6681.heic",
             "link": ""
           }
         },
         "ig-4": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/IMG_6683.heic",
             "link": ""
           }
         },
