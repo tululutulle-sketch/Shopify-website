@@ -236,6 +236,13 @@
     "instagram": {
       "type": "instagram-gallery",
       "blocks": {
+        "image_HNrJQD": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Photoroom_20261113_230034.png",
+            "link": ""
+          }
+        },
         "image_BNEb4a": {
           "type": "image",
           "settings": {
@@ -287,6 +294,7 @@
         }
       },
       "block_order": [
+        "image_HNrJQD",
         "image_BNEb4a",
         "ig-1",
         "ig-3",
