@@ -216,6 +216,46 @@
     },
     "reviews": {
       "type": "testimonials",
+      "blocks": {
+        "review_6ypwBT": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "title": "",
+            "quote": "",
+            "author": "",
+            "verified": false,
+            "product": ""
+          }
+        },
+        "review_Ah6APf": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "title": "",
+            "quote": "",
+            "author": "",
+            "verified": false,
+            "product": ""
+          }
+        },
+        "review_pFifEY": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "title": "",
+            "quote": "",
+            "author": "",
+            "verified": false,
+            "product": ""
+          }
+        }
+      },
+      "block_order": [
+        "review_6ypwBT",
+        "review_Ah6APf",
+        "review_pFifEY"
+      ],
       "settings": {
         "eyebrow": "Kind words",
         "heading": "Loved by Our Customers",
