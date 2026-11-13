@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "type": "header",
   "name": "Header group",
@@ -5,16 +14,38 @@
     "announcement-bar": {
       "type": "announcement-bar",
       "blocks": {
-        "msg-1": { "type": "announcement", "settings": { "text": "Free Shipping on Orders Above ₹999", "link": "" } },
-        "msg-2": { "type": "announcement", "settings": { "text": "Beautifully Gift-Wrapped", "link": "" } },
-        "msg-3": { "type": "announcement", "settings": { "text": "Discover Our Latest Collections", "link": "shopify://collections/all" } }
+        "msg-1": {
+          "type": "announcement",
+          "settings": {
+            "text": "Free Shipping on Orders Above ₹2999",
+            "link": ""
+          }
+        },
+        "msg-2": {
+          "type": "announcement",
+          "settings": {
+            "text": "Beautifully Gift-Wrapped",
+            "link": ""
+          }
+        },
+        "msg-3": {
+          "type": "announcement",
+          "settings": {
+            "text": "Discover Our Latest Collections",
+            "link": "shopify://collections/all"
+          }
+        }
       },
-      "block_order": ["msg-1", "msg-2", "msg-3"],
+      "block_order": [
+        "msg-1",
+        "msg-2",
+        "msg-3"
+      ],
       "settings": {
         "autoplay": true,
         "speed": 5,
-        "background": "#E56B8C",
-        "text_color": "#FFFFFF"
+        "background": "#e56b8c",
+        "text_color": "#ffffff"
       }
     },
     "header": {
@@ -23,9 +54,14 @@
         "layout": "logo-left",
         "menu": "main-menu",
         "sticky": true,
-        "mega_caption": "The Gifting Edit"
+        "mega_caption": "The Gifting Edit",
+        "mega_link": "",
+        "search_menu": ""
       }
     }
   },
-  "order": ["announcement-bar", "header"]
+  "order": [
+    "announcement-bar",
+    "header"
+  ]
 }
