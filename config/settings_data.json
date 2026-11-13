@@ -12,6 +12,7 @@
     "logo": "shopify://shop_images/Tululu_Pink_Heart_Logo.png",
     "logo_width": 260,
     "logo_width_mobile": 130,
+    "logo_footer": "shopify://shop_images/Mirrored_Rose_Pink_Ribbon_Emblem.png",
     "color_primary": "#E56B8C",
     "color_primary_hover": "#D2577A",
     "color_blush": "#FDE6ED",
