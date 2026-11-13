@@ -64,7 +64,6 @@
           "type": "category",
           "settings": {
             "collection": "hair-accessories",
-            "image": "shopify://shop_images/Pastel_Pink_Hair_Accessories_Gift_Set.png",
             "title": "Bow Clips",
             "link": ""
           }
@@ -73,7 +72,6 @@
           "type": "category",
           "settings": {
             "collection": "tutu-skirt",
-            "image": "shopify://shop_images/Lavender_and_Pink_Tutu_Gift_Flatlay.png",
             "title": "New Born Set",
             "link": ""
           }
@@ -81,9 +79,8 @@
         "cat-4": {
           "type": "category",
           "settings": {
-            "collection": "gift-sets",
-            "image": "shopify://shop_images/Pastel_Tululu_Surprise_Gift_Box.png",
-            "title": "Surprise Gift Boxes",
+            "collection": "lemonade-collections",
+            "title": "Lemonade",
             "link": ""
           }
         },
@@ -91,7 +88,6 @@
           "type": "category",
           "settings": {
             "collection": "marshmallow-collections",
-            "image": "shopify://shop_images/Pastel_Tululu_Surprise_Gift_Box_1.png",
             "title": "Marshmallow",
             "link": ""
           }
