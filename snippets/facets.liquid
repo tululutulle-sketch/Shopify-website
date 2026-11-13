@@ -119,7 +119,7 @@
                 {%- when 'price_range' -%}
                   {%- liquid
                     assign currency_symbol = cart.currency.symbol
-                    assign range_max = filter.range_max | money_without_currency | remove: ','
+                    assign range_max = filter.range_max | divided_by: 100.0 | ceil
                   -%}
                   <div class="facet__price">
                     <div class="field field--price">
@@ -133,7 +133,7 @@
                         min="0"
                         max="{{ range_max }}"
                         placeholder="0"
-                        {% if filter.min_value.value %}value="{{ filter.min_value.value | money_without_currency | remove: ',' }}"{% endif %}
+                        {% if filter.min_value.value %}value="{{ filter.min_value.value | divided_by: 100.0 | floor }}"{% endif %}
                       >
                       <label class="visually-hidden" for="Price-min-{{ section_id }}">{{ 'facets.from' | t }}</label>
                     </div>
@@ -149,7 +149,7 @@
                         min="0"
                         max="{{ range_max }}"
                         placeholder="{{ range_max }}"
-                        {% if filter.max_value.value %}value="{{ filter.max_value.value | money_without_currency | remove: ',' }}"{% endif %}
+                        {% if filter.max_value.value %}value="{{ filter.max_value.value | divided_by: 100.0 | ceil }}"{% endif %}
                       >
                       <label class="visually-hidden" for="Price-max-{{ section_id }}">{{ 'facets.to' | t }}</label>
                     </div>

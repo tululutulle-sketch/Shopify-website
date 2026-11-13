@@ -750,7 +750,8 @@ h4, .h4 { font-size: calc(1.2rem * var(--heading-scale)); }
 .facet__price { display: flex; align-items: center; gap: var(--space-2); }
 .field--price { flex: 1; margin: 0; flex-direction: row; align-items: center; }
 .field--price .field__prefix { position: absolute; left: 0.8rem; color: var(--color-muted); font-size: 0.9rem; }
-.field--price .field__input { padding-left: 1.8rem; min-height: 44px; }
+.field--price .field__input { min-width: 0; padding-left: 1.8rem; padding-right: 0.6rem; min-height: 44px; -moz-appearance: textfield; }
+.field--price .field__input::-webkit-outer-spin-button, .field--price .field__input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
 .facet__note { padding: var(--space-2) 0 var(--space-4); margin: 0; }
 .swatch { display: inline-block; width: 22px; height: 22px; border-radius: 50%; border: 1px solid rgba(var(--color-heading-rgb), 0.15); background-size: cover; background-position: center; flex-shrink: 0; }
 .checkbox--swatch input:checked ~ .swatch { box-shadow: 0 0 0 2px var(--color-bg), 0 0 0 3px var(--color-heading); }
