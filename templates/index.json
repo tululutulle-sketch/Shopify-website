@@ -276,6 +276,7 @@
         "ig-2": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/IMG_8300.jpg",
             "link": ""
           }
         },
