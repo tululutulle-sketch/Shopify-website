@@ -38,6 +38,25 @@
         "accessibility_label": "Featured collections"
       }
     },
+    "featured": {
+      "type": "featured-products",
+      "settings": {
+        "eyebrow": "New & noteworthy",
+        "heading": "Featured Collection",
+        "text": "",
+        "source": "collection",
+        "collection": "best-sellers",
+        "products": [],
+        "limit": 4,
+        "columns": 4,
+        "mobile_scroll": true,
+        "show_view_all": true,
+        "view_all_label": "View all",
+        "view_all_link": "",
+        "view_all_position": "bottom",
+        "background": "white"
+      }
+    },
     "categories": {
       "type": "category-cards",
       "blocks": {
@@ -94,25 +113,6 @@
         "image_ratio": "portrait",
         "show_count": false,
         "show_arrow": true,
-        "background": "white"
-      }
-    },
-    "featured": {
-      "type": "featured-products",
-      "settings": {
-        "eyebrow": "New & noteworthy",
-        "heading": "Featured Collection",
-        "text": "",
-        "source": "collection",
-        "collection": "hair-accessories",
-        "products": [],
-        "limit": 8,
-        "columns": 4,
-        "mobile_scroll": true,
-        "show_view_all": true,
-        "view_all_label": "View all",
-        "view_all_link": "",
-        "view_all_position": "bottom",
         "background": "white"
       }
     },
@@ -284,8 +284,8 @@
   },
   "order": [
     "hero",
-    "categories",
     "featured",
+    "categories",
     "gifting",
     "bestsellers",
     "story",
