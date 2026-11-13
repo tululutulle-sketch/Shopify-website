@@ -65,7 +65,7 @@
           "settings": {
             "collection": "hair-accessories",
             "image": "shopify://shop_images/Pastel_Pink_Hair_Accessories_Gift_Set.png",
-            "title": "Hair Clip Combo Gift Boxes",
+            "title": "Bow Clips",
             "link": ""
           }
         },
@@ -74,7 +74,7 @@
           "settings": {
             "collection": "tutu-skirt",
             "image": "shopify://shop_images/Lavender_and_Pink_Tutu_Gift_Flatlay.png",
-            "title": "Tutu Skirts",
+            "title": "New Born Set",
             "link": ""
           }
         },
@@ -90,9 +90,9 @@
         "cat-5": {
           "type": "category",
           "settings": {
-            "collection": "best-sellers",
+            "collection": "marshmallow-collections",
             "image": "shopify://shop_images/Pastel_Tululu_Surprise_Gift_Box_1.png",
-            "title": "Hair Accessory Bouquets",
+            "title": "Marshmallow",
             "link": ""
           }
         }
