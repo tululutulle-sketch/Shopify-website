@@ -44,7 +44,7 @@
         "cat-1": {
           "type": "category",
           "settings": {
-            "collection": "",
+            "collection": "hair-accessories",
             "image": "shopify://shop_images/Pastel_Pink_Hair_Accessories_Gift_Set.png",
             "title": "Hair Clip Combo Gift Boxes",
             "link": ""
@@ -53,25 +53,16 @@
         "cat-2": {
           "type": "category",
           "settings": {
-            "collection": "",
+            "collection": "tutu-skirt",
             "image": "shopify://shop_images/Lavender_and_Pink_Tutu_Gift_Flatlay.png",
             "title": "Tutu Skirts",
-            "link": ""
-          }
-        },
-        "cat-3": {
-          "type": "category",
-          "settings": {
-            "collection": "",
-            "image": "shopify://shop_images/Pastel_Tulle_Dress_with_Rose_Bow.png",
-            "title": "Frog Collection",
             "link": ""
           }
         },
         "cat-4": {
           "type": "category",
           "settings": {
-            "collection": "",
+            "collection": "gift-sets",
             "image": "shopify://shop_images/Pastel_Tululu_Surprise_Gift_Box.png",
             "title": "Surprise Gift Boxes",
             "link": ""
@@ -80,7 +71,7 @@
         "cat-5": {
           "type": "category",
           "settings": {
-            "collection": "",
+            "collection": "best-sellers",
             "image": "shopify://shop_images/Pastel_Tululu_Surprise_Gift_Box_1.png",
             "title": "Hair Accessory Bouquets",
             "link": ""
@@ -90,7 +81,6 @@
       "block_order": [
         "cat-1",
         "cat-2",
-        "cat-3",
         "cat-4",
         "cat-5"
       ],
@@ -100,7 +90,7 @@
         "text": "",
         "link_label": "View all",
         "link": "shopify://collections/all",
-        "columns": 5,
+        "columns": 4,
         "image_ratio": "portrait",
         "show_count": false,
         "show_arrow": true,
@@ -160,7 +150,6 @@
         "gift-3"
       ],
       "settings": {
-        "image": "shopify://shop_images/67BBAAC5-49A9-4850-89A5-F6B3810D3CEB.png",
         "image_position": "left",
         "eyebrow": "The Gifting Edit",
         "heading": "The Art of Gifting.",
