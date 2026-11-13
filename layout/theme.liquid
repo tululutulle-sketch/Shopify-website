@@ -18,6 +18,11 @@
 
     {%- liquid
       assign page_title_full = page_title
+      assign is_wishlist_view = false
+      if template.name == 'search' and template.suffix == 'wishlist'
+        assign is_wishlist_view = true
+        assign page_title_full = 'wishlist.title' | t
+      endif
       if current_tags
         assign tags_joined = current_tags | join: ', '
         assign page_title_full = page_title_full | append: ' – tagged "' | append: tags_joined | append: '"'
@@ -30,6 +35,7 @@
       endunless
     -%}
     <title>{{ page_title_full }}</title>
+    {%- if is_wishlist_view -%}<meta name="robots" content="noindex">{%- endif -%}
     {%- if page_description -%}
       <meta name="description" content="{{ page_description | escape }}">
     {%- endif -%}

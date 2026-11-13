@@ -237,13 +237,13 @@
         "id": "wishlist_enable",
         "label": "Enable wishlist",
         "default": true,
-        "info": "Saves favourites in the shopper's browser. Create a page with the template \"page.wishlist\" and handle \"wishlist\"."
+        "info": "Saves favourites in the shopper's browser. Works out of the box; optionally create a page with handle \"wishlist\" and template \"page.wishlist\" to add your own intro text."
       },
       {
         "type": "url",
         "id": "wishlist_url",
         "label": "Wishlist page",
-        "info": "Defaults to /pages/wishlist"
+        "info": "Leave empty to use the built-in wishlist page."
       }
     ]
   },

@@ -1,6 +1,15 @@
 {%- liquid
   assign menu = section.settings.menu
-  assign wishlist_url = settings.wishlist_url | default: '/pages/wishlist'
+  # Prefer a custom link, then a "wishlist" page if one exists, else the built-in
+  # search-based wishlist view (always available, so the link never 404s).
+  assign wishlist_url = settings.wishlist_url
+  if wishlist_url == blank
+    if pages['wishlist'] != empty
+      assign wishlist_url = pages['wishlist'].url
+    else
+      assign wishlist_url = routes.search_url | append: '?view=wishlist'
+    endif
+  endif
   assign is_home = false
   if request.page_type == 'index'
     assign is_home = true
