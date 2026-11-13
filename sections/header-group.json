@@ -14,10 +14,25 @@
     "announcement-bar": {
       "type": "announcement-bar",
       "blocks": {
-        "msg-1": {
+        "msg-3": {
           "type": "announcement",
           "settings": {
-            "text": "Free Shipping on Orders Above ₹2999",
+            "text": "Discover Our Latest Collections",
+            "link": "shopify://collections/all"
+          }
+        },
+        "announcement_GdRMDJ": {
+          "type": "announcement",
+          "settings": {
+            "text": "Free Shipping on Orders Above ₹999",
+            "link": ""
+          }
+        },
+        "msg-1": {
+          "type": "announcement",
+          "disabled": true,
+          "settings": {
+            "text": "Free Shipping on Orders Above ₹1999",
             "link": ""
           }
         },
@@ -27,19 +42,13 @@
             "text": "Beautifully Gift-Wrapped",
             "link": ""
           }
-        },
-        "msg-3": {
-          "type": "announcement",
-          "settings": {
-            "text": "Discover Our Latest Collections",
-            "link": "shopify://collections/all"
-          }
         }
       },
       "block_order": [
+        "msg-3",
+        "announcement_GdRMDJ",
         "msg-1",
-        "msg-2",
-        "msg-3"
+        "msg-2"
       ],
       "settings": {
         "autoplay": true,
