@@ -149,6 +149,7 @@
         "gift-2",
         "gift-3"
       ],
+      "disabled": true,
       "settings": {
         "image_position": "left",
         "eyebrow": "The Gifting Edit",
@@ -166,9 +167,9 @@
         "heading": "Bestsellers",
         "text": "",
         "source": "collection",
-        "collection": "best-sellers",
+        "collection": "hair-accessories",
         "products": [],
-        "limit": 4,
+        "limit": 6,
         "columns": 4,
         "mobile_scroll": true,
         "show_view_all": true,
