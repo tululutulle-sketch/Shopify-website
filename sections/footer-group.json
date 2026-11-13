@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "type": "footer",
   "name": "Footer group",
@@ -7,6 +16,9 @@
       "settings": {
         "heading": "A Little Note from TULULU",
         "text": "<p>Be the first to discover new collections, special releases and thoughtful gifts.</p>",
+        "button_label": "Subscribe",
+        "disclaimer": "",
+        "show_icon": true,
         "background": "blush"
       }
     },
@@ -20,18 +32,44 @@
             "show_social": true
           }
         },
-        "shop": { "type": "menu", "settings": { "heading": "Shop", "menu": "footer-shop" } },
-        "care": { "type": "menu", "settings": { "heading": "Customer Care", "menu": "footer-customer-care" } },
-        "about": { "type": "menu", "settings": { "heading": "About", "menu": "footer-about" } }
+        "shop": {
+          "type": "menu",
+          "settings": {
+            "heading": "Shop",
+            "menu": ""
+          }
+        },
+        "care": {
+          "type": "menu",
+          "settings": {
+            "heading": "Supports",
+            "menu": "supports"
+          }
+        },
+        "about": {
+          "type": "menu",
+          "settings": {
+            "heading": "About",
+            "menu": ""
+          }
+        }
       },
-      "block_order": ["brand", "shop", "care", "about"],
+      "block_order": [
+        "brand",
+        "shop",
+        "care",
+        "about"
+      ],
       "settings": {
-        "background": "#FFF7F9",
+        "background": "#fff7f9",
         "copyright_text": "All rights reserved.",
         "show_payment": true,
         "show_powered_by": false
       }
     }
   },
-  "order": ["newsletter", "footer"]
+  "order": [
+    "newsletter",
+    "footer"
+  ]
 }
