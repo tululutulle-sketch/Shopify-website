@@ -297,6 +297,7 @@
         "ig-5": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/IMG_7692.heic",
             "link": ""
           }
         },
