@@ -60,6 +60,14 @@
     "categories": {
       "type": "category-cards",
       "blocks": {
+        "category_m3BwEX": {
+          "type": "category",
+          "settings": {
+            "collection": "tutu-skirt-1",
+            "title": "",
+            "link": ""
+          }
+        },
         "cat-2": {
           "type": "category",
           "settings": {
@@ -102,6 +110,7 @@
         }
       },
       "block_order": [
+        "category_m3BwEX",
         "cat-2",
         "category_d8hCm4",
         "cat-5",
