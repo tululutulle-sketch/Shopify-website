@@ -50,6 +50,7 @@
         "msg-1",
         "msg-2"
       ],
+      "disabled": true,
       "settings": {
         "autoplay": true,
         "speed": 5,
