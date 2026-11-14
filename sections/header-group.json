@@ -50,10 +50,9 @@
         "msg-1",
         "msg-2"
       ],
-      "disabled": true,
       "settings": {
         "autoplay": true,
-        "speed": 5,
+        "speed": 3,
         "background": "#e56b8c",
         "text_color": "#ffffff"
       }
