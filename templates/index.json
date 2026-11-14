@@ -60,15 +60,6 @@
     "categories": {
       "type": "category-cards",
       "blocks": {
-        "category_gwNAhH": {
-          "type": "category",
-          "settings": {
-            "collection": "",
-            "image": "shopify://shop_images/D485BD1D-5754-4A37-BE5A-AE3E65CF3431.png",
-            "title": "",
-            "link": ""
-          }
-        },
         "cat-2": {
           "type": "category",
           "settings": {
@@ -111,7 +102,6 @@
         }
       },
       "block_order": [
-        "category_gwNAhH",
         "cat-2",
         "category_d8hCm4",
         "cat-5",
