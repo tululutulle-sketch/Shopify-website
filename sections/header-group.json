@@ -29,13 +29,6 @@
             "link": "shopify://collections/all"
           }
         },
-        "msg-1": {
-          "type": "announcement",
-          "settings": {
-            "text": "Beautiful Gift Wrapping",
-            "link": ""
-          }
-        },
         "msg-2": {
           "type": "announcement",
           "settings": {
@@ -47,7 +40,6 @@
       "block_order": [
         "announcement_tR8WyD",
         "msg-3",
-        "msg-1",
         "msg-2"
       ],
       "settings": {
