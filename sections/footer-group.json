@@ -15,11 +15,11 @@
       "type": "newsletter",
       "settings": {
         "heading": "A Little Note from TULULU",
-        "text": "<p>Be the first to discover new collections, special releases and thoughtful gifts.</p>",
+        "text": "<p>One day, she'll look back at these little dresses and remember how loved she was.</p><p>Tululu is made to be part of those beautiful childhood memories.</p>",
         "button_label": "JOIN THE TULULU FAMILY",
         "disclaimer": "",
         "show_icon": true,
-        "background": "lavender"
+        "background": "blush"
       }
     },
     "footer": {
