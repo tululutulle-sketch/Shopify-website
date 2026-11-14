@@ -45,7 +45,7 @@
         "heading": "Featured Products",
         "text": "",
         "source": "collection",
-        "collection": "best-sellers",
+        "collection": "featured-product",
         "products": [],
         "limit": 4,
         "columns": 4,
