@@ -14,6 +14,13 @@
     "announcement-bar": {
       "type": "announcement-bar",
       "blocks": {
+        "announcement_DcbdmJ": {
+          "type": "announcement",
+          "settings": {
+            "text": "Flat 50% Off on All Products",
+            "link": ""
+          }
+        },
         "announcement_jTrNQc": {
           "type": "announcement",
           "settings": {
@@ -38,6 +45,7 @@
         },
         "msg-3": {
           "type": "announcement",
+          "disabled": true,
           "settings": {
             "text": "Discover Our Latest Collections",
             "link": "shopify://collections/all"
@@ -45,6 +53,7 @@
         },
         "msg-2": {
           "type": "announcement",
+          "disabled": true,
           "settings": {
             "text": "Beautifully Gift-Wrapped",
             "link": ""
@@ -52,6 +61,7 @@
         }
       },
       "block_order": [
+        "announcement_DcbdmJ",
         "announcement_jTrNQc",
         "announcement_hiPXJH",
         "announcement_tR8WyD",
