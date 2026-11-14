@@ -60,6 +60,15 @@
     "categories": {
       "type": "category-cards",
       "blocks": {
+        "category_rBPXaG": {
+          "type": "category",
+          "settings": {
+            "collection": "",
+            "image": "shopify://shop_images/0B05B5B1-91BF-4E90-AC59-9B5AB0F87671_be7d486a-f754-48f8-9605-d4d7362b7ba2.png",
+            "title": "Cotton Candy",
+            "link": ""
+          }
+        },
         "cat-2": {
           "type": "category",
           "settings": {
@@ -102,6 +111,7 @@
         }
       },
       "block_order": [
+        "category_rBPXaG",
         "cat-2",
         "category_d8hCm4",
         "cat-5",
