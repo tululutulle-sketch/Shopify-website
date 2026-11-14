@@ -312,14 +312,14 @@
         "ig-5"
       ],
       "settings": {
-        "heading": "Follow the World of TULULU",
+        "heading": "Happy Customers",
         "handle": "",
-        "profile_url": "",
+        "profile_url": "https://www.instagram.com/tululu.in?rpxt=NTVnMjhobmNqOG1h&utm_source=qr",
         "text": "",
         "columns": 6,
         "button_label": "Follow us",
         "app_note": "Upload images as blocks, or add an Instagram feed app block for a live feed.",
-        "background": "white"
+        "background": "blush"
       }
     }
   },
