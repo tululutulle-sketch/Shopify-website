@@ -21,6 +21,13 @@
             "link": ""
           }
         },
+        "announcement_hiPXJH": {
+          "type": "announcement",
+          "settings": {
+            "text": "Happy Children’s Day",
+            "link": ""
+          }
+        },
         "announcement_tR8WyD": {
           "type": "announcement",
           "disabled": true,
@@ -46,6 +53,7 @@
       },
       "block_order": [
         "announcement_jTrNQc",
+        "announcement_hiPXJH",
         "announcement_tR8WyD",
         "msg-3",
         "msg-2"
