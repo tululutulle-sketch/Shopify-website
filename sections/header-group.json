@@ -16,6 +16,7 @@
       "blocks": {
         "announcement_tR8WyD": {
           "type": "announcement",
+          "disabled": true,
           "settings": {
             "text": "Free Shipping on Orders Above ₹999",
             "link": ""
@@ -30,9 +31,8 @@
         },
         "msg-1": {
           "type": "announcement",
-          "disabled": true,
           "settings": {
-            "text": "Free Shipping on Orders Above ₹1999",
+            "text": "Beautiful Gift Wrapping",
             "link": ""
           }
         },
