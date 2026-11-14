@@ -184,55 +184,6 @@
         "background": "white"
       }
     },
-    "reviews": {
-      "type": "testimonials",
-      "blocks": {
-        "review_6ypwBT": {
-          "type": "review",
-          "settings": {
-            "rating": 5,
-            "title": "",
-            "quote": "<p><br/>Ordered a tutu dress for my baby girl and it was honestly so pretty! The colours were exactly what I was looking for. Loved the little detailing. Can't wait to dress her up again!<br/><br/></p>",
-            "author": "Priya S.",
-            "verified": false,
-            "product": ""
-          }
-        },
-        "review_Ah6APf": {
-          "type": "review",
-          "settings": {
-            "rating": 5,
-            "title": "",
-            "quote": "<p><br/>Such a cute collection! I purchased a newborn set and absolutely loved how adorable it looked. Perfect for my baby's photoshoot<br/><br/></p>",
-            "author": "Ananya R.",
-            "verified": false,
-            "product": ""
-          }
-        },
-        "review_pFifEY": {
-          "type": "review",
-          "settings": {
-            "rating": 5,
-            "title": "",
-            "quote": "<p><br/>The bow clips are super cute and the pastel colours are beautiful. They look even prettier in person. Definitely loved my purchase!<br/><br/></p>",
-            "author": "Divya M",
-            "verified": false,
-            "product": ""
-          }
-        }
-      },
-      "block_order": [
-        "review_6ypwBT",
-        "review_Ah6APf",
-        "review_pFifEY"
-      ],
-      "settings": {
-        "eyebrow": "Reviews",
-        "heading": "Loved by Our Customers",
-        "text": "",
-        "background": "white"
-      }
-    },
     "instagram": {
       "type": "instagram-gallery",
       "blocks": {
@@ -321,6 +272,55 @@
         "app_note": "Upload images as blocks, or add an Instagram feed app block for a live feed.",
         "background": "blush"
       }
+    },
+    "reviews": {
+      "type": "testimonials",
+      "blocks": {
+        "review_6ypwBT": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "title": "",
+            "quote": "<p><br/>Ordered a tutu dress for my baby girl and it was honestly so pretty! The colours were exactly what I was looking for. Loved the little detailing. Can't wait to dress her up again!<br/><br/></p>",
+            "author": "Priya S.",
+            "verified": false,
+            "product": ""
+          }
+        },
+        "review_Ah6APf": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "title": "",
+            "quote": "<p><br/>Such a cute collection! I purchased a newborn set and absolutely loved how adorable it looked. Perfect for my baby's photoshoot<br/><br/></p>",
+            "author": "Ananya R.",
+            "verified": false,
+            "product": ""
+          }
+        },
+        "review_pFifEY": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "title": "",
+            "quote": "<p><br/>The bow clips are super cute and the pastel colours are beautiful. They look even prettier in person. Definitely loved my purchase!<br/><br/></p>",
+            "author": "Divya M",
+            "verified": false,
+            "product": ""
+          }
+        }
+      },
+      "block_order": [
+        "review_6ypwBT",
+        "review_Ah6APf",
+        "review_pFifEY"
+      ],
+      "settings": {
+        "eyebrow": "Reviews",
+        "heading": "Loved by Our Customers",
+        "text": "",
+        "background": "white"
+      }
     }
   },
   "order": [
@@ -329,7 +329,7 @@
     "categories",
     "gifting",
     "bestsellers",
-    "reviews",
-    "instagram"
+    "instagram",
+    "reviews"
   ]
 }
