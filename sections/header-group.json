@@ -14,6 +14,13 @@
     "announcement-bar": {
       "type": "announcement-bar",
       "blocks": {
+        "announcement_jTrNQc": {
+          "type": "announcement",
+          "settings": {
+            "text": "Happy Children’s Day",
+            "link": ""
+          }
+        },
         "announcement_tR8WyD": {
           "type": "announcement",
           "disabled": true,
@@ -38,6 +45,7 @@
         }
       },
       "block_order": [
+        "announcement_jTrNQc",
         "announcement_tR8WyD",
         "msg-3",
         "msg-2"
